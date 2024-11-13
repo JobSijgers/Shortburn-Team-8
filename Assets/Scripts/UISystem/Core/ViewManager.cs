@@ -51,6 +51,7 @@ namespace UISystem.Core
 
                 view.Show();
                 _activeView = view;
+                OnViewShow(_startingView);
             }
         }
 
@@ -66,6 +67,7 @@ namespace UISystem.Core
                 _activeView.Hide();
             }
 
+            OnViewShow(_startingView);
             view.Show();
             _activeView = view;
         }
