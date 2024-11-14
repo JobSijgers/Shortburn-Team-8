@@ -53,6 +53,33 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Eye"",
+                    ""type"": ""Button"",
+                    ""id"": ""8238cf3a-286c-4080-81e6-f95fdfbcfc71"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SwapCamera"",
+                    ""type"": ""Button"",
+                    ""id"": ""afccd746-760a-47a8-a0d9-632c532b953d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Leg"",
+                    ""type"": ""Button"",
+                    ""id"": ""431189ec-21e7-430d-b8dd-67de07686094"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -273,6 +300,39 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""XR"",
                     ""action"": ""Fire"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""416e21c8-e7ed-422f-9a80-d613086b3719"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Eye"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""32598365-2856-471a-a486-8144e98b2025"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwapCamera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""410fa37c-76ee-4856-ae56-b35a0971b771"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Leg"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -863,6 +923,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
         m_Player_Fire = m_Player.FindAction("Fire", throwIfNotFound: true);
+        m_Player_Eye = m_Player.FindAction("Eye", throwIfNotFound: true);
+        m_Player_SwapCamera = m_Player.FindAction("SwapCamera", throwIfNotFound: true);
+        m_Player_Leg = m_Player.FindAction("Leg", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -939,6 +1002,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_Look;
     private readonly InputAction m_Player_Fire;
+    private readonly InputAction m_Player_Eye;
+    private readonly InputAction m_Player_SwapCamera;
+    private readonly InputAction m_Player_Leg;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -946,6 +1012,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @Move => m_Wrapper.m_Player_Move;
         public InputAction @Look => m_Wrapper.m_Player_Look;
         public InputAction @Fire => m_Wrapper.m_Player_Fire;
+        public InputAction @Eye => m_Wrapper.m_Player_Eye;
+        public InputAction @SwapCamera => m_Wrapper.m_Player_SwapCamera;
+        public InputAction @Leg => m_Wrapper.m_Player_Leg;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -964,6 +1033,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Fire.started += instance.OnFire;
             @Fire.performed += instance.OnFire;
             @Fire.canceled += instance.OnFire;
+            @Eye.started += instance.OnEye;
+            @Eye.performed += instance.OnEye;
+            @Eye.canceled += instance.OnEye;
+            @SwapCamera.started += instance.OnSwapCamera;
+            @SwapCamera.performed += instance.OnSwapCamera;
+            @SwapCamera.canceled += instance.OnSwapCamera;
+            @Leg.started += instance.OnLeg;
+            @Leg.performed += instance.OnLeg;
+            @Leg.canceled += instance.OnLeg;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -977,6 +1055,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Fire.started -= instance.OnFire;
             @Fire.performed -= instance.OnFire;
             @Fire.canceled -= instance.OnFire;
+            @Eye.started -= instance.OnEye;
+            @Eye.performed -= instance.OnEye;
+            @Eye.canceled -= instance.OnEye;
+            @SwapCamera.started -= instance.OnSwapCamera;
+            @SwapCamera.performed -= instance.OnSwapCamera;
+            @SwapCamera.canceled -= instance.OnSwapCamera;
+            @Leg.started -= instance.OnLeg;
+            @Leg.performed -= instance.OnLeg;
+            @Leg.canceled -= instance.OnLeg;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -1162,6 +1249,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
         void OnFire(InputAction.CallbackContext context);
+        void OnEye(InputAction.CallbackContext context);
+        void OnSwapCamera(InputAction.CallbackContext context);
+        void OnLeg(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

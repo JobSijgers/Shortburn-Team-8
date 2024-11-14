@@ -9,11 +9,12 @@ namespace Player
         [Header("Camera")] [SerializeField] private Transform _playerCamera;
         [SerializeField] private float _sensitivity = 10;
 
-
         [Header("Movement")] [SerializeField] private CharacterController _controller;
         [SerializeField] private float _speed = 5;
         [SerializeField] private float _mass = 1;
 
+        private Transform _constraintCenter;
+        private float _constraintRadius = 10;
 
         private PlayerInputActions _playerInputActions;
         private InputAction _lookAction;
@@ -45,6 +46,7 @@ namespace Player
             UpdateLook();
             UpdateMovement();
             UpdateGravity();
+            ConstrainPosition();
         }
 
         private void UpdateLook()
@@ -72,6 +74,30 @@ namespace Player
         {
             Vector3 gravity = Physics.gravity * (Time.deltaTime * _mass);
             _velocity.y = _controller.isGrounded ? -1f : _velocity.y + gravity.y;
+        }
+
+        private void ConstrainPosition()
+        {
+            if (_constraintCenter == null) return;
+
+            Vector3 offset = transform.position - _constraintCenter.position;
+            if (!(offset.magnitude > _constraintRadius)) 
+                return;
+            Vector3 constrainedPosition = _constraintCenter.position + offset.normalized * _constraintRadius;
+            _controller.enabled = false;
+            transform.position = constrainedPosition;
+            _controller.enabled = true;
+        }
+        
+        public void SetConstraint(Transform center, float radius)
+        {
+            _constraintCenter = center;
+            _constraintRadius = radius;
+        }
+        
+        public void RemoveConstraint()
+        {
+            _constraintCenter = null;
         }
     }
 }
