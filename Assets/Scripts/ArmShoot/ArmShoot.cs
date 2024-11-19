@@ -32,18 +32,18 @@ public class ArmShoot : MonoBehaviour
             {
                 ILatchable latchObj = hit.collider.GetComponent<ILatchable>();
                 if (latchObj == null) return;
-                StartCoroutine(LatchArm(latchObj.latchPos));
+                StartCoroutine(LatchArm(latchObj));
                 latchObj.Latched();
             }
         }
     }
 
-    private IEnumerator LatchArm(Vector3 latchPos)
+    private IEnumerator LatchArm(ILatchable latchObj)
     {
         GameObject armObj = Instantiate(_armPrefab, _armPos.position, Quaternion.identity);
         Arm arm = armObj.GetComponent<Arm>();
-        yield return StartCoroutine(arm.Latch(latchPos));
+        yield return StartCoroutine(arm.Latch(latchObj));
         yield return new WaitForSeconds(0.5f);
-        StartCoroutine(arm.Release(_armPos));
+        yield return StartCoroutine(arm.Release(_armPos));
     }
 }
