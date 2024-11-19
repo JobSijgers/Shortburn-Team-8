@@ -99,5 +99,6 @@ namespace Player
         {
             _constraintCenter = null;
         }
+        
     }
 }
