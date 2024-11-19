@@ -33,6 +33,7 @@ public class ArmShoot : MonoBehaviour
                 ILatchable latchObj = hit.collider.GetComponent<ILatchable>();
                 if (latchObj == null) return;
                 StartCoroutine(LatchArm(latchObj.latchPos));
+                latchObj.Latched();
             }
         }
     }
