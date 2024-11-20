@@ -6,14 +6,24 @@ using UnityEngine;
 
 public class Arm : MonoBehaviour
 {
-    public static Arm Instance { get; private set; }
     [SerializeField] private float _lerpSpeed;
-    private void Awake()
+    private Coroutine _grabCoroutine;
+    
+    public void Grab(IGrabbable grabbable)
     {
-        Instance = this;
+        _grabCoroutine = StartCoroutine(GrabRoutine(grabbable));
     }
 
-    public IEnumerator Latch(IGrabbable grabbable)
+    public void Release(Transform armTransform)
+    {
+        if (_grabCoroutine != null)
+        {
+            StopCoroutine(_grabCoroutine);
+            _grabCoroutine = null;
+        }
+        StartCoroutine(ReleaseRoutine(armTransform));
+    }
+    private IEnumerator GrabRoutine(IGrabbable grabbable)
     {
         Vector3 position = grabbable.GetGrabPoint().position;
         // lerp to position
@@ -24,9 +34,11 @@ public class Arm : MonoBehaviour
         }
 
         transform.parent = grabbable.GetGrabPoint();
+        grabbable.Latched();
+        _grabCoroutine = null;
     }
 
-    public IEnumerator Release(Transform armTransform)
+    public IEnumerator ReleaseRoutine(Transform armTransform)
     {
         transform.parent = null;
         // lerp back to arm
@@ -35,6 +47,7 @@ public class Arm : MonoBehaviour
             transform.position = Vector3.Lerp(transform.position, armTransform.position, Time.deltaTime * _lerpSpeed);
             yield return null;
         }
+
         Destroy(gameObject);
     }
 }
