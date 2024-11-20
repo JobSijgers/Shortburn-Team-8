@@ -80,6 +80,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Reset"",
+                    ""type"": ""Button"",
+                    ""id"": ""f93bb99c-c5a9-4d9d-98d5-cd336e3f23d0"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -333,6 +342,17 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Leg"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5681b35b-f9a8-461e-bc73-b18d0f6230bf"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Reset"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -926,6 +946,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_Eye = m_Player.FindAction("Eye", throwIfNotFound: true);
         m_Player_SwapCamera = m_Player.FindAction("SwapCamera", throwIfNotFound: true);
         m_Player_Leg = m_Player.FindAction("Leg", throwIfNotFound: true);
+        m_Player_Reset = m_Player.FindAction("Reset", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1005,6 +1026,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Eye;
     private readonly InputAction m_Player_SwapCamera;
     private readonly InputAction m_Player_Leg;
+    private readonly InputAction m_Player_Reset;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -1015,6 +1037,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @Eye => m_Wrapper.m_Player_Eye;
         public InputAction @SwapCamera => m_Wrapper.m_Player_SwapCamera;
         public InputAction @Leg => m_Wrapper.m_Player_Leg;
+        public InputAction @Reset => m_Wrapper.m_Player_Reset;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1042,6 +1065,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Leg.started += instance.OnLeg;
             @Leg.performed += instance.OnLeg;
             @Leg.canceled += instance.OnLeg;
+            @Reset.started += instance.OnReset;
+            @Reset.performed += instance.OnReset;
+            @Reset.canceled += instance.OnReset;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -1064,6 +1090,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Leg.started -= instance.OnLeg;
             @Leg.performed -= instance.OnLeg;
             @Leg.canceled -= instance.OnLeg;
+            @Reset.started -= instance.OnReset;
+            @Reset.performed -= instance.OnReset;
+            @Reset.canceled -= instance.OnReset;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -1252,6 +1281,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnEye(InputAction.CallbackContext context);
         void OnSwapCamera(InputAction.CallbackContext context);
         void OnLeg(InputAction.CallbackContext context);
+        void OnReset(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
