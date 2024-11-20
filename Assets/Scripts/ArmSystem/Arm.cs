@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using ArmSystem;
 using UnityEngine;
 
 public class Arm : MonoBehaviour
@@ -12,9 +13,9 @@ public class Arm : MonoBehaviour
         Instance = this;
     }
 
-    public IEnumerator Latch(ILatchable latchable)
+    public IEnumerator Latch(IGrabbable grabbable)
     {
-        Vector3 position = latchable.latchPos;
+        Vector3 position = grabbable.GetGrabPoint().position;
         // lerp to position
         while (Vector3.Distance(transform.position, position) > 0.1f)
         {
@@ -22,7 +23,7 @@ public class Arm : MonoBehaviour
             yield return null;
         }
 
-        transform.parent = latchable.getTransform;
+        transform.parent = grabbable.GetGrabPoint();
     }
 
     public IEnumerator Release(Transform armTransform)
