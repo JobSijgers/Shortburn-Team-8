@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4201709790450302504}
-  - component: {fileID: 4486036465247770856}
+  - component: {fileID: 6946996406071083420}
   m_Layer: 0
   m_Name: PullableObject
   m_TagString: Untagged
@@ -33,7 +33,7 @@ Transform:
   - {fileID: 4568300433161199510}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4486036465247770856
+--- !u!114 &6946996406071083420
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -50,8 +50,8 @@ MonoBehaviour:
       points:
       - {x: -2, y: 0, z: 0}
       - {x: -1, y: 0.5, z: 0}
-      - {x: 10.8439045, y: -8.377993, z: 0.17711592}
-      - {x: 2.2145538, y: 0.13106537, z: -0.36584282}
+      - {x: 1, y: -0.5, z: 0}
+      - {x: 2, y: 0, z: 0}
       isClosed: 0
       space: 0
       controlMode: 0
@@ -65,7 +65,7 @@ MonoBehaviour:
       - 0
       globalNormalsAngle: 0
       flipNormals: 0
-    vertexPathUpToDate: 1
+    vertexPathUpToDate: 0
     vertexPathMaxAngleError: 0.3
     vertexPathMinVertexSpacing: 0.01
     showTransformTool: 1
@@ -237,5 +237,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _grabPoint: {fileID: 7839660345229837610}
-  _pullPath: {fileID: 4486036465247770856}
+  _pullPath: {fileID: 6946996406071083420}
   _grabSpeed: 1
