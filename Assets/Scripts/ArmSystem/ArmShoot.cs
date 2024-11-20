@@ -1,8 +1,5 @@
-using System;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
 
 namespace ArmSystem
 {
@@ -31,11 +28,10 @@ namespace ArmSystem
 
         private void Shoot()
         {
-            // check if arm exists
-            if (Arm.Instance != null) return;
+            if (_arm != null)
+                return;
 
             // shoot ray fromc camera
-
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit))
@@ -44,7 +40,7 @@ namespace ArmSystem
                 if (_grabbable == null)
                     return;
                 _pullable = hit.collider.GetComponent<IPullable>();
-                StartCoroutine(LatchArm(_grabbable));
+                LatchArm(_grabbable);
             }
         }
 
@@ -52,20 +48,21 @@ namespace ArmSystem
         {
             if (_arm == null)
                 return;
-            StartCoroutine(_arm.Release(_armSpawnPosition));
+            _arm.Release(_armSpawnPosition);
+            _pullable = null;
         }
 
-        private IEnumerator LatchArm(IGrabbable latchObj)
+        private void LatchArm(IGrabbable latchObj)
         {
             _arm = Instantiate(_armPrefab, _armSpawnPosition.position, Quaternion.identity);
-            yield return StartCoroutine(_arm.Latch(latchObj));
-            latchObj.Latched();
+            _arm.Grab(latchObj);
         }
 
         private void Update()
         {
-            if (!_pullAction.IsPressed())
+            if (!_pullAction.IsPressed() || !_shootAction.IsPressed())
                 return;
+            
 
             _pullable?.Pull();
         }
