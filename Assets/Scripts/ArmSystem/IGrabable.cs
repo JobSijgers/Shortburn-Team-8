@@ -6,5 +6,6 @@ namespace ArmSystem
     {
         public void Grabbed(Transform newParent);
         public void Drop();
+        public string GetGrabableKey();
     }
 }
