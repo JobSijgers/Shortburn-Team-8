@@ -1,6 +1,4 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using ArmSystem;
 using UnityEngine;
 
@@ -8,10 +6,11 @@ public class Arm : MonoBehaviour
 {
     [SerializeField] private float _lerpSpeed;
     private Coroutine _grabCoroutine;
-    
-    public void Grab(IGrabbable grabbable)
+    private IGrabable _grabbedObject;
+
+    public void Interact(IInteractable interactable)
     {
-        _grabCoroutine = StartCoroutine(GrabRoutine(grabbable));
+        _grabCoroutine = StartCoroutine(GrabRoutine(interactable));
     }
 
     public void Release(Transform armTransform)
@@ -21,33 +20,45 @@ public class Arm : MonoBehaviour
             StopCoroutine(_grabCoroutine);
             _grabCoroutine = null;
         }
+
         StartCoroutine(ReleaseRoutine(armTransform));
     }
-    private IEnumerator GrabRoutine(IGrabbable grabbable)
-    {
-        Vector3 position = grabbable.GetGrabPoint().position;
-        // lerp to position
-        while (Vector3.Distance(transform.position, position) > 0.1f)
-        {
-            transform.position = Vector3.Lerp(transform.position, position, Time.deltaTime * _lerpSpeed);
-            yield return null;
-        }
 
-        transform.parent = grabbable.GetGrabPoint();
-        grabbable.Latched();
+    public void GrabObject(Transform grabPoint, Transform armHoldPosition, IGrabable grabable)
+    {
+        StartCoroutine(GrabObjectRoutine(grabPoint, armHoldPosition, grabable));
+    }
+
+    private IEnumerator GrabRoutine(IInteractable interactable)
+    {
+        yield return StartCoroutine(MoveArmToTransform(interactable.GetGrabPoint()));
+        transform.parent = interactable.GetGrabPoint();
+        interactable.Interacted();
         _grabCoroutine = null;
     }
 
-    public IEnumerator ReleaseRoutine(Transform armTransform)
+    private IEnumerator ReleaseRoutine(Transform armTransform)
     {
         transform.parent = null;
         // lerp back to arm
-        while (Vector3.Distance(transform.position, armTransform.position) > 0.1f)
+        yield return StartCoroutine(MoveArmToTransform(armTransform));
+        Destroy(gameObject);
+    }
+
+    private IEnumerator GrabObjectRoutine(Transform grabPoint, Transform armHoldPosition, IGrabable grabable)
+    {
+        yield return StartCoroutine(MoveArmToTransform(grabPoint));
+        grabable.Grabbed(transform);
+        _grabbedObject = grabable;
+        yield return StartCoroutine(MoveArmToTransform(armHoldPosition));
+    }
+
+    private IEnumerator MoveArmToTransform(Transform destination)
+    {
+        while (Vector3.Distance(transform.position, destination.position) > 0.1f)
         {
-            transform.position = Vector3.Lerp(transform.position, armTransform.position, Time.deltaTime * _lerpSpeed);
+            transform.position = Vector3.Lerp(transform.position, destination.position, Time.deltaTime * _lerpSpeed);
             yield return null;
         }
-
-        Destroy(gameObject);
     }
 }

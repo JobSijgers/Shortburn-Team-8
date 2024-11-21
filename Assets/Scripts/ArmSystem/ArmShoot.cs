@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,13 +8,16 @@ namespace ArmSystem
     {
         [SerializeField] private Arm _armPrefab;
         [SerializeField] private Transform _armSpawnPosition;
+        [SerializeField] private Transform _armHoldPosition;
         private PlayerInputActions _playerInputActions;
         private InputAction _shootAction;
         private InputAction _pullAction;
-
-        private IGrabbable _grabbable;
+        private InputAction _dropAction;
+        
+        private IInteractable _interactable;
         private IPullable _pullable;
         private Arm _arm;
+        private bool _isHolding;
 
         private void Awake()
         {
@@ -24,6 +28,7 @@ namespace ArmSystem
             _shootAction.canceled += ctx => Release();
             _pullAction = _playerInputActions.Player.Pull;
             _pullAction.Enable();
+            
         }
 
         private void Shoot()
@@ -31,16 +36,24 @@ namespace ArmSystem
             if (_arm != null)
                 return;
 
-            // shoot ray fromc camera
+            // shoot ray from camera
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit))
             {
-                _grabbable = hit.collider.GetComponent<IGrabbable>();
-                if (_grabbable == null)
+                _interactable = hit.collider.GetComponent<IInteractable>();
+                if (_interactable == null)
                     return;
+                IGrabable grabable = hit.collider.GetComponent<IGrabable>();
+                if (grabable != null)
+                {
+                    _isHolding = true;
+                    _arm = Instantiate(_armPrefab, _armSpawnPosition.position, Quaternion.identity);
+                    _arm.GrabObject(_interactable.GetGrabPoint(), _armHoldPosition, grabable);
+                    return;
+                }
                 _pullable = hit.collider.GetComponent<IPullable>();
-                LatchArm(_grabbable);
+                LatchArm(_interactable);
             }
         }
 
@@ -52,10 +65,10 @@ namespace ArmSystem
             _pullable = null;
         }
 
-        private void LatchArm(IGrabbable latchObj)
+        private void LatchArm(IInteractable latchObj)
         {
             _arm = Instantiate(_armPrefab, _armSpawnPosition.position, Quaternion.identity);
-            _arm.Grab(latchObj);
+            _arm.Interact(latchObj);
         }
 
         private void Update()
@@ -63,7 +76,6 @@ namespace ArmSystem
             if (!_pullAction.IsPressed() || !_shootAction.IsPressed())
                 return;
             
-
             _pullable?.Pull();
         }
     }

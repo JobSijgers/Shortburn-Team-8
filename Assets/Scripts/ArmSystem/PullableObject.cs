@@ -4,7 +4,7 @@ using UnityEngine.Events;
 
 namespace ArmSystem
 {
-    public class PullableObject : MonoBehaviour, IGrabbable, IPullable
+    public class PullableObject : MonoBehaviour, IInteractable, IPullable
     {
         [SerializeField] private UnityEvent _onPathCompleted;
         [SerializeField] private Transform _grabPoint;
@@ -22,7 +22,7 @@ namespace ArmSystem
             transform.rotation = _pullPath.path.GetRotationAtDistance(0, EndOfPathInstruction.Stop);
         }
 
-        public void Latched()
+        public void Interacted()
         {
         }
 

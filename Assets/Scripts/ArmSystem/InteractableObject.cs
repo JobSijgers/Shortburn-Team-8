@@ -4,16 +4,16 @@ using UnityEngine.Serialization;
 
 namespace ArmSystem
 {
-    public class Lever : MonoBehaviour, IGrabbable
+    public class InteractableObject : MonoBehaviour, IInteractable
     {
         [SerializeField] private Transform _grabPoint;
-        [SerializeField] private UnityEvent _onGrabbed;
+        [SerializeField] private UnityEvent _onInteract;
         
         public Transform GetGrabPoint() => _grabPoint;
 
-        public void Latched()
+        public void Interacted()
         {
-            _onGrabbed.Invoke();
+            _onInteract.Invoke();
         }
     }
 }

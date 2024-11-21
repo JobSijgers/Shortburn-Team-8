@@ -2,10 +2,10 @@ using UnityEngine;
 
 namespace ArmSystem
 {
-    public interface IGrabbable
+    public interface IInteractable
     {
         public Transform GetGrabPoint();
 
-        public void Latched();
+        public void Interacted();
     }
 }

@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.kinematicsoup.scenefusion2": "file:C:/Users/jobsi/Downloads/com.kinematicsoup.scenefusion2-2.0.3.tgz",
     "com.unity.ide.rider": "3.0.34",
     "com.unity.inputsystem": "1.7.0",
     "com.unity.probuilder": "5.2.3",
