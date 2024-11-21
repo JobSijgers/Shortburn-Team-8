@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "com.kinematicsoup.scenefusion2": {
-      "version": "file:C:/Users/jobsi/Downloads/com.kinematicsoup.scenefusion2-2.0.3.tgz",
+      "version": "file:SceneFusion.tgz",
       "depth": 0,
       "source": "local-tarball",
       "dependencies": {}
