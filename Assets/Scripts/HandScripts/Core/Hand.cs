@@ -8,7 +8,10 @@ namespace HandScripts.Core
     {
         [SerializeField] private float _moveSpeed = 1f;
         [SerializeField] private AnimationCurve _moveCurve;
+        [SerializeField] private Transform _storagePoint;
 
+        public Transform GetStoragePoint() => _storagePoint;
+        
         public void MoveToPoint(Transform grabPoint, Transform parentAfterMove, UnityAction onComplete)
         {
             StartCoroutine(MoveRoutine(grabPoint, parentAfterMove, onComplete));

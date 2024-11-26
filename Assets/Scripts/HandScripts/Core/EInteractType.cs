@@ -4,6 +4,7 @@ namespace HandScripts.Core
     {
         Grab,
         Pull,
-        Use
+        Use,
+        Deposit
     }
 }

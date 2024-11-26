@@ -1,10 +1,10 @@
 using System;
 using System.Collections;
+using HandScripts.Grab;
 using HandScripts.Pull;
 using HandScripts.Use;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UIElements;
 
 namespace HandScripts.Core
 {
@@ -12,10 +12,18 @@ namespace HandScripts.Core
     {
         [Header("Hand Settings")]
         [SerializeField] private Hand _rightHand;
+
         [SerializeField] private Transform _rightHandHolder;
 
-        [Header("Raycast Settings")] 
+        [Space(10)]
+        [SerializeField] private StorageHand _leftHand;
+
+        [SerializeField] private Transform _leftHandActiveHolder;
+        [SerializeField] private Transform _leftHandInactiveHolder;
+
+        [Header("Raycast Settings")]
         [SerializeField] private Transform _rayOrigin;
+
         [SerializeField] private float _rayDistance = 10f;
         [SerializeField] private LayerMask _layerMask;
 
@@ -31,7 +39,7 @@ namespace HandScripts.Core
             _useAction = _inputActions.Hand.UseHand;
             _useAction.Enable();
             _useAction.performed += ctx => TryUseHand();
-            
+
             _pullAction = _inputActions.Hand.Pull;
             _pullAction.Enable();
         }
@@ -41,13 +49,23 @@ namespace HandScripts.Core
             _rightHand.transform.position = _rightHandHolder.position;
             _rightHand.transform.rotation = _rightHandHolder.rotation;
             _rightHand.transform.SetParent(_rightHandHolder);
+
+            _leftHand.transform.position = _leftHandInactiveHolder.position;
+            _leftHand.transform.rotation = _leftHandInactiveHolder.rotation;
+            _leftHand.transform.SetParent(_leftHandInactiveHolder);
+            _leftHand.gameObject.SetActive(false);
         }
 
         private void TryUseHand()
         {
             if (_handInUse)
                 return;
-            IHandInteractable interactable = ShootRay().collider?.GetComponent<IHandInteractable>();
+            TryUseInteractable(ShootRay());
+        }
+
+        private void TryUseInteractable(RaycastHit hit)
+        {
+            IHandInteractable interactable = hit.collider?.GetComponent<IHandInteractable>();
 
             if (interactable == null)
                 return;
@@ -55,6 +73,7 @@ namespace HandScripts.Core
             switch (interactable.GetInteractType())
             {
                 case EInteractType.Grab:
+                    HandleHandGrab(interactable);
                     break;
                 case EInteractType.Pull:
                     HandleHandPull(interactable);
@@ -62,22 +81,86 @@ namespace HandScripts.Core
                 case EInteractType.Use:
                     HandleHandUse(interactable);
                     break;
+                case EInteractType.Deposit:
+                    TryUseDeposit(interactable);
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+        }
+
+        private void TryUseDeposit(IHandInteractable interactable)
+        {
+            if (_leftHand.GetStoredObject() == null)
+                return;
+
+            IDeposit deposit = (IDeposit)interactable;
+            if (deposit.GetDepositKey() != _leftHand.GetStoredObject().GetDepositKey())
+                return;
+
+            _handInUse = true;
+            _leftHand.MoveToPoint(_leftHandInactiveHolder, _leftHandInactiveHolder, () =>
+            {
+                _leftHand.gameObject.SetActive(false);
+            });
+                
+            _rightHand.MoveToPoint(_leftHandInactiveHolder, null, () =>
+            {
+                IHandGrabable storedObject = _leftHand.GetStoredObject();
+                storedObject.SetParent(_rightHand.GetStoragePoint());
+                storedObject.ResetPosition();
+                _rightHand.MoveToPoint(interactable.GetHeldPoint(), null, () =>
+                {
+                    storedObject.SetParent(null);
+                    
+                    deposit.OnDeposit(_leftHand.GetStoredObject());
+                    
+                    ReturnRightHand();
+                });
+                IHandGrabable grabable = _leftHand.GetStoredObject();
+                _leftHand.StoreObject(null);
+            });
+        }
+
+        private void HandleHandGrab(IHandInteractable interactable)
+        {
+            if (_leftHand.GetStoredObject() != null)
+            {
+                Debug.Log("Hand is already holding an object");
+            }
+
+            IHandGrabable grabable = (IHandGrabable)interactable;
+            _handInUse = true;
+            _rightHand.MoveToPoint(interactable.GetHeldPoint(), null, () => ReturnGrabItem(grabable));
+        }
+
+        private void ReturnGrabItem(IHandGrabable grabable)
+        {
+            grabable.SetParent(_rightHand.transform);
+            grabable.Grabbed();
+            _rightHand.MoveToPoint(_leftHandInactiveHolder, null, () =>
+            {
+                grabable.SetParent(_leftHand.GetStoragePoint());
+                grabable.ResetPosition();
+                _leftHand.StoreObject(grabable);
+                _leftHand.gameObject.SetActive(true);
+                _leftHand.MoveToPoint(_leftHandActiveHolder, _leftHandActiveHolder, null);
+                ReturnRightHand();
+            });
         }
 
         private void HandleHandPull(IHandInteractable interactable)
         {
             IHandPullable pullable = (IHandPullable)interactable;
             _handInUse = true;
-            _rightHand.MoveToPoint(interactable.GetHeldPoint(), interactable.GetObjectTransform(), () => StartCoroutine(PullRoutine(pullable)));
+            _rightHand.MoveToPoint(interactable.GetHeldPoint(), interactable.GetObjectTransform(),
+                () => StartCoroutine(PullRoutine(pullable)));
         }
 
         private IEnumerator PullRoutine(IHandPullable pullable)
         {
             bool shouldReturn = false;
-            
+
             while (shouldReturn == false)
             {
                 if (_pullAction.IsPressed())
@@ -92,9 +175,10 @@ namespace HandScripts.Core
 
                 yield return null;
             }
-            
-            ReturnHand();
+
+            ReturnRightHand();
         }
+
         private void HandleHandUse(IHandInteractable interactable)
         {
             IHandUseable useable = (IHandUseable)interactable;
@@ -102,10 +186,10 @@ namespace HandScripts.Core
                 return;
             _handInUse = true;
             _rightHand.MoveToPoint(interactable.GetHeldPoint(), interactable.GetObjectTransform(),
-                () => useable.Use(ReturnHand));
+                () => useable.Use(ReturnRightHand));
         }
 
-        private void ReturnHand()
+        private void ReturnRightHand()
         {
             _rightHand.MoveToPoint(_rightHandHolder, _rightHandHolder, OnHandUseComplete);
         }

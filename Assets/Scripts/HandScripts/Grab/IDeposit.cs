@@ -1,7 +1,8 @@
 namespace HandScripts.Grab
 {
-    public class IDeposit
+    public interface IDeposit
     {
-        
+        void OnDeposit(IHandGrabable grabable);
+        string GetDepositKey();
     }
 }
