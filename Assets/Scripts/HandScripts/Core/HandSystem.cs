@@ -88,6 +88,12 @@ namespace HandScripts.Core
                     throw new ArgumentOutOfRangeException();
             }
         }
+        
+        private RaycastHit ShootRay()
+        {
+            Physics.Raycast(_rayOrigin.position, _rayOrigin.forward, out RaycastHit hit, _rayDistance, _layerMask);
+            return hit;
+        }
 
         private void TryUseDeposit(IHandInteractable interactable)
         {
@@ -117,7 +123,6 @@ namespace HandScripts.Core
                     
                     ReturnRightHand();
                 });
-                IHandGrabable grabable = _leftHand.GetStoredObject();
                 _leftHand.StoreObject(null);
             });
         }
@@ -152,6 +157,8 @@ namespace HandScripts.Core
         private void HandleHandPull(IHandInteractable interactable)
         {
             IHandPullable pullable = (IHandPullable)interactable;
+            if (pullable.HasBeenPulled())
+                return;
             _handInUse = true;
             _rightHand.MoveToPoint(interactable.GetHeldPoint(), interactable.GetObjectTransform(),
                 () => StartCoroutine(PullRoutine(pullable)));
@@ -163,7 +170,7 @@ namespace HandScripts.Core
 
             while (shouldReturn == false)
             {
-                if (_pullAction.IsPressed())
+                if (_pullAction.IsPressed() && pullable.CanPull(transform.position))
                 {
                     pullable.Pull(() => shouldReturn = true);
                 }
@@ -200,12 +207,6 @@ namespace HandScripts.Core
             _rightHand.transform.rotation = _rightHandHolder.rotation;
             _rightHand.transform.SetParent(_rightHandHolder);
             _handInUse = false;
-        }
-
-        private RaycastHit ShootRay()
-        {
-            Physics.Raycast(_rayOrigin.position, _rayOrigin.forward, out RaycastHit hit, _rayDistance, _layerMask);
-            return hit;
         }
     }
 }

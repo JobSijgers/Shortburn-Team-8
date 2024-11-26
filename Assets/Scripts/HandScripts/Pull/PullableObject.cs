@@ -21,6 +21,7 @@ namespace HandScripts.Pull
         public Transform GetHeldPoint() => _handHoldPoint;
         public EInteractType GetInteractType() => EInteractType.Pull;
         public Transform GetObjectTransform() => transform;
+        public bool HasBeenPulled() => _distanceTravelled >= _pathCreator.path.length;
 
         private void Start()
         {
@@ -41,7 +42,10 @@ namespace HandScripts.Pull
 
         public bool CanPull(Vector3 playerPosition)
         {
-            throw new NotImplementedException();
+            //if the player is within the min and max angle of the object
+            Vector3 directionToPlayer = playerPosition - transform.position;
+            float angle = Vector3.SignedAngle(transform.forward, directionToPlayer, Vector3.up);
+            return angle >= _minAngle && angle <= _maxAngle;
         }
 
         private void SetPositionAndRotationAtPathDistance(float distance)

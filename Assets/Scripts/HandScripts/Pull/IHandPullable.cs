@@ -7,5 +7,6 @@ namespace HandScripts.Pull
     {
         void Pull(UnityAction onComplete);
         bool CanPull(Vector3 playerPosition);
+        bool HasBeenPulled();
     }
 }
