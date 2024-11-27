@@ -913,6 +913,74 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Hand"",
+            ""id"": ""9611e6c7-9ee1-4934-ba3d-8b5af30c7069"",
+            ""actions"": [
+                {
+                    ""name"": ""UseHand"",
+                    ""type"": ""Button"",
+                    ""id"": ""31ad9870-e192-464a-b572-0710226ad1ba"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Drop"",
+                    ""type"": ""Button"",
+                    ""id"": ""4b357267-a2cb-4f76-b101-f5ede711e42a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pull"",
+                    ""type"": ""Button"",
+                    ""id"": ""9bd7e5b2-2e2d-4a07-a277-a2186a320783"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""52198b4e-8698-4563-9186-424968141825"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UseHand"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f0b7bb27-5ac3-4de7-bef6-0faab88c4c18"",
+                    ""path"": ""<Keyboard>/g"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Drop"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e0277297-af31-4e7e-8d49-663949c76c74"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pull"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -1001,6 +1069,11 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_UI_RightClick = m_UI.FindAction("RightClick", throwIfNotFound: true);
         m_UI_TrackedDevicePosition = m_UI.FindAction("TrackedDevicePosition", throwIfNotFound: true);
         m_UI_TrackedDeviceOrientation = m_UI.FindAction("TrackedDeviceOrientation", throwIfNotFound: true);
+        // Hand
+        m_Hand = asset.FindActionMap("Hand", throwIfNotFound: true);
+        m_Hand_UseHand = m_Hand.FindAction("UseHand", throwIfNotFound: true);
+        m_Hand_Drop = m_Hand.FindAction("Drop", throwIfNotFound: true);
+        m_Hand_Pull = m_Hand.FindAction("Pull", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -1286,6 +1359,68 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         }
     }
     public UIActions @UI => new UIActions(this);
+
+    // Hand
+    private readonly InputActionMap m_Hand;
+    private List<IHandActions> m_HandActionsCallbackInterfaces = new List<IHandActions>();
+    private readonly InputAction m_Hand_UseHand;
+    private readonly InputAction m_Hand_Drop;
+    private readonly InputAction m_Hand_Pull;
+    public struct HandActions
+    {
+        private @PlayerInputActions m_Wrapper;
+        public HandActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @UseHand => m_Wrapper.m_Hand_UseHand;
+        public InputAction @Drop => m_Wrapper.m_Hand_Drop;
+        public InputAction @Pull => m_Wrapper.m_Hand_Pull;
+        public InputActionMap Get() { return m_Wrapper.m_Hand; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(HandActions set) { return set.Get(); }
+        public void AddCallbacks(IHandActions instance)
+        {
+            if (instance == null || m_Wrapper.m_HandActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_HandActionsCallbackInterfaces.Add(instance);
+            @UseHand.started += instance.OnUseHand;
+            @UseHand.performed += instance.OnUseHand;
+            @UseHand.canceled += instance.OnUseHand;
+            @Drop.started += instance.OnDrop;
+            @Drop.performed += instance.OnDrop;
+            @Drop.canceled += instance.OnDrop;
+            @Pull.started += instance.OnPull;
+            @Pull.performed += instance.OnPull;
+            @Pull.canceled += instance.OnPull;
+        }
+
+        private void UnregisterCallbacks(IHandActions instance)
+        {
+            @UseHand.started -= instance.OnUseHand;
+            @UseHand.performed -= instance.OnUseHand;
+            @UseHand.canceled -= instance.OnUseHand;
+            @Drop.started -= instance.OnDrop;
+            @Drop.performed -= instance.OnDrop;
+            @Drop.canceled -= instance.OnDrop;
+            @Pull.started -= instance.OnPull;
+            @Pull.performed -= instance.OnPull;
+            @Pull.canceled -= instance.OnPull;
+        }
+
+        public void RemoveCallbacks(IHandActions instance)
+        {
+            if (m_Wrapper.m_HandActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IHandActions instance)
+        {
+            foreach (var item in m_Wrapper.m_HandActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_HandActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public HandActions @Hand => new HandActions(this);
     private int m_KeyboardMouseSchemeIndex = -1;
     public InputControlScheme KeyboardMouseScheme
     {
@@ -1355,5 +1490,11 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnRightClick(InputAction.CallbackContext context);
         void OnTrackedDevicePosition(InputAction.CallbackContext context);
         void OnTrackedDeviceOrientation(InputAction.CallbackContext context);
+    }
+    public interface IHandActions
+    {
+        void OnUseHand(InputAction.CallbackContext context);
+        void OnDrop(InputAction.CallbackContext context);
+        void OnPull(InputAction.CallbackContext context);
     }
 }

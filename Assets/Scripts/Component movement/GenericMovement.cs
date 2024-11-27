@@ -16,7 +16,6 @@ namespace Component_movement
 
         private IEnumerator Move()
         {
-            Debug.Log("StartMovement");
             // lerp to end pos
             _startPos = transform.position;
             float t = 0;
