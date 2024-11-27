@@ -1,7 +1,8 @@
+using Player;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Player
+namespace LegSystem
 {
     public class LegSystem : MonoBehaviour
     {
@@ -22,25 +23,25 @@ namespace Player
         {
             _legAction = _inputActions.Player.Leg;
             _legAction.Enable();
-            _legAction.performed += OnLeg;
+            _legAction.performed += LeaveLeg;
         }
 
         private void OnDisable()
         {
             _legAction.Disable();
-            _legAction.performed -= OnLeg;
+            _legAction.performed -= LeaveLeg;
         }
 
-        private void OnLeg(InputAction.CallbackContext obj)
+        private void LeaveLeg(InputAction.CallbackContext obj)
         {
             if (_leg == null)
             {
-                _leg = Instantiate(_legPrefab, transform.position, Quaternion.identity);
+                _leg = Instantiate(_legPrefab, _legOrigin.position, Quaternion.identity);
                 _playerMovement.SetConstraint(_leg.transform, _maxDistanceFromLeg);
             }
             else
             {
-                _leg.ReturnLeg(_legOrigin.position);
+                _leg.StartLegReturn(_legOrigin);
                 _leg = null;
                 _playerMovement.RemoveConstraint();
             }

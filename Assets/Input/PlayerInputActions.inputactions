@@ -336,7 +336,7 @@
                     "path": "<Keyboard>/2",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Keyboard&Mouse",
                     "action": "Leg",
                     "isComposite": false,
                     "isPartOfComposite": false
