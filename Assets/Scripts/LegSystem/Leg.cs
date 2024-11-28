@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -5,9 +6,16 @@ namespace LegSystem
 {
     public class Leg : MonoBehaviour
     {
+        public static Leg Instance;
         [SerializeField] private AnimationCurve _legReturnCurve;
         [SerializeField] private AnimationCurve _legReturnRotationCurve;
         [SerializeField] private float _legReturnSpeed;
+
+        private void Awake()
+        {
+            Instance = this;
+        }
+
         public void StartLegReturn(Transform origin)
         {
             StartCoroutine(ReturnLeg(origin));

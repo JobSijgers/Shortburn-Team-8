@@ -1,4 +1,5 @@
 using System.Collections;
+using LegSystem;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
@@ -10,53 +11,47 @@ namespace Player
         Idle,
         Walking,
         Running,
-        Crouching,
     }
 
     public class PlayerMovement : MonoBehaviour
     {
+        public static PlayerMovement Instance;
         [Header("Camera")] [SerializeField] private Transform _playerCamera;
         [SerializeField] private float _sensitivity = 10;
+        [SerializeField] private CameraController _cameraController;
 
         [Header("Player settings: ", order = 0)] 
         [SerializeField] public CharacterController Controller;
 
         [SerializeField] public float Gravity = -9.81f; 
 
-        [FormerlySerializedAs("walkSpeed")]
         [Header("  1. Speed", order = 1)] 
         [SerializeField] private float _walkSpeed;
 
         [SerializeField] private float _speedChangeTime;
         [SerializeField] private float _sprintMultiplier;
 
-        [FormerlySerializedAs("jumpHeight")]
         [Header("  2. Jump", order = 2)] 
         [SerializeField] private float _jumpHeight;
-
-        [FormerlySerializedAs("crouchHeight")]
-        [Header("  3. Crouch", order = 3)] 
-        [SerializeField] private float _crouchHeight;
-        [SerializeField] private float _crouchDuration;
 
 
         private PlayerInputActions _playerInputActions;
         private InputAction _moveAction;
-        private InputAction _jumpAction;
-        private InputAction _crouchAction;
         private InputAction _sprintAction;
         private InputAction _lookAction;
+        private Vector2 _smoothedInput;
 
         // public variables
-        [HideInInspector] public float speed;
+        [HideInInspector] public float Speed;
         [HideInInspector] public Vector3 Velocity;
         [HideInInspector] public Vector3 MoveVector;
+        [HideInInspector] public float X, Y;
         [HideInInspector] public EPlayerMovementState PlayerMovementState;
 
         // private variables
         private float _standHeight;
-        private Vector2 _look;
-
+       
+       
         // coroutines
         private Coroutine _crouchCoroutine;
         private Coroutine _speedChangeCoroutine;
@@ -72,28 +67,26 @@ namespace Player
 
         private void Awake()
         {
+            Instance = this;
             _playerInputActions = new PlayerInputActions();
         }
 
         private void Start()
         {
-            speed = _walkSpeed;
+            Speed = _walkSpeed;
             _standHeight = transform.localScale.y;
             Cursor.lockState = CursorLockMode.Locked;
+            _cameraController = CameraController.Instance;
         }
 
         private void OnEnable()
         {
             // Initialize input actions
             _moveAction = _playerInputActions.Player.Move;
-            _jumpAction = _playerInputActions.Player.Jump;
-            _crouchAction = _playerInputActions.Player.Crouch;
             _sprintAction = _playerInputActions.Player.Sprint;
             _lookAction = _playerInputActions.Player.Look;
             // Enable input actions
             _moveAction.Enable();
-            _jumpAction.Enable();
-            _crouchAction.Enable();
             _sprintAction.Enable();
             _lookAction.Enable();
         }
@@ -101,7 +94,6 @@ namespace Player
         private void Update()
         {
             ConstrainPosition();
-            UpdateLook();
 
             // Handle grounded state
             if (Controller.isGrounded && Velocity.y < 0)
@@ -111,10 +103,14 @@ namespace Player
 
             // Movement
             Vector2 input = _moveAction.ReadValue<Vector2>();
-            float x = input.x;
-            float z = input.y;
+            
+            // smooth input
+            _smoothedInput = Vector2.Lerp(_smoothedInput, input, 0.04f);
+            
+            X = _smoothedInput.x;
+            Y = _smoothedInput.y;
 
-            MoveVector = transform.right * x + transform.forward * z;
+            MoveVector = transform.right * X + transform.forward * Y;
             if (MoveVector.magnitude < 0.1f)
             {
                 PlayerMovementState = EPlayerMovementState.Idle;
@@ -126,41 +122,15 @@ namespace Player
                     : EPlayerMovementState.Walking;
             }
 
-            Controller.Move(MoveVector * speed * Time.deltaTime);
-
-            // Jump
-            if (_jumpAction.triggered && Grounded())
-            {
-                Velocity.y = Mathf.Sqrt(_jumpHeight * -2f * Gravity);
-            }
+            float constraintSpeed = Leg.Instance == null ? 1 : 2;
+            Controller.Move(MoveVector * ((Speed / constraintSpeed) * Time.deltaTime));
 
             // Apply gravity
             Velocity.y += Gravity * Time.deltaTime;
             Controller.Move(Velocity * Time.deltaTime);
 
-            // Crouch
-            if (_crouchAction.IsPressed())
-            {
-                PlayerMovementState = EPlayerMovementState.Crouching;
-            }
-
-            if (_crouchAction.triggered)
-            {
-                if (_crouchCoroutine != null) StopCoroutine(_crouchCoroutine);
-                _crouchCoroutine = StartCoroutine(Crouch(true));
-                AdjustSpeed(_walkSpeed / 2);
-            }
-
-            if (_crouchAction.WasReleasedThisFrame())
-            {
-                if (_crouchCoroutine != null) StopCoroutine(_crouchCoroutine);
-                _crouchCoroutine = StartCoroutine(Crouch(false));
-                AdjustSpeed(_walkSpeed);
-                PlayerMovementState = EPlayerMovementState.Walking;
-            }
-
             // Sprint
-            if (_sprintAction.IsPressed() && PlayerMovementState != EPlayerMovementState.Crouching)
+            if (_sprintAction.IsPressed())
             {
                 PlayerMovementState = EPlayerMovementState.Running;
                 if (Grounded())
@@ -168,20 +138,17 @@ namespace Player
                     AdjustSpeed(_walkSpeed * _sprintMultiplier);
                 }
             }
-            else if (PlayerMovementState != EPlayerMovementState.Crouching)
+            else 
             {
                 PlayerMovementState = EPlayerMovementState.Walking;
                 AdjustSpeed(_walkSpeed);
             }
+            UpdateLook();
         }
 
         private void UpdateLook()
         {
-            _look += _lookAction.ReadValue<Vector2>() * (_sensitivity * Time.deltaTime);
-            _look.y = Mathf.Clamp(_look.y, -90, 90);
-
-            transform.localRotation = Quaternion.Euler(0, _look.x, 0);
-            _playerCamera.localRotation = Quaternion.Euler(-_look.y, 0, 0);
+            _cameraController.UpdateLook(_lookAction, transform);
         }
 
         public bool Grounded()
@@ -198,24 +165,6 @@ namespace Player
             OnPlayerStateChange?.Invoke();
         }
 
-        private IEnumerator Crouch(bool crouching)
-        {
-            float t = 0;
-            float desiredHeight = crouching ? _crouchHeight : _standHeight;
-            while (t < _crouchDuration)
-            {
-                t += Time.deltaTime;
-
-                float amount = t / _crouchDuration;
-                float y = Mathf.Lerp(transform.localScale.y, desiredHeight, amount);
-                transform.localScale = new Vector3(transform.localScale.x, y, transform.localScale.z);
-                transform.Translate(Vector3.up * 0.01f);
-                yield return null;
-            }
-
-            _crouchCoroutine = null;
-        }
-
         private IEnumerator ChangeSpeed(float newSpeed)
         {
             float t = 0;
@@ -223,7 +172,7 @@ namespace Player
             {
                 t += Time.deltaTime;
                 float amount = t / _speedChangeTime;
-                speed = Mathf.Lerp(speed, newSpeed, amount);
+                Speed = Mathf.Lerp(Speed, newSpeed, amount);
                 yield return null;
             }
             _speedChangeCoroutine = null;
