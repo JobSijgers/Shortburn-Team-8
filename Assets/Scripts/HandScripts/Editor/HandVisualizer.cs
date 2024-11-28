@@ -7,18 +7,25 @@ namespace HandScripts.Editor
     public static class HandVisualizer
     {
         private static GameObject _previewInstance;
-        private static readonly GameObject Prefab;
+        private static GameObject _prefab;
         private static GameObject _previousSelection;
 
         static HandVisualizer()
         {
-            Prefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Arminteraction/Hand.prefab");
+            _prefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Arminteraction/Hand.prefab");
             // Subscribe to SceneView callback
             SceneView.duringSceneGui += OnSceneGUI;
         }
 
         private static void OnSceneGUI(SceneView sceneView)
         {
+            if (_prefab == null)
+            {
+                _prefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Arminteraction/Hand.prefab");
+            }
+            if (_prefab == null)
+                return;
+            
             if (Selection.activeGameObject != null && Selection.activeGameObject.name == "GrabPoint")
             {
                 if (_previousSelection != Selection.activeGameObject)
@@ -29,6 +36,7 @@ namespace HandScripts.Editor
                         _previewInstance = null;
                     }
                 }
+
                 _previousSelection = Selection.activeGameObject;
                 GameObject grabPoint = Selection.activeGameObject;
 
@@ -36,7 +44,7 @@ namespace HandScripts.Editor
                 {
                     _previewInstance = CreatePreviewInstance(grabPoint);
                 }
-                
+
                 ApplyWorldScale(_previewInstance, Vector3.one);
             }
             else
@@ -52,13 +60,13 @@ namespace HandScripts.Editor
 
         private static GameObject CreatePreviewInstance(GameObject parent)
         {
-            GameObject preview = Object.Instantiate(Prefab, parent.transform, true);
+            GameObject preview = Object.Instantiate(_prefab, parent.transform, true);
             preview.transform.localPosition = Vector3.zero;
             preview.transform.localRotation = Quaternion.identity;
 
             return preview;
         }
-        
+
         private static void ApplyWorldScale(GameObject obj, Vector3 targetWorldScale)
         {
             if (obj.transform.parent != null)
