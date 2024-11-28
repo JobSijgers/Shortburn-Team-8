@@ -1,0 +1,67 @@
+2024-11-24 12:50:00.9086 [WARNING] Unable to sync reference to Mesh pb_Mesh-15186
+2024-11-24 12:50:00.9125 [WARNING] Unable to sync reference to Mesh pb_Mesh-15186
+2024-11-24 12:50:01.0945 [WARNING] Unable to sync reference to Mesh pb_Mesh-62890
+2024-11-24 12:50:01.0966 [WARNING] Unable to sync reference to Mesh pb_Mesh-62890
+2024-11-24 12:50:01.2398 [WARNING] Unable to sync reference to Mesh pb_Mesh-41784
+2024-11-24 12:50:01.2408 [WARNING] Unable to sync reference to Mesh pb_Mesh-41784
+2024-11-24 12:50:01.3531 [WARNING] Unable to sync reference to Mesh pb_Mesh-1858(Clone)(Clone)
+2024-11-24 12:50:01.3646 [WARNING] Unable to sync reference to Mesh pb_Mesh-1858(Clone)(Clone)
+2024-11-24 12:50:01.4322 [WARNING] Unable to sync reference to Mesh pb_Mesh-1858(Clone)
+2024-11-24 12:50:01.4345 [WARNING] Unable to sync reference to Mesh pb_Mesh-1858(Clone)
+2024-11-24 12:50:01.5545 [WARNING] Unable to sync reference to Mesh pb_Mesh-50718
+2024-11-24 12:50:01.5555 [WARNING] Unable to sync reference to Mesh pb_Mesh-50718
+2024-11-24 12:50:01.5555 [WARNING] Unable to sync reference to Mesh pb_Mesh-50718
+2024-11-24 12:50:01.5560 [WARNING] Unable to sync reference to Mesh pb_Mesh-50732
+2024-11-24 12:50:01.5570 [WARNING] Unable to sync reference to Mesh pb_Mesh-50732
+2024-11-24 12:50:01.5570 [WARNING] Unable to sync reference to Mesh pb_Mesh-50732
+2024-11-24 12:50:01.5580 [WARNING] Unable to sync reference to Mesh pb_Mesh-50746
+2024-11-24 12:50:01.5580 [WARNING] Unable to sync reference to Mesh pb_Mesh-50746
+2024-11-24 12:50:01.5580 [WARNING] Unable to sync reference to Mesh pb_Mesh-50746
+2024-11-24 12:50:01.7217 [WARNING] Unable to sync reference to Mesh pb_Mesh-96268
+2024-11-24 12:50:01.7227 [WARNING] Unable to sync reference to Mesh pb_Mesh-96268
+2024-11-24 12:50:01.8005 [WARNING] Unable to sync reference to Mesh pb_Mesh-96268(Clone)
+2024-11-24 12:50:01.8020 [WARNING] Unable to sync reference to Mesh pb_Mesh-96268(Clone)
+2024-11-24 12:50:01.9668 [WARNING] Unable to sync reference to Mesh pb_Mesh-8490
+2024-11-24 12:50:01.9703 [WARNING] Unable to sync reference to Mesh pb_Mesh-8490
+2024-11-24 12:50:01.9846 [WARNING] Unable to sync reference to Mesh pb_Mesh-15186(Clone)
+2024-11-24 12:50:01.9857 [WARNING] Unable to sync reference to Mesh pb_Mesh-15186(Clone)
+2024-11-24 12:50:02.0114 [WARNING] Unable to sync reference to Mesh pb_Mesh-6010(Clone)
+2024-11-24 12:50:02.0134 [WARNING] Unable to sync reference to Mesh pb_Mesh-6010(Clone)
+2024-11-24 12:50:02.0391 [WARNING] Unable to sync reference to Mesh pb_Mesh-6010(Clone)(Clone)
+2024-11-24 12:50:02.0413 [WARNING] Unable to sync reference to Mesh pb_Mesh-6010(Clone)(Clone)
+2024-11-24 12:50:02.0732 [WARNING] Unable to sync reference to Mesh pb_Mesh-19568
+2024-11-24 12:50:02.0742 [WARNING] Unable to sync reference to Mesh pb_Mesh-19568
+2024-11-24 12:50:02.3253 [WARNING] Unable to sync reference to Mesh pb_Mesh-19568(Clone)
+2024-11-24 12:50:02.3268 [WARNING] Unable to sync reference to Mesh pb_Mesh-19568(Clone)
+2024-11-24 12:50:02.3377 [WARNING] Unable to sync reference to Mesh pb_Mesh-24140
+2024-11-24 12:50:02.3397 [WARNING] Unable to sync reference to Mesh pb_Mesh-24140
+2024-11-24 12:50:02.3755 [WARNING] Unable to sync reference to Mesh pb_Mesh-26218
+2024-11-24 12:50:02.3765 [WARNING] Unable to sync reference to Mesh pb_Mesh-26218
+2024-11-24 12:50:02.3882 [WARNING] Unable to sync reference to Mesh pb_Mesh-24140(Clone)
+2024-11-24 12:50:02.3897 [WARNING] Unable to sync reference to Mesh pb_Mesh-24140(Clone)
+2024-11-24 13:32:25.4101 [WARNING] Unable to sync reference to Mesh pb_Mesh-8490
+2024-11-24 13:32:31.2038 [WARNING] Unable to sync reference to Mesh pb_Mesh-41784
+2024-11-24 13:32:36.8559 [WARNING] Unable to sync reference to Mesh pb_Mesh-8490
+2024-11-24 13:33:14.3195 [WARNING] Unable to sync reference to Mesh pb_Mesh-8490
+2024-11-24 13:33:42.7388 [WARNING] Unable to sync reference to Mesh pb_Mesh-8490
+2024-11-24 13:34:25.6099 [WARNING] Unable to sync reference to Mesh pb_Mesh-8490
+2024-11-24 13:34:36.2672 [WARNING] Unable to sync reference to Mesh pb_Mesh-8490
+2024-11-24 14:21:51.9769 [WARNING] Asset UnityEngine.Material at 'Assets/Thirdparty/Ciathyza/Gridbox Prototype Materials/Materials/URP/Prototype_512x512_Grey2.mat'[1] cannot be generated. Did you miss calling sfLoader.Get().RegisterSyncableType<T>()? Make sure all users have the same version of the project that registers the same syncable asset types before starting a session to ensure these assets sync properly.
+2024-11-24 14:39:14.6604 [WARNING] Unable to sync reference to Mesh pb_Mesh-19568(Clone)
+2024-11-24 14:39:14.6624 [WARNING] Unable to sync reference to Mesh pb_Mesh-19568
+2024-11-24 14:39:14.6784 [WARNING] Unable to sync reference to Mesh pb_Mesh-6010(Clone)(Clone)
+2024-11-24 14:39:14.6804 [WARNING] Unable to sync reference to Mesh pb_Mesh-6010(Clone)
+2024-11-24 14:39:14.6910 [WARNING] Unable to sync reference to Mesh pb_Mesh-6010(Clone)(Clone)(Clone)
+2024-11-24 14:39:14.6921 [WARNING] Unable to sync reference to Mesh pb_Mesh-6010(Clone)(Clone)
+2024-11-24 14:39:14.9892 [WARNING] Unable to sync reference to Mesh pb_Mesh-19568(Clone)
+2024-11-24 14:39:14.9913 [WARNING] Unable to sync reference to Mesh pb_Mesh-19568
+2024-11-24 14:39:15.0075 [WARNING] Unable to sync reference to Mesh pb_Mesh-6010(Clone)(Clone)
+2024-11-24 14:39:15.0085 [WARNING] Unable to sync reference to Mesh pb_Mesh-6010(Clone)
+2024-11-24 14:39:15.0216 [WARNING] Unable to sync reference to Mesh pb_Mesh-6010(Clone)(Clone)(Clone)
+2024-11-24 14:39:15.0227 [WARNING] Unable to sync reference to Mesh pb_Mesh-6010(Clone)(Clone)
+2024-11-24 16:02:08.4791 [WARNING] Asset UnityEngine.Material at 'Assets/Thirdparty/Ciathyza/Gridbox Prototype Materials/Materials/URP/Prototype_512x512_Grey3.mat'[1] cannot be generated. Did you miss calling sfLoader.Get().RegisterSyncableType<T>()? Make sure all users have the same version of the project that registers the same syncable asset types before starting a session to ensure these assets sync properly.
+2024-11-24 16:06:01.5005 [WARNING] Asset UnityEngine.Material at 'Assets/Thirdparty/Ciathyza/Gridbox Prototype Materials/Materials/URP/Prototype_512x512_Grey2.mat'[1] cannot be generated. Did you miss calling sfLoader.Get().RegisterSyncableType<T>()? Make sure all users have the same version of the project that registers the same syncable asset types before starting a session to ensure these assets sync properly.
+2024-11-24 16:06:01.5227 [WARNING] Asset UnityEngine.Material at 'Assets/Thirdparty/Ciathyza/Gridbox Prototype Materials/Materials/URP/Prototype_512x512_Grey3.mat'[1] cannot be generated. Did you miss calling sfLoader.Get().RegisterSyncableType<T>()? Make sure all users have the same version of the project that registers the same syncable asset types before starting a session to ensure these assets sync properly.
+2024-11-24 16:13:33.0656 [ERROR] Connection refused because this user is already connected to the session.
+2024-11-24 16:17:14.3405 [ERROR] Connection refused because this user is already connected to the session.
+2024-11-24 16:18:26.5669 [ERROR] Connection refused because this user is already connected to the session.
