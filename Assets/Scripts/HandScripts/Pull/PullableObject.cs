@@ -1,6 +1,7 @@
 using System;
 using HandScripts.Core;
 using PathCreation;
+using Player;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
@@ -70,8 +71,15 @@ namespace HandScripts.Pull
             Vector3 maxAnglePosition = transform.position + Quaternion.Euler(0, _maxAngle, 0) * transform.forward * 10;
             Gizmos.DrawLine(transform.position, minAnglePosition);
             Gizmos.DrawLine(transform.position, maxAnglePosition);
-            //fill the area between the min and max angle
-            Handles.color = new Color(1, 0, 0, 0.1f);
+            //fill the area between the min and max 
+            if (CanPull(FindObjectOfType<PlayerMovement>().transform.position))
+            {
+                Handles.color = new Color(0, 2, 0, 0.1f);
+            }
+            else
+            {
+                Handles.color = new Color(1, 0, 0, 0.1f);
+            }
             Handles.DrawSolidArc(transform.position, Vector3.up, transform.forward, _minAngle, 10);
             Handles.DrawSolidArc(transform.position, Vector3.up, transform.forward, _maxAngle, 10);
         }
