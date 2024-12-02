@@ -2,7 +2,7 @@ using System.Collections;
 using LegSystem;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
+using LimbsPickup;
 
 namespace Player
 {
@@ -20,21 +20,20 @@ namespace Player
         [SerializeField] private float _sensitivity = 10;
         [SerializeField] private CameraController _cameraController;
 
-        [Header("Player settings: ", order = 0)] 
-        [SerializeField] public CharacterController Controller;
+        [Header("Player settings: ", order = 0)] [SerializeField]
+        public CharacterController Controller;
 
-        [SerializeField] public float Gravity = -9.81f; 
+        [SerializeField] public float Gravity = -9.81f;
 
-        [Header("  1. Speed", order = 1)] 
-        [SerializeField] private float _walkSpeed;
+        [Header("  1. Speed", order = 1)] [SerializeField]
+        private float _walkSpeed;
 
         [SerializeField] private float _speedChangeTime;
         [SerializeField] private float _sprintMultiplier;
 
-        [Header("  2. Jump", order = 2)] 
-        [SerializeField] private float _jumpHeight;
-
-
+        [Header("  2. Jump", order = 2)] [SerializeField]
+        private float _jumpHeight;
+        
         private PlayerInputActions _playerInputActions;
         private InputAction _moveAction;
         private InputAction _sprintAction;
@@ -50,8 +49,8 @@ namespace Player
 
         // private variables
         private float _standHeight;
-       
-       
+
+
         // coroutines
         private Coroutine _crouchCoroutine;
         private Coroutine _speedChangeCoroutine;
@@ -103,10 +102,10 @@ namespace Player
 
             // Movement
             Vector2 input = _moveAction.ReadValue<Vector2>();
-            
+
             // smooth input
             _smoothedInput = Vector2.Lerp(_smoothedInput, input, 0.04f);
-            
+
             X = _smoothedInput.x;
             Y = _smoothedInput.y;
 
@@ -122,7 +121,8 @@ namespace Player
                     : EPlayerMovementState.Walking;
             }
 
-            float constraintSpeed = Leg.Instance == null ? 1 : 2;
+            float constraintSpeed = Leg.Instance == null ^ LimbsController.Instance.Leg.enabled == false ? 1 : 2;
+
             Controller.Move(MoveVector * ((Speed / constraintSpeed) * Time.deltaTime));
 
             // Apply gravity
@@ -138,11 +138,12 @@ namespace Player
                     AdjustSpeed(_walkSpeed * _sprintMultiplier);
                 }
             }
-            else 
+            else
             {
                 PlayerMovementState = EPlayerMovementState.Walking;
                 AdjustSpeed(_walkSpeed);
             }
+
             UpdateLook();
         }
 
@@ -175,6 +176,7 @@ namespace Player
                 Speed = Mathf.Lerp(Speed, newSpeed, amount);
                 yield return null;
             }
+
             _speedChangeCoroutine = null;
         }
 

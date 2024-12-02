@@ -19,7 +19,8 @@ namespace Player
         [Header("View bobbing")] 
         [SerializeField] private bool _doViewBobbing;
         [SerializeField] private float _bobFrequency = 14f;
-        [SerializeField] private float _bobIntensity = 0.05f;
+        [SerializeField] private float _bobIntensityX = 0.05f;
+        [SerializeField] private float _bobIntensityY = 0.05f;
         [SerializeField] private float _runMultiplier;
 
         [FormerlySerializedAs("walkFOV")]
@@ -61,8 +62,8 @@ namespace Player
             if ((Mathf.Abs(_player.MoveVector.x) > 0.1f || Mathf.Abs(_player.MoveVector.z) > 0.1f) && _player.Grounded())
             {
                 _timer += Time.deltaTime * (_bobFrequency * multiplier);
-                float bobX = Mathf.Cos(_timer * _bobFrequency / 23) * (_bobIntensity / 60);
-                float bobY = Mathf.Sin(_timer) * _bobIntensity;
+                float bobX = Mathf.Cos(_timer * _bobFrequency / 23) * (_bobIntensityX / 60);
+                float bobY = Mathf.Sin(_timer) * _bobIntensityY;
 
                 transform.localPosition = new Vector3(transform.localPosition.x + bobX, _defaultPos.y + bobY, transform.localPosition.z);
             }
