@@ -1,48 +1,19 @@
 using UnityEditor;
 using UnityEngine;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Maze.Editor
 {
     public class MazeWindow : EditorWindow
     {
-        private class Point
-        {
-            public Vector3 _Position;
-            public float _Height;
-            public HashSet<Vector3> _Connections;
-
-            public Point(Vector3 position, float height)
-            {
-                _Position = position;
-                _Height = height;
-                _Connections = new HashSet<Vector3>();
-            }
-
-            public override bool Equals(object obj)
-            {
-                if (obj == null || GetType() != obj.GetType())
-                {
-                    return false;
-                }
-
-                Point other = (Point)obj;
-                return _Position == other._Position && _Height == other._Height;
-            }
-
-            public override int GetHashCode()
-            {
-                return _Position.GetHashCode() ^ _Height.GetHashCode();
-            }
-        }
-
         private const int GridSize = 20;
         private const int CellSize = 30;
         private const int StartEndSize = 12;
         private const int HalfStartEndSize = StartEndSize / 2;
         private const int BorderThickness = 2;
         private const int HalfBorderThickness = BorderThickness / 2;
+        private const int GridWidth = GridSize * CellSize + BorderThickness + 300;
+        private const int GridHeight = GridSize * CellSize + BorderThickness;
 
         private SerializedObject _serializedObject;
         private SerializedProperty _startHeightProperty;
@@ -79,7 +50,6 @@ namespace Maze.Editor
         private readonly HashSet<MazeLine> _mazeLines = new();
         private bool _isDrawingLine = false;
 
-        private Texture2D _binkAppleTexture;
 
         private void OnGUI()
         {
@@ -92,6 +62,19 @@ namespace Maze.Editor
         }
 
         private void OnEnable()
+        {
+            InitializeSerializedProperties();
+            LoadMazePrefabs();
+        }
+
+        [MenuItem("Window/Custom Grid")]
+        public static void ShowWindow()
+        {
+            MazeWindow window = GetWindow<MazeWindow>("Custom Grid");
+            SetWindowSizeConstraints(window);
+        }
+
+        private void InitializeSerializedProperties()
         {
             _serializedObject = new SerializedObject(this);
             _startHeightProperty = _serializedObject.FindProperty("_startHeight");
@@ -106,24 +89,20 @@ namespace Maze.Editor
             _crossJunctionProperty = _serializedObject.FindProperty("_crossJunction");
             _mazeStartProperty = _serializedObject.FindProperty("_mazeStart");
             _mazeEndProperty = _serializedObject.FindProperty("_mazeEnd");
+        }
+
+        private void LoadMazePrefabs()
+        {
             _straight = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Maze/Straight.prefab");
             _corner = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Maze/Corner.prefab");
             _tJunction = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Maze/T Split.prefab");
             _crossJunction = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Maze/Split.prefab");
-            _binkAppleTexture = AssetDatabase.LoadAssetAtPath<Texture2D>("Assets/Textures/Food/Binkapple.jpg");
         }
 
-        [MenuItem("Window/Custom Grid")]
-        public static void ShowWindow()
+        private static void SetWindowSizeConstraints(MazeWindow window)
         {
-            MazeWindow window = GetWindow<MazeWindow>("Custom Grid");
-
-            int gridWidth = GridSize * CellSize + BorderThickness + 300;
-            int gridHeight = GridSize * CellSize + BorderThickness;
-
-            // Set window size constraints
-            window.minSize = new Vector2(gridWidth, gridHeight);
-            window.maxSize = new Vector2(gridWidth, gridHeight);
+            window.minSize = new Vector2(GridWidth, GridHeight);
+            window.maxSize = new Vector2(GridWidth, GridHeight);
         }
 
         private void DrawGrid()
@@ -150,34 +129,58 @@ namespace Maze.Editor
             Rect settingsRect = new Rect(offset, 0, position.width - offset, position.height);
             GUILayout.BeginArea(settingsRect);
             _serializedObject.Update();
+            DrawHeightSettings();
+            DrawGridSettings();
+            DrawMazeSettings();
+            DrawMazePrefabs();
+            DrawGenerateAndClearButtons();
+            _serializedObject.ApplyModifiedProperties();
+            ClampMazeStartEnd();
+            GUILayout.EndArea();
+        }
+
+        private void DrawHeightSettings()
+        {
             EditorGUILayout.LabelField("Height Settings", EditorStyles.boldLabel);
             EditorGUILayout.PropertyField(_startHeightProperty);
             EditorGUILayout.PropertyField(_endHeightProperty);
             EditorGUILayout.PropertyField(_gradientProperty);
             GUILayout.Space(10);
+        }
+
+        private void DrawGridSettings()
+        {
             EditorGUILayout.LabelField("Grid Settings", EditorStyles.boldLabel);
             EditorGUILayout.PropertyField(_backgroundColorProperty);
             EditorGUILayout.PropertyField(_lineColorProperty);
             GUILayout.Space(10);
+        }
+
+        private void DrawMazeSettings()
+        {
             EditorGUILayout.LabelField("Maze Settings", EditorStyles.boldLabel);
             EditorGUILayout.PropertyField(_mazeStartProperty);
             EditorGUILayout.PropertyField(_mazeEndProperty);
             EditorGUILayout.PropertyField(_spawnPositionProperty);
             GUILayout.Space(10);
+        }
+
+        private void DrawMazePrefabs()
+        {
             EditorGUILayout.LabelField("Maze Prefabs", EditorStyles.boldLabel);
             EditorGUILayout.PropertyField(_straightProperty);
             EditorGUILayout.PropertyField(_cornerProperty);
             EditorGUILayout.PropertyField(_tJunctionProperty);
             EditorGUILayout.PropertyField(_crossJunctionProperty);
             GUILayout.Space(10);
+        }
 
-
-            GUILayout.Space(10);
+        private void DrawGenerateAndClearButtons()
+        {
             if (GUILayout.Button("Generate Maze", GUILayout.Height(40)))
             {
                 GenerateMaze();
             }
-
 
             if (_mazeLines.Count > 0)
             {
@@ -187,46 +190,19 @@ namespace Maze.Editor
                     _mazeLines.Clear();
                 }
             }
+        }
 
-            _serializedObject.ApplyModifiedProperties();
-
+        private void ClampMazeStartEnd()
+        {
             _mazeStart = ClampVector3Int(_mazeStart, 0, GridSize - 1);
             _mazeEnd = ClampVector3Int(_mazeEnd, 0, GridSize - 1);
-            GUILayout.EndArea();
         }
 
         private Vector3Int ClampVector3Int(Vector3Int vector, int min, int max)
         {
-            if (vector.x < min)
-            {
-                vector.x = min;
-            }
-
-            if (vector.y < min)
-            {
-                vector.y = min;
-            }
-
-            if (vector.z < min)
-            {
-                vector.z = min;
-            }
-
-            if (vector.x > max)
-            {
-                vector.x = max;
-            }
-
-            if (vector.y > max)
-            {
-                vector.y = max;
-            }
-
-            if (vector.z > max)
-            {
-                vector.z = max;
-            }
-
+            vector.x = Mathf.Clamp(vector.x, min, max);
+            vector.y = Mathf.Clamp(vector.y, min, max);
+            vector.z = Mathf.Clamp(vector.z, min, max);
             return vector;
         }
 
@@ -390,27 +366,9 @@ namespace Maze.Editor
 
         private void UpdateMinAndMax(float minHeight, float maxHeight)
         {
-            if (minHeight < _minHeight)
-            {
-                _minHeight = minHeight;
-            }
-
-            if (maxHeight < _minHeight)
-            {
-                _minHeight = maxHeight;
-            }
-
-            if (minHeight > _maxHeight)
-            {
-                _maxHeight = minHeight;
-            }
-
-            if (maxHeight > _maxHeight)
-            {
-                _maxHeight = maxHeight;
-            }
+            _minHeight = Mathf.Min(_minHeight, minHeight);
+            _maxHeight = Mathf.Max(_maxHeight, maxHeight);
         }
-
 
         private void GenerateMaze()
         {
@@ -433,83 +391,73 @@ namespace Maze.Editor
                 new Color(1, 0, 0, 0.5f));
         }
 
-        public void GenerateMazeObjects()
+        private void AddConnection(HashSet<Point> points, Vector3 position, float height, Vector3 connection)
+        {
+            Point point = new Point(position, height);
+            if (!points.Contains(point))
+            {
+                point._Connections.Add(connection);
+                points.Add(point);
+            }
+            else
+            {
+                foreach (Point existingPoint in points)
+                {
+                    if (existingPoint.Equals(point))
+                    {
+                        existingPoint._Connections.Add(connection);
+                        break;
+                    }
+                }
+            }
+        }
+
+        private void SpawnMazeObject(Point point, Transform mazeTransform)
+        {
+            switch (point._Connections.Count)
+            {
+                case 1:
+                    SpawnStraight(point, mazeTransform);
+                    break;
+                case 2:
+                    if (CheckIfStraight(point))
+                    {
+                        SpawnStraight(point, mazeTransform);
+                    }
+                    else
+                    {
+                        SpawnCorner(point, mazeTransform);
+                    }
+
+                    break;
+                case 3:
+                    SpawnTJunction(point, mazeTransform);
+                    break;
+                case 4:
+                    SpawnJunction(point, mazeTransform);
+                    break;
+            }
+        }
+
+        private void GenerateMazeObjects()
         {
             GameObject maze = new GameObject("Maze");
             maze.transform.position = _spawnPosition;
             HashSet<Point> points = new();
+
             foreach (MazeLine mazeLine in _mazeLines)
             {
                 Vector3 startPosition = new Vector3(mazeLine.StartPosition.x, mazeLine.StartHeight,
                     mazeLine.StartPosition.y);
                 Vector3 endPosition = new Vector3(mazeLine.EndPosition.x, mazeLine.EndHeight, mazeLine.EndPosition.y);
 
-                Point startPoint = new Point(startPosition, mazeLine.StartHeight);
-
-                if (!points.Contains(startPoint))
-                {
-                    startPoint._Connections.Add(endPosition);
-                    points.Add(startPoint);
-                }
-                else
-                {
-                    foreach (Point point in points)
-                    {
-                        if (point.Equals(startPoint))
-                        {
-                            Debug.Log("Point already exists, adding connection: " + endPosition);
-
-                            point._Connections.Add(endPosition);
-                        }
-                    }
-                }
-
-                Point endPoint = new Point(endPosition, mazeLine.EndHeight);
-
-                if (!points.Contains(endPoint))
-                {
-                    endPoint._Connections.Add(startPosition);
-                    points.Add(endPoint);
-                }
-                else
-                {
-                    foreach (Point point in points)
-                    {
-                        if (point.Equals(endPoint))
-                        {
-                            Debug.Log("Point already exists, adding connection: " + startPosition);
-
-                            point._Connections.Add(startPosition);
-                        }
-                    }
-                }
+                AddConnection(points, startPosition, mazeLine.StartHeight, endPosition);
+                AddConnection(points, endPosition, mazeLine.EndHeight, startPosition);
             }
 
             foreach (Point point in points)
             {
-                switch (point._Connections.Count)
-                {
-                    case 1:
-                        SpawnStraight(point, maze.transform);
-                        break;
-                    case 2:
-                        if (CheckIfStraight(point))
-                        {
-                            SpawnStraight(point, maze.transform);
-                        }
-                        else
-                        {
-                            SpawnCorner(point, maze.transform);
-                        }
-
-                        break;
-                    case 3:
-                        SpawnTJunction(point, maze.transform);
-                        break;
-                    case 4:
-                        SpawnJunction(point, maze.transform);
-                        break;
-                }
+                SpawnMazeObject(point, maze.transform);
             }
         }
 
@@ -558,29 +506,30 @@ namespace Maze.Editor
             bool back = point._Connections.Contains(point._Position + Vector3.back);
             bool left = point._Connections.Contains(point._Position + Vector3.left);
             bool right = point._Connections.Contains(point._Position + Vector3.right);
-        
+
             if (forward && left)
             {
                 return Vector3.left;
             }
-        
+
             if (forward && right)
             {
                 return Vector3.forward;
             }
-        
+
             if (back && left)
             {
                 return Vector3.back;
             }
-        
+
             if (back && right)
             {
                 return Vector3.right;
             }
-        
+
             return Vector3.zero;
         }
+
         //
         private Vector3 GetTJunctionDirection(Point point)
         {
@@ -588,27 +537,27 @@ namespace Maze.Editor
             bool back = point._Connections.Contains(point._Position + Vector3.back);
             bool left = point._Connections.Contains(point._Position + Vector3.left);
             bool right = point._Connections.Contains(point._Position + Vector3.right);
-        
+
             if (forward && left && right)
             {
                 return Vector3.forward;
             }
-        
+
             if (back && left && right)
             {
                 return Vector3.back;
             }
-        
+
             if (forward && back && left)
             {
                 return Vector3.left;
             }
-        
+
             if (forward && back && right)
             {
                 return Vector3.right;
             }
-        
+
             return Vector3.zero;
         }
     }
