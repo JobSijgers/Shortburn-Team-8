@@ -2,9 +2,9 @@ using UnityEngine;
 
 namespace Maze.Editor
 {
-    public struct Line
+    public struct MazeLine
     {
-        public Line(Vector2 startPosition, Vector2 endPosition, float startHeight, float endHeight)
+        public MazeLine(Vector2 startPosition, Vector2 endPosition, float startHeight, float endHeight)
         {
             StartPosition = startPosition;
             EndPosition = endPosition;
