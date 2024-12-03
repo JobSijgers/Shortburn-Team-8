@@ -8,22 +8,6 @@ namespace Maze.Editor
 {
     public class MazeWindow : EditorWindow
     {
-        private struct Line
-        {
-            public Line(Vector2 startPosition, Vector2 endPosition, float startHeight, float endHeight)
-            {
-                StartPosition = startPosition;
-                EndPosition = endPosition;
-                StartHeight = startHeight;
-                EndHeight = endHeight;
-            }
-
-            public Vector2 StartPosition;
-            public Vector2 EndPosition;
-            public float StartHeight;
-            public float EndHeight;
-        }
-
         private const int GridSize = 20;
         private const int CellSize = 30;
         private const int BorderThickness = 2;
@@ -35,6 +19,10 @@ namespace Maze.Editor
         private SerializedProperty _backgroundColorProperty;
         private SerializedProperty _lineColorProperty;
         private SerializedProperty _spawnPositionProperty;
+        private SerializedProperty _straightProperty;
+        private SerializedProperty _cornerProperty;
+        private SerializedProperty _tJunctionProperty;
+        private SerializedProperty _crossJunctionProperty;
         private Vector2 _startPosition;
         public float _startHeight;
         public float _endHeight;
@@ -44,6 +32,10 @@ namespace Maze.Editor
         public Color _gridBackgroundColor = Color.grey;
         public Color _gridLineColor = Color.black;
         public Gradient _heightGradient = new Gradient();
+        public GameObject _straight;
+        public GameObject _corner;
+        public GameObject _tJunction;
+        public GameObject _crossJunction;
 
         private string _newName;
         private int _startIndex;
@@ -71,6 +63,14 @@ namespace Maze.Editor
             _backgroundColorProperty = _serializedObject.FindProperty("_gridBackgroundColor");
             _lineColorProperty = _serializedObject.FindProperty("_gridLineColor");
             _spawnPositionProperty = _serializedObject.FindProperty("_spawnPosition");
+            _straightProperty = _serializedObject.FindProperty("_straight");
+            _cornerProperty = _serializedObject.FindProperty("_corner");
+            _tJunctionProperty = _serializedObject.FindProperty("_tJunction");
+            _crossJunctionProperty = _serializedObject.FindProperty("_crossJunction");
+            _straight = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Maze/Straight.prefab");
+            _corner = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Maze/Corner.prefab");
+            _tJunction = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Maze/T Split.prefab");
+            _crossJunction = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Maze/Split.prefab");
             _binkAppleTexture = AssetDatabase.LoadAssetAtPath<Texture2D>("Assets/Textures/Food/Binkapple.jpg");
         }
 
@@ -119,6 +119,13 @@ namespace Maze.Editor
             EditorGUILayout.LabelField("Grid Setting", EditorStyles.boldLabel);
             EditorGUILayout.PropertyField(_backgroundColorProperty);
             EditorGUILayout.PropertyField(_lineColorProperty);
+            EditorGUILayout.LabelField("Maze Objects", EditorStyles.boldLabel);
+            EditorGUILayout.PropertyField(_straightProperty);
+            EditorGUILayout.PropertyField(_cornerProperty);
+            EditorGUILayout.PropertyField(_tJunctionProperty);
+            EditorGUILayout.PropertyField(_crossJunctionProperty);
+
+            
             _serializedObject.ApplyModifiedProperties();
             if (GUILayout.Button("Generate Maze", GUILayout.Height(40)))
             {
@@ -137,7 +144,7 @@ namespace Maze.Editor
                 Color startColor = _heightGradient.Evaluate(normalizedStartHeight);
                 Color endColor = _heightGradient.Evaluate(normalizedEndHeight);
 
-                DrawGradientLine(line.StartPosition, line.EndPosition, startColor, endColor, 5);
+                DrawGradientLine(line.StartPosition * CellSize, line.EndPosition * CellSize, startColor, endColor, 5);
             }
         }
 
@@ -208,7 +215,8 @@ namespace Maze.Editor
                 case 0 when Mathf.Approximately(_startPosition.x, gridPosition.x) ||
                             Mathf.Approximately(_startPosition.y, gridPosition.y):
                 {
-                    Line newLine = new Line(_startPosition, gridPosition, _startHeight, _endHeight);
+                    Line newLine = new Line(_startPosition / CellSize, gridPosition / CellSize, _startHeight,
+                        _endHeight);
                     _linePoints.Add(newLine);
                     _isDrawingLine = false;
                     UpdateMinAndMax(newLine);
@@ -228,7 +236,8 @@ namespace Maze.Editor
                         gridPosition.x = _startPosition.x;
                     }
 
-                    Line newLine = new Line(_startPosition, gridPosition, _startHeight, _endHeight);
+                    Line newLine = new Line(_startPosition / CellSize, gridPosition / CellSize, _startHeight,
+                        _endHeight);
                     _linePoints.Add(newLine);
                     _isDrawingLine = false;
                     UpdateMinAndMax(newLine);
@@ -303,52 +312,9 @@ namespace Maze.Editor
 
         private void GenerateMaze()
         {
-            GameObject maze = new("Maze");
-            for (int i = 0; i < _linePoints.Count; i++)
-            {
-                if (_linePoints[i].StartPosition == _linePoints[i].EndPosition)
-
-                    continue;
-
-                if (_linePoints[i].StartHeight == _linePoints[i].EndHeight)
-                {
-                    Line line = _linePoints[i];
-                    GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                    float middleX = (line.StartPosition.x + line.EndPosition.x) / 2 / CellSize;
-                    float middleZ = (line.StartPosition.y + line.EndPosition.y) / 2 / CellSize;
-                    cube.transform.position = new Vector3(middleX, line.StartHeight, middleZ);
-                    cube.transform.localScale =
-                        new Vector3(Mathf.Abs((line.StartPosition.x - line.EndPosition.x) / CellSize) + 1, 1,
-                            Mathf.Abs((line.StartPosition.y - line.EndPosition.y) / CellSize) + 1);
-                    cube.name = "Cube " + i;
-                    cube.transform.SetParent(maze.transform);
-                }
-                else
-                {
-                    Line line = _linePoints[i];
-                    GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                    float middleX = (line.StartPosition.x + line.EndPosition.x) / 2 / CellSize;
-                    float middleY = (line.StartHeight + line.EndHeight) / 2;
-                    float middleZ = (line.StartPosition.y + line.EndPosition.y) / 2 / CellSize;
-                    float endX = line.EndPosition.x / CellSize;
-                    float endY = line.EndHeight;
-                    float endZ = line.EndPosition.y / CellSize;
-
-                    cube.transform.position = new Vector3(middleX, middleY, middleZ);
-
-                    //rotate the cube so it points to the start and end position
-
-                    Vector3 endPosition = new Vector3(endX, endY, endZ);
-                    cube.transform.LookAt(endPosition);
-                    
-                    //calculate the distance between the start and end position
-                    float distance = Vector3.Distance(new Vector3(line.StartPosition.x / CellSize, line.StartHeight, line.StartPosition.y / CellSize), endPosition);
-                    //set the scale of the cube
-                    cube.transform.localScale = new Vector3(1, 1, distance);
-                    cube.name = "Cube " + i;
-                    cube.transform.SetParent(maze.transform);
-                }
-            }
+            GameObject mazeGo = new("Maze");
+            Maze mazeComponent = mazeGo.AddComponent<Maze>();
+            mazeComponent.GenerateMaze(_linePoints.ToArray(), mazeGo, _straight, _corner, _tJunction, _crossJunction);
         }
     }
 }
