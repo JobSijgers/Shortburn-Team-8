@@ -1,9 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using LegSystem;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
+using LimbsPickup;
 namespace Player
 {
     public class CameraController : MonoBehaviour
@@ -21,6 +23,7 @@ namespace Player
         [SerializeField] private float _bobFrequency = 14f;
         [SerializeField] private float _bobIntensityX = 0.05f;
         [SerializeField] private float _bobIntensityY = 0.05f;
+        [SerializeField] private float _leglessBobIntensityY = 0.05f;
         [SerializeField] private float _runMultiplier;
 
         [FormerlySerializedAs("walkFOV")]
@@ -62,8 +65,9 @@ namespace Player
             if ((Mathf.Abs(_player.MoveVector.x) > 0.1f || Mathf.Abs(_player.MoveVector.z) > 0.1f) && _player.Grounded())
             {
                 _timer += Time.deltaTime * (_bobFrequency * multiplier);
+                float intensityY = LimbsController.Instance.LegState ^ Leg.Instance ? _bobIntensityY : _leglessBobIntensityY;
                 float bobX = Mathf.Cos(_timer * _bobFrequency / 23) * (_bobIntensityX / 60);
-                float bobY = Mathf.Sin(_timer) * _bobIntensityY;
+                float bobY = Mathf.Sin(_timer) * intensityY;
 
                 transform.localPosition = new Vector3(transform.localPosition.x + bobX, _defaultPos.y + bobY, transform.localPosition.z);
             }

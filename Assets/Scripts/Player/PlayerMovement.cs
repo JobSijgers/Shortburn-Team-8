@@ -130,7 +130,7 @@ namespace Player
             Controller.Move(Velocity * Time.deltaTime);
 
             // Sprint
-            if (_sprintAction.IsPressed())
+            if (_sprintAction.IsPressed() && LimbsController.Instance.LegState && !Leg.Instance)
             {
                 PlayerMovementState = EPlayerMovementState.Running;
                 if (Grounded())

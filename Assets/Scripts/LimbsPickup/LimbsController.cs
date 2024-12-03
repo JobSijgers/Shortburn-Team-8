@@ -1,9 +1,9 @@
 using UnityEditor;
 using UnityEngine;
+using HandScripts.Core;
 namespace LimbsPickup
 {
     using LegSystem;
-    using HandScripts.Core;
     public class LimbsController : MonoBehaviour
     {
         public static LimbsController Instance;
@@ -15,6 +15,9 @@ namespace LimbsPickup
             Leg.enabled = false;
             Hand.enabled = false;
         }
+
+        public bool LegState => Leg.enabled;
+        public bool HandState => Hand.enabled;
 
         public void PickupLimb(MonoScript type)
         {
