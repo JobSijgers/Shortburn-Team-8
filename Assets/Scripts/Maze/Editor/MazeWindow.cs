@@ -1,6 +1,7 @@
 using UnityEditor;
 using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Maze.Editor
 {
@@ -15,6 +16,7 @@ namespace Maze.Editor
         private const int GridWidth = GridSize * CellSize + BorderThickness + 300;
         private const int GridHeight = GridSize * CellSize + BorderThickness;
         private const int LineThickness = 4;
+
         private SerializedObject _serializedObject;
         private SerializedProperty _startHeightProperty;
         private SerializedProperty _endHeightProperty;
@@ -218,7 +220,6 @@ namespace Maze.Editor
                 Vector2 start = line.StartPosition * CellSize + new Vector2(HalfBorderThickness, HalfBorderThickness);
                 Vector2 end = line.EndPosition * CellSize + new Vector2(HalfBorderThickness, HalfBorderThickness);
                 DrawGradientLine(start, end, startColor, endColor, LineThickness);
-                
             }
         }
 
@@ -297,8 +298,10 @@ namespace Maze.Editor
                             i / (float)lineAmount);
                         Vector2 endPosition = Vector2.Lerp(_startPosition / CellSize, gridPosition / CellSize,
                             (i + 1) / (float)lineAmount);
+                        float startHeight = Mathf.Lerp(_startHeight, _endHeight, i / (float)lineAmount);
+                        float endHeight = Mathf.Lerp(_startHeight, _endHeight, (i + 1) / (float)lineAmount);
 
-                        MazeLine newLine = new MazeLine(startPosition, endPosition, _startHeight, _endHeight);
+                        MazeLine newLine = new MazeLine(startPosition, endPosition, startHeight, endHeight);
 
                         _mazeLines.Add(newLine);
                     }
@@ -444,6 +447,7 @@ namespace Maze.Editor
 
         private void GenerateMazeObjects()
         {
+            _mazeBlocks.Clear();
             GameObject maze = new GameObject("Maze");
             maze.transform.position = _spawnPosition;
             HashSet<Point> points = new();
@@ -483,11 +487,26 @@ namespace Maze.Editor
 
         private bool CheckIfStraight(Point point)
         {
-            bool forward = point._Connections.Contains(point._Position + Vector3.forward);
-            bool back = point._Connections.Contains(point._Position + Vector3.back);
-            bool left = point._Connections.Contains(point._Position + Vector3.left);
-            bool right = point._Connections.Contains(point._Position + Vector3.right);
-            return (forward && back) || (left && right);
+            Vector3 forward = Vector3.forward;
+            Vector3 back = Vector3.back;
+            Vector3 left = Vector3.left;
+            Vector3 right = Vector3.right;
+
+            bool isForwardBack = point._Connections.Any(conn =>
+                                     Vector3.Normalize(new Vector3(conn.x - point._Position.x, 0,
+                                         conn.z - point._Position.z)) == forward) &&
+                                 point._Connections.Any(conn =>
+                                     Vector3.Normalize(new Vector3(conn.x - point._Position.x, 0,
+                                         conn.z - point._Position.z)) == back);
+
+            bool isLeftRight = point._Connections.Any(conn =>
+                                   Vector3.Normalize(new Vector3(conn.x - point._Position.x, 0,
+                                       conn.z - point._Position.z)) == left) &&
+                               point._Connections.Any(conn =>
+                                   Vector3.Normalize(new Vector3(conn.x - point._Position.x, 0,
+                                       conn.z - point._Position.z)) == right);
+
+            return isForwardBack || isLeftRight;
         }
 
 
@@ -504,7 +523,6 @@ namespace Maze.Editor
             go.transform.rotation = Quaternion.LookRotation(GetTJunctionDirection(point));
             MazeBlock block = go.AddComponent<MazeBlock>();
             _mazeBlocks.Add(point, block);
-
         }
 
         private void SpawnCorner(Point point, Transform mazeTransform)
@@ -513,19 +531,20 @@ namespace Maze.Editor
             go.transform.rotation = Quaternion.LookRotation(GetCornerDirection(point));
             MazeBlock block = go.AddComponent<MazeBlock>();
             _mazeBlocks.Add(point, block);
-
         }
 
         private void SpawnStraight(Point point, Transform parent)
         {
             GameObject go = Instantiate(_straight, point._Position, Quaternion.identity, parent);
-            go.name = "Straight connecting to " + point._Connections.Count + " other points";
 
             foreach (Vector3 connection in point._Connections)
             {
                 Vector3 direction = connection - point._Position;
                 go.transform.rotation = Quaternion.LookRotation(direction);
             }
+
+            go.transform.localScale = new Vector3(go.transform.localScale.x, go.transform.localScale.y,
+                Vector3.Distance(point._Position, point._Connections.First()));
             MazeBlock block = go.AddComponent<MazeBlock>();
             _mazeBlocks.Add(point, block);
         }
