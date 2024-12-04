@@ -2,6 +2,7 @@ using UnityEngine;
 using System;
 using System.Collections;
 using HandScripts.Grab;
+using PathCreation.Examples;
 
 namespace HandScripts.ProceduralAnimation
 {
@@ -15,10 +16,15 @@ namespace HandScripts.ProceduralAnimation
     {
         [SerializeField] private Finger[] _fingers;
         [SerializeField] private float _animationSpeed = 1;
+        [SerializeField] private float _fingerSpeed = 1;
+        [SerializeField] [Range(0, 1)]private float _fingerAnimStartPrc;
         [SerializeField] private GrabPoint _grabPoint;
+
+        private PathFollower _pathFollower;
         private void Start()
         {
             StartAnimation(_grabPoint);
+            _pathFollower = GetComponent<PathFollower>();
         }
         public Finger GetFinger(string name) => Array.Find(_fingers, finger => finger.Name == name);
         public void SetFingerPosition(string name, Vector3 position)
@@ -34,21 +40,20 @@ namespace HandScripts.ProceduralAnimation
         private IEnumerator AnimateHand(GrabPoint point)
         {
             Vector3 startPosition = transform.position;
-            Vector3 endPosition = point.transform.position;
+            Vector3 endPosition = point.PathCreator.path.GetPoint(0);
             Quaternion startRotation = transform.rotation;
-            Quaternion endRotation = point.transform.rotation;
+            Quaternion endRotation = point.PathCreator.path.GetRotation(0);
+            bool startFingers = true;
             float t = 0;
             while (t < 1)
             {
                 t += Time.deltaTime * _animationSpeed;
-                transform.position = Vector3.Lerp(startPosition, endPosition, t);
-                transform.rotation = Quaternion.Lerp(startRotation, endRotation, t);
+                transform.position = Vector3.Slerp(startPosition, endPosition, t);
+                transform.rotation = Quaternion.Slerp(startRotation, endRotation, t);
                 yield return null;
             }
-            foreach (Finger finger in _fingers)
-            {
-                StartCoroutine(AnimateFinger(point, finger));
-            }
+            _pathFollower.pathCreator = point.PathCreator;
+            
         }
         private IEnumerator AnimateFinger(GrabPoint grabPoint, Finger finger)
         {
@@ -57,8 +62,8 @@ namespace HandScripts.ProceduralAnimation
             float t = 0;
             while (t < 1)
             {
-                t += Time.deltaTime * _animationSpeed;
-                finger.Target.position = Vector3.Lerp(StartPos, EndPos, t);
+                t += Time.deltaTime * _fingerSpeed;
+                finger.Target.position = Vector3.Slerp(StartPos, EndPos, t);
                 yield return null;
             }
         }

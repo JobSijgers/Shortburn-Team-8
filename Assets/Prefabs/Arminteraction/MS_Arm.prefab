@@ -1252,8 +1252,10 @@ GameObject:
   - component: {fileID: 1523104517770123779}
   - component: {fileID: 3408524808049505018}
   - component: {fileID: 6286586266050255786}
+  - component: {fileID: 8408889680137676177}
   - component: {fileID: 6018340055276038342}
   - component: {fileID: 3646915624320091420}
+  - component: {fileID: 2055862718392907300}
   m_Layer: 0
   m_Name: MS_Arm
   m_TagString: Untagged
@@ -1351,7 +1353,46 @@ MonoBehaviour:
     Target: {fileID: 6886968572135587285}
   - Name: Thumb
     Target: {fileID: 747398235400059818}
+  _animationSpeed: 1
+  _fingerSpeed: 2
+  _fingerAnimStartPrc: 0.565
+  _grabPoint: {fileID: 0}
 --- !u!114 &6286586266050255786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5990012869077736530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2d8418b0b9634b1892b0268dd9c2743, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boneShape: 1
+  drawBones: 1
+  drawTripods: 0
+  boneSize: 1
+  tripodSize: 1
+  boneColor: {r: 0, g: 0, b: 1, a: 0.5}
+  m_Transforms:
+  - {fileID: 1476039287708894097}
+  - {fileID: 6933795262816288520}
+  - {fileID: 8384332573408827963}
+  - {fileID: 6247339769578164994}
+  - {fileID: 5647914044164764046}
+  - {fileID: 5908934620528872508}
+  - {fileID: 2143408897335687603}
+  - {fileID: 684078970498083437}
+  - {fileID: 7774169653315019173}
+  - {fileID: 2052872483871562332}
+  - {fileID: 7908458219547791011}
+  - {fileID: 8617673506886524358}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+--- !u!114 &8408889680137676177
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1423,6 +1464,21 @@ MonoBehaviour:
   - m_Rig: {fileID: 1957684352895617802}
     m_Active: 1
   m_Effectors: []
+--- !u!114 &2055862718392907300
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5990012869077736530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6813d54d09233da45afa99797af365c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pathCreator: {fileID: 0}
+  endOfPathInstruction: 2
+  speed: 1
 --- !u!1 &6768354249363228406
 GameObject:
   m_ObjectHideFlags: 0
