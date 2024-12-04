@@ -14,7 +14,7 @@ namespace Maze.Editor
         private const int HalfBorderThickness = BorderThickness / 2;
         private const int GridWidth = GridSize * CellSize + BorderThickness + 300;
         private const int GridHeight = GridSize * CellSize + BorderThickness;
-
+        private const int LineThickness = 4;
         private SerializedObject _serializedObject;
         private SerializedProperty _startHeightProperty;
         private SerializedProperty _endHeightProperty;
@@ -49,6 +49,7 @@ namespace Maze.Editor
 
         private readonly HashSet<MazeLine> _mazeLines = new();
         private bool _isDrawingLine = false;
+        private readonly Dictionary<Point, MazeBlock> _mazeBlocks = new();
 
 
         private void OnGUI()
@@ -214,8 +215,10 @@ namespace Maze.Editor
                 float normalizedEndHeight = Mathf.InverseLerp(_minHeight, _maxHeight, line.EndHeight);
                 Color startColor = _heightGradient.Evaluate(normalizedStartHeight);
                 Color endColor = _heightGradient.Evaluate(normalizedEndHeight);
-
-                DrawGradientLine(line.StartPosition * CellSize, line.EndPosition * CellSize, startColor, endColor, 5);
+                Vector2 start = line.StartPosition * CellSize + new Vector2(HalfBorderThickness, HalfBorderThickness);
+                Vector2 end = line.EndPosition * CellSize + new Vector2(HalfBorderThickness, HalfBorderThickness);
+                DrawGradientLine(start, end, startColor, endColor, LineThickness);
+                
             }
         }
 
@@ -459,6 +462,23 @@ namespace Maze.Editor
             {
                 SpawnMazeObject(point, maze.transform);
             }
+
+            foreach (KeyValuePair<Point, MazeBlock> mazeBlock in _mazeBlocks)
+            {
+                HashSet<MazeBlock> neighbours = new();
+                foreach (Vector3 connection in mazeBlock.Key._Connections)
+                {
+                    foreach (KeyValuePair<Point, MazeBlock> otherMazeBlock in _mazeBlocks)
+                    {
+                        if (otherMazeBlock.Key._Position == connection)
+                        {
+                            neighbours.Add(otherMazeBlock.Value);
+                        }
+                    }
+                }
+
+                mazeBlock.Value.SetNeighbours(neighbours);
+            }
         }
 
         private bool CheckIfStraight(Point point)
@@ -474,18 +494,26 @@ namespace Maze.Editor
         private void SpawnJunction(Point point, Transform mazeTransform)
         {
             GameObject go = Instantiate(_crossJunction, point._Position, Quaternion.identity, mazeTransform);
+            MazeBlock block = go.AddComponent<MazeBlock>();
+            _mazeBlocks.Add(point, block);
         }
 
         private void SpawnTJunction(Point point, Transform mazeTransform)
         {
             GameObject go = Instantiate(_tJunction, point._Position, Quaternion.identity, mazeTransform);
             go.transform.rotation = Quaternion.LookRotation(GetTJunctionDirection(point));
+            MazeBlock block = go.AddComponent<MazeBlock>();
+            _mazeBlocks.Add(point, block);
+
         }
 
         private void SpawnCorner(Point point, Transform mazeTransform)
         {
             GameObject go = Instantiate(_corner, point._Position, Quaternion.identity, mazeTransform);
             go.transform.rotation = Quaternion.LookRotation(GetCornerDirection(point));
+            MazeBlock block = go.AddComponent<MazeBlock>();
+            _mazeBlocks.Add(point, block);
+
         }
 
         private void SpawnStraight(Point point, Transform parent)
@@ -498,6 +526,8 @@ namespace Maze.Editor
                 Vector3 direction = connection - point._Position;
                 go.transform.rotation = Quaternion.LookRotation(direction);
             }
+            MazeBlock block = go.AddComponent<MazeBlock>();
+            _mazeBlocks.Add(point, block);
         }
 
         private Vector3 GetCornerDirection(Point point)
