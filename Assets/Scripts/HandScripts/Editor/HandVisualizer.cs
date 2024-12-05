@@ -6,14 +6,13 @@ using UnityEngine.Animations.Rigging;
 
 namespace HandScripts.Editor
 {
-    [InitializeOnLoad][ExecuteAlways]
+    [InitializeOnLoad] [ExecuteAlways]
     public static class HandVisualizer
     {
         private static GameObject _previewInstance;
         private static GameObject _prefab;
         private static GameObject _previousSelection;
         private static ProceduralHandAnimation _handAnimation;
-        private static GrabPoint _grabPoint;
 
         static HandVisualizer()
         {
@@ -27,53 +26,58 @@ namespace HandScripts.Editor
             {
                 _prefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Arminteraction/Ms_Arm.prefab");
             }
-            
+
             if (_prefab == null)
                 return;
 
             GameObject selectedObject = Selection.activeGameObject;
-            bool isChildOfGrabPoint = selectedObject != null && _grabPoint != null && selectedObject.transform.IsChildOf(_grabPoint.transform);
-            if (Selection.activeGameObject != null && Selection.activeGameObject.name == "GrabPoint" || isChildOfGrabPoint)
+
+            if (selectedObject == null)
+                return;
+
+            bool isArmLocation = selectedObject.name == "ArmLocation";
+            bool isChildOfArmLocation = false;
+            if (selectedObject.transform.parent!=null)
             {
-                if (_previousSelection != Selection.activeGameObject)
-                {
-                    if (_previewInstance != null)
-                    {
-                        Object.DestroyImmediate(_previewInstance);
-                        _previewInstance = null;
-                    }
-                }
-
-                _previousSelection = Selection.activeGameObject;
-                GameObject grabPoint = Selection.activeGameObject;
-                if (_grabPoint == null)
-                    _grabPoint = grabPoint.GetComponent<GrabPoint>();
-
-                if (_previewInstance == null)
-                {
-                    _previewInstance = CreatePreviewInstance(_grabPoint.gameObject);
-                }
-
-                ApplyWorldScale(_previewInstance, Vector3.one);
+                isChildOfArmLocation = selectedObject.transform.parent.name == "ArmLocation";
             }
-            else
+            bool shouldVisualize = isArmLocation || isChildOfArmLocation;
+
+            if (!shouldVisualize)
             {
-                // Destroy preview instance if deselected
                 if (_previewInstance != null)
                 {
                     Object.DestroyImmediate(_previewInstance);
                     _previewInstance = null;
                 }
+
+                return;
             }
-            
-            // update fingers
-            if (_previewInstance != null && _grabPoint != null)
+
+            if (_previewInstance == null)
             {
-                _handAnimation.SetFingerPosition("Thumb", _grabPoint.GetFingerPosition("Thumb"));
-                _handAnimation.SetFingerPosition("Index", _grabPoint.GetFingerPosition("Index"));
-                _handAnimation.SetFingerPosition("Middle", _grabPoint.GetFingerPosition("Middle"));
-                _handAnimation.SetFingerPosition("Ring", _grabPoint.GetFingerPosition("Ring"));
-                _handAnimation.SetFingerPosition("Pink", _grabPoint.GetFingerPosition("Pink"));
+                if (isArmLocation)
+                {
+                    _previewInstance = CreatePreviewInstance(selectedObject);
+                }
+                else
+                {
+                    _previewInstance = CreatePreviewInstance(selectedObject.transform.parent.gameObject);
+                }
+            }
+
+            _previousSelection = Selection.activeGameObject;
+
+
+            GrabPoint grabPoint = _previewInstance.GetComponentInParent<GrabPoint>();
+
+            if (_previewInstance != null && grabPoint != null)
+            {
+                _handAnimation.SetFingerPosition("Thumb", grabPoint.GetFingerPosition("Thumb"));
+                _handAnimation.SetFingerPosition("Index", grabPoint.GetFingerPosition("Index"));
+                _handAnimation.SetFingerPosition("Middle", grabPoint.GetFingerPosition("Middle"));
+                _handAnimation.SetFingerPosition("Ring", grabPoint.GetFingerPosition("Ring"));
+                _handAnimation.SetFingerPosition("Pink", grabPoint.GetFingerPosition("Pink"));
             }
         }
 
@@ -84,26 +88,9 @@ namespace HandScripts.Editor
             preview.transform.localRotation = Quaternion.identity;
             _handAnimation = preview.GetComponentInChildren<ProceduralHandAnimation>();
 
-                _handAnimation.GetComponent<RigBuilder>().Build();
+            _handAnimation.GetComponent<RigBuilder>().Build();
 
             return preview;
-        }
-
-        private static void ApplyWorldScale(GameObject obj, Vector3 targetWorldScale)
-        {
-            if (obj.transform.parent != null)
-            {
-                Vector3 parentScale = obj.transform.parent.lossyScale;
-                obj.transform.localScale = new Vector3(
-                    targetWorldScale.x / parentScale.x,
-                    targetWorldScale.y / parentScale.y,
-                    targetWorldScale.z / parentScale.z
-                );
-            }
-            else
-            {
-                obj.transform.localScale = targetWorldScale; // If no parent, use directly
-            }
         }
     }
 }

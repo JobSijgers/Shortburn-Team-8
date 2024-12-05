@@ -34,17 +34,15 @@ namespace HandScripts.ProceduralAnimation
         }
 
         public Finger GetFinger(string name) => Array.Find(_fingers, finger => finger.Name == name);
-        public PathFollower GetPathFollower() => _pathFollower;
-        public void SetGrabPoint(GrabPoint grabPoint) => _grabPoint = grabPoint;
         public void SetFingerPosition(string name, Vector3 position)
         {
             Finger finger = GetFinger(name);
             if (finger != null) finger.Target.position = position;
         }
         
-        public void MoveToGrabPoint(UnityAction onComplete = null)
+        public void MoveToGrabPoint(GrabPoint grabPoint, UnityAction onComplete = null)
         {
-            StartCoroutine(AnimateHand(_grabPoint, onComplete));
+            StartCoroutine(MoveFingersToGrabPoint(grabPoint, onComplete));
         }
         public void ResetFingers()
         {
@@ -54,34 +52,16 @@ namespace HandScripts.ProceduralAnimation
             }
         }
 
-        private IEnumerator AnimateHand(GrabPoint point, UnityAction onComplete = null)
+        private IEnumerator MoveFingersToGrabPoint(GrabPoint target, UnityAction onComplete)
         {
-            Vector3 startPos = transform.position;
-            Vector3 endPos = point.transform.position;
-            Quaternion startRot = transform.rotation;
-            Quaternion endRot = point.transform.rotation;
-            float t = 0;
-            bool moveFingers = true;
-            while (t < 1)
+            foreach (Finger finger in _fingers)
             {
-                t += Time.deltaTime * _animationSpeed;
-                transform.position = Vector3.Slerp(startPos, endPos, t);
-                transform.rotation = Quaternion.Slerp(startRot, endRot, t);
-                if (t >= _fingerAnimStartPrc && moveFingers)
-                {
-                    moveFingers = false;
-                    foreach (Finger finger in _fingers)
-                    {
-                        StartCoroutine(AnimateFinger(point.GetFingerPosition(finger.Name), finger));
-                    }
-                }
-                yield return null;
+                StartCoroutine(AnimateFinger(target.GetFingerPosition(finger.Name), finger));
             }
-
-            float dynamicWaitTime = 1.2f / _fingerSpeed;
-            yield return new WaitForSeconds(dynamicWaitTime);
+            yield return new WaitForSeconds(1.2f / _fingerSpeed);
             onComplete?.Invoke();
         }
+        
         private IEnumerator AnimateFinger(Vector3 target, Finger finger, bool isLocal = false)
         {
             Vector3 startPos = finger.Target.position;
@@ -93,6 +73,14 @@ namespace HandScripts.ProceduralAnimation
                 if (isLocal) finger.Target.localPosition = Vector3.Slerp(startPos, endPos, t);
                 else finger.Target.position = Vector3.Slerp(startPos, endPos, t);
                 yield return null;
+            }
+        }
+
+        public void SetFingersToGrabPoint(GrabPoint grabPoint)
+        {
+            foreach (Finger finger in _fingers)
+            {
+                finger.Target.position = grabPoint.GetFingerPosition(finger.Name);
             }
         }
     }

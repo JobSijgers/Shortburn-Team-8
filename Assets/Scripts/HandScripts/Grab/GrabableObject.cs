@@ -2,6 +2,7 @@ using System;
 using HandScripts.Core;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace HandScripts.Grab
 {
@@ -25,10 +26,11 @@ namespace HandScripts.Grab
 
         public void Released() => gameObject.layer = _defaultLayer;
 
-        public void ResetPosition()
+        public void ResetPosition(Quaternion localRotation)
         {
+            transform.rotation = localRotation;
             transform.localPosition = Vector3.zero;
-            transform.localRotation = Quaternion.identity;
         }
+
     }
 }
