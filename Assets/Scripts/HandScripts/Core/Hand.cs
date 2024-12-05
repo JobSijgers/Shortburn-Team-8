@@ -26,21 +26,14 @@ namespace HandScripts.Core
             transform.SetParent(null);
             Vector3 startPos = transform.position;
             Quaternion startRot = transform.rotation;
-            Vector3 endPos = destination.position;
-            Quaternion endRot = destination.rotation;
-            if (grab != null)
-            {
-                endPos = grab.PathCreator.path.GetPoint(0);
-                endRot = grab.PathCreator.path.GetRotation(0);
-            }
 
             float t = 0f;
             while (t <= 1)
             {
                 t += Time.deltaTime / _moveSpeed;
                 float a = _moveCurve.Evaluate(t);
-                transform.position = Vector3.Lerp(startPos, endPos, a);
-                transform.rotation = Quaternion.Slerp(startRot, endRot, a);
+                transform.position = Vector3.Lerp(startPos, grab != null ? grab.PathCreator.path.GetPoint(0) : destination.position, a);
+                transform.rotation = Quaternion.Slerp(startRot, grab != null ? grab.PathCreator.path.GetRotation(0) : destination.rotation, a);
                 yield return null;
             }
             transform.SetParent(parentAfterMove);

@@ -1464,7 +1464,15 @@ MonoBehaviour:
   m_RigLayers:
   - m_Rig: {fileID: 1957684352895617802}
     m_Active: 1
-  m_Effectors: []
+  m_Effectors:
+  - m_Transform: {fileID: 1476039287708894097}
+    m_Style:
+      shape: {fileID: 4300000, guid: c6793350c150f456688e39a81f97364a, type: 2}
+      color: {r: 1, g: 0, b: 0, a: 0.5}
+      size: 0.1
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0}
+    m_Visible: 1
 --- !u!114 &2055862718392907300
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1480,9 +1488,6 @@ MonoBehaviour:
   pathCreator: {fileID: 0}
   endOfPathInstruction: 2
   speed: 2
-  onFishined:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &7821615622886914416
 MonoBehaviour:
   m_ObjectHideFlags: 0

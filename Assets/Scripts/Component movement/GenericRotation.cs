@@ -13,11 +13,6 @@ namespace Component_movement
         [SerializeField] private float _delay;
         private Quaternion _startRot;
 
-        private void Start()
-        {
-            StartMovement();
-        }
-
         public void StartMovement()
         {
             StartCoroutine(Move());

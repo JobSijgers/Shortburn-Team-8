@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7447360152757435384}
   - component: {fileID: 3056040564199076544}
+  - component: {fileID: 4801479774239785783}
   m_Layer: 0
   m_Name: HandPickup
   m_TagString: Untagged
@@ -54,6 +55,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4801479774239785783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1496969654347363911}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d87126c420a444f7955f30cbb3808dcb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LimbScript: {fileID: 11500000, guid: 465e8236d147d4d479476a5cf1981c44, type: 3}
 --- !u!1 &4975989395086429909
 GameObject:
   m_ObjectHideFlags: 0

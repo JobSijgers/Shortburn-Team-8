@@ -12,6 +12,7 @@ namespace HandScripts.ProceduralAnimation
     {
         public string Name;
         public Transform Target;
+        public Vector3 StartPosition => Target.position;
     }
     public class ProceduralHandAnimation : MonoBehaviour
     {
@@ -41,6 +42,13 @@ namespace HandScripts.ProceduralAnimation
         {
             StartCoroutine(AnimateHand(_grabPoint, onComplete));
         }
+        private void ResetFingers()
+        {
+            foreach (Finger finger in _fingers)
+            {
+                finger.Target.position = finger.StartPosition;
+            }
+        }
 
         private IEnumerator AnimateHand(GrabPoint point, UnityAction onComplete = null)
         {
@@ -65,6 +73,9 @@ namespace HandScripts.ProceduralAnimation
                 }
                 yield return null;
             }
+
+            float dynamicWaitTime = 1.2f / _fingerSpeed;
+            yield return new WaitForSeconds(dynamicWaitTime);
             onComplete?.Invoke();
         }
         private IEnumerator AnimateFinger(GrabPoint grabPoint, Finger finger)

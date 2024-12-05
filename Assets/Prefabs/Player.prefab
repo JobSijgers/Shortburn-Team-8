@@ -435,7 +435,9 @@ MonoBehaviour:
   _sensitivity: 15
   _doViewBobbing: 1
   _bobFrequency: 10
-  _bobIntensity: 0.02
+  _bobIntensityX: 0.05
+  _bobIntensityY: 0.05
+  _leglessBobIntensityY: 0.05
   _runMultiplier: 1.5
   _walkFOV: 65
   _runFOV: 70
@@ -740,6 +742,7 @@ GameObject:
   - component: {fileID: 3549193942683413741}
   - component: {fileID: 1912018188251409083}
   - component: {fileID: 5268428716276538955}
+  - component: {fileID: 8655781629012698913}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -929,6 +932,20 @@ MonoBehaviour:
   _layerMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &8655781629012698913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7839921865825756541}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63cfd0b1e9c9b7f4f84c12b91bafdc89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Leg: {fileID: 1912018188251409083}
+  Hand: {fileID: 5268428716276538955}
 --- !u!1 &8410691486041173413
 GameObject:
   m_ObjectHideFlags: 0
