@@ -1,18 +1,22 @@
+using HandScripts.ProceduralAnimation;
+using HandScripts.Grab;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
 
 namespace HandScripts.Editor
 {
-    [InitializeOnLoad]
+    [InitializeOnLoad][ExecuteAlways]
     public static class HandVisualizer
     {
         private static GameObject _previewInstance;
         private static GameObject _prefab;
         private static GameObject _previousSelection;
+        private static ProceduralHandAnimation _handAnimation;
+        private static GrabPoint _grabPoint;
 
         static HandVisualizer()
         {
-            _prefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Arminteraction/Hand.prefab");
             // Subscribe to SceneView callback
             SceneView.duringSceneGui += OnSceneGUI;
         }
@@ -21,12 +25,15 @@ namespace HandScripts.Editor
         {
             if (_prefab == null)
             {
-                _prefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Arminteraction/Hand.prefab");
+                _prefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Arminteraction/Ms_Arm.prefab");
             }
+            
             if (_prefab == null)
                 return;
-            
-            if (Selection.activeGameObject != null && Selection.activeGameObject.name == "GrabPoint")
+
+            GameObject selectedObject = Selection.activeGameObject;
+            bool isChildOfGrabPoint = selectedObject != null && _grabPoint != null && selectedObject.transform.IsChildOf(_grabPoint.transform);
+            if (Selection.activeGameObject != null && Selection.activeGameObject.name == "GrabPoint" || isChildOfGrabPoint)
             {
                 if (_previousSelection != Selection.activeGameObject)
                 {
@@ -39,10 +46,12 @@ namespace HandScripts.Editor
 
                 _previousSelection = Selection.activeGameObject;
                 GameObject grabPoint = Selection.activeGameObject;
+                if (_grabPoint == null)
+                    _grabPoint = grabPoint.GetComponent<GrabPoint>();
 
                 if (_previewInstance == null)
                 {
-                    _previewInstance = CreatePreviewInstance(grabPoint);
+                    _previewInstance = CreatePreviewInstance(_grabPoint.gameObject);
                 }
 
                 ApplyWorldScale(_previewInstance, Vector3.one);
@@ -56,6 +65,16 @@ namespace HandScripts.Editor
                     _previewInstance = null;
                 }
             }
+            
+            // update fingers
+            if (_previewInstance != null && _grabPoint != null)
+            {
+                _handAnimation.SetFingerPosition("Thumb", _grabPoint.GetFingerPosition("Thumb"));
+                _handAnimation.SetFingerPosition("Index", _grabPoint.GetFingerPosition("Index"));
+                _handAnimation.SetFingerPosition("Middle", _grabPoint.GetFingerPosition("Middle"));
+                _handAnimation.SetFingerPosition("Ring", _grabPoint.GetFingerPosition("Ring"));
+                _handAnimation.SetFingerPosition("Pink", _grabPoint.GetFingerPosition("Pink"));
+            }
         }
 
         private static GameObject CreatePreviewInstance(GameObject parent)
@@ -63,6 +82,9 @@ namespace HandScripts.Editor
             GameObject preview = Object.Instantiate(_prefab, parent.transform, true);
             preview.transform.localPosition = Vector3.zero;
             preview.transform.localRotation = Quaternion.identity;
+            _handAnimation = preview.GetComponentInChildren<ProceduralHandAnimation>();
+
+                _handAnimation.GetComponent<RigBuilder>().Build();
 
             return preview;
         }
