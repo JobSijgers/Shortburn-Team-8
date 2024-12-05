@@ -72,9 +72,19 @@ namespace HandScripts.Pull
             Gizmos.DrawLine(transform.position, minAnglePosition);
             Gizmos.DrawLine(transform.position, maxAnglePosition);
             //fill the area between the min and max 
-            if (CanPull(FindObjectOfType<PlayerMovement>().transform.position))
+            PlayerMovement player = FindObjectOfType<PlayerMovement>();
+            if (player != null)
             {
-                Handles.color = new Color(0, 2, 0, 0.1f);
+                if (CanPull(player.transform.position))
+                {
+                
+                    Handles.color = new Color(0, 2, 0, 0.1f);
+                }
+            
+                else
+                {
+                    Handles.color = new Color(1, 0, 0, 0.1f);
+                }
             }
             else
             {
