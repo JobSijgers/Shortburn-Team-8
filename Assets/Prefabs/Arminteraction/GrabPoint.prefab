@@ -134,6 +134,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2939557674648820239}
   - component: {fileID: 3927026861802067893}
+  - component: {fileID: 22404423150906244}
   m_Layer: 0
   m_Name: GrabPoint
   m_TagString: Untagged
@@ -150,7 +151,7 @@ Transform:
   m_GameObject: {fileID: 4784536177906134537}
   serializedVersion: 2
   m_LocalRotation: {x: -0.15800017, y: -0.69667035, z: 0.18920793, w: 0.67371106}
-  m_LocalPosition: {x: 0.646, y: -0.718, z: 0.524}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -184,6 +185,60 @@ MonoBehaviour:
     Target: {fileID: 7464896554692892365}
   - Name: Thumb
     Target: {fileID: 6153720766681377713}
+  PathCreator: {fileID: 22404423150906244}
+--- !u!114 &22404423150906244
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4784536177906134537}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e5ac92bc18f545cc84cd886ece82b4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  editorData:
+    _bezierPath:
+      points:
+      - {x: -1.9999998, y: 0, z: 0.00000035762787}
+      - {x: -0.9999997, y: 0.5, z: 0.00000035762787}
+      - {x: -1.0000002, y: -0.5, z: 0.00000035762787}
+      - {x: 0, y: 0, z: 0.00000035762787}
+      isClosed: 0
+      space: 0
+      controlMode: 0
+      autoControlLength: 0.3
+      boundsUpToDate: 0
+      bounds:
+        m_Center: {x: 0, y: 0, z: 0}
+        m_Extent: {x: 0, y: 0, z: 0}
+      perAnchorNormalsAngle:
+      - 0
+      - 0
+      globalNormalsAngle: 0
+      flipNormals: 0
+    vertexPathUpToDate: 0
+    vertexPathMaxAngleError: 0.3
+    vertexPathMinVertexSpacing: 0.01
+    showTransformTool: 1
+    showPathBounds: 0
+    showPerSegmentBounds: 0
+    displayAnchorPoints: 1
+    displayControlPoints: 1
+    bezierHandleScale: 1
+    globalDisplaySettingsFoldout: 0
+    keepConstantHandleSize: 0
+    showNormalsInVertexMode: 0
+    showBezierPathInVertexMode: 0
+    showDisplayOptions: 1
+    showPathOptions: 1
+    showVertexPathDisplayOptions: 0
+    showVertexPathOptions: 1
+    showNormals: 0
+    showNormalsHelpInfo: 0
+    tabIndex: 0
+  initialized: 1
 --- !u!1 &4840060753574693516
 GameObject:
   m_ObjectHideFlags: 0
