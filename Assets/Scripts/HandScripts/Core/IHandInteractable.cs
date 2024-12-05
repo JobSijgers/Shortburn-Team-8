@@ -1,10 +1,11 @@
+using HandScripts.Grab;
 using UnityEngine;
 
 namespace HandScripts.Core
 {
     public interface IHandInteractable
     {
-        Transform GetHeldPoint();
+        GrabPoint GetGrabPoint();
         EInteractType GetInteractType();
         Transform GetObjectTransform();
     }

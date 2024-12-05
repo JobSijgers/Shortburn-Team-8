@@ -113,16 +113,16 @@ namespace HandScripts.Core
             _rightHand.MoveToPoint(_leftHandInactiveHolder, null, () =>
             {
                 IHandGrabable storedObject = _leftHand.GetStoredObject();
-                storedObject.SetParent(_rightHand.GetStoragePoint());
+                storedObject.SetParent(_rightHand.GetStoragePoint().transform);
                 storedObject.ResetPosition();
-                _rightHand.MoveToPoint(interactable.GetHeldPoint(), null, () =>
+                _rightHand.MoveToPoint(interactable.GetGrabPoint().transform, null, () =>
                 {
                     storedObject.SetParent(null);
                     
                     deposit.OnDeposit(_leftHand.GetStoredObject());
                     
-                    ReturnRightHand();
-                });
+                    ReturnRightHand(true);
+                }, interactable.GetGrabPoint());
                 _leftHand.StoreObject(null);
             });
         }
@@ -136,7 +136,7 @@ namespace HandScripts.Core
 
             IHandGrabable grabable = (IHandGrabable)interactable;
             _handInUse = true;
-            _rightHand.MoveToPoint(interactable.GetHeldPoint(), null, () => ReturnGrabItem(grabable));
+            _rightHand.MoveToPoint(interactable.GetGrabPoint().transform, null, () => ReturnGrabItem(grabable), interactable.GetGrabPoint());
         }
 
         private void ReturnGrabItem(IHandGrabable grabable)
@@ -145,7 +145,7 @@ namespace HandScripts.Core
             grabable.Grabbed();
             _rightHand.MoveToPoint(_leftHandInactiveHolder, null, () =>
             {
-                grabable.SetParent(_leftHand.GetStoragePoint());
+                grabable.SetParent(_leftHand.GetStoragePoint().transform);
                 grabable.ResetPosition();
                 _leftHand.StoreObject(grabable);
                 _leftHand.gameObject.SetActive(true);
@@ -160,8 +160,8 @@ namespace HandScripts.Core
             if (pullable.HasBeenPulled())
                 return;
             _handInUse = true;
-            _rightHand.MoveToPoint(interactable.GetHeldPoint(), interactable.GetObjectTransform(),
-                () => StartCoroutine(PullRoutine(pullable)));
+            _rightHand.MoveToPoint(interactable.GetGrabPoint().transform, interactable.GetObjectTransform(),
+                () => StartCoroutine(PullRoutine(pullable)), interactable.GetGrabPoint());
         }
 
         private IEnumerator PullRoutine(IHandPullable pullable)
@@ -183,7 +183,7 @@ namespace HandScripts.Core
                 yield return null;
             }
 
-            ReturnRightHand();
+            ReturnRightHand(true);
         }
 
         private void HandleHandUse(IHandInteractable interactable)
@@ -192,12 +192,17 @@ namespace HandScripts.Core
             if (useable.HasBeenUsed())
                 return;
             _handInUse = true;
-            _rightHand.MoveToPoint(interactable.GetHeldPoint(), interactable.GetObjectTransform(),
-                () => useable.Use(ReturnRightHand));
+            _rightHand.MoveToPoint(interactable.GetGrabPoint().transform, interactable.GetObjectTransform(),
+                () => useable.Use( () => ReturnRightHand(true)), interactable.GetGrabPoint());
         }
 
-        private void ReturnRightHand()
+        private void ReturnRightHand(bool resetFingers = false)
         {
+            if (resetFingers)
+            {
+                _rightHand.ResetFingers();
+            }
+
             _rightHand.MoveToPoint(_rightHandHolder, _rightHandHolder, OnHandUseComplete);
         }
 

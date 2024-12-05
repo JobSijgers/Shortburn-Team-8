@@ -10,14 +10,13 @@ namespace HandScripts.Core
     {
         [SerializeField] private float _moveSpeed = 1f;
         [SerializeField] private AnimationCurve _moveCurve;
-        [SerializeField] private Transform _storagePoint;
+        [SerializeField] private GrabPoint _storagePoint;
         [SerializeField] private ProceduralHandAnimation _proceduralAnim;
 
-        public Transform GetStoragePoint() => _storagePoint;
+        public GrabPoint GetStoragePoint() => _storagePoint;
         
-        public void MoveToPoint(Transform grabPoint, Transform parentAfterMove, UnityAction onComplete)
+        public void MoveToPoint(Transform grabPoint, Transform parentAfterMove,  UnityAction onComplete, GrabPoint grab = null)
         {
-            GrabPoint grab = grabPoint.GetComponentInChildren<GrabPoint>();
             StartCoroutine(MoveRoutine(grabPoint, parentAfterMove, onComplete, grab));
         }
 
@@ -49,6 +48,11 @@ namespace HandScripts.Core
             {
                 onComplete?.Invoke();
             }
+        }
+
+        public void ResetFingers()
+        {
+            _proceduralAnim.ResetFingers();
         }
     }
 }

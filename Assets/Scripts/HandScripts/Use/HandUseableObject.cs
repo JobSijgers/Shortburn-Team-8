@@ -1,5 +1,6 @@
 using System.Collections;
 using HandScripts.Core;
+using HandScripts.Grab;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -7,14 +8,14 @@ namespace HandScripts.Use
 {
     public class HandUseableObject : MonoBehaviour, IHandUseable, IHandInteractable
     {
-        [SerializeField] private Transform _heldPoint;
+        [SerializeField] private GrabPoint _heldPoint;
         [SerializeField] private float _useDuration = 1f;
         [SerializeField] private UnityEvent _onUseStart;
         [SerializeField] private UnityEvent _onUseEnd;
 
         private bool _hasBeenUsed;
         
-        public Transform GetHeldPoint() => _heldPoint;
+        public GrabPoint GetGrabPoint() => _heldPoint;
         public EInteractType GetInteractType() => EInteractType.Use;
         public Transform GetObjectTransform() => transform;
         public bool HasBeenUsed() => _hasBeenUsed;

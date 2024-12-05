@@ -7,7 +7,7 @@ namespace HandScripts.Grab
 {
     public class GrabableObject : MonoBehaviour, IHandInteractable, IHandGrabable
     {
-        [SerializeField] private Transform _heldPoint;
+        [SerializeField] private GrabPoint _heldPoint;
         [SerializeField] private string _depositKey;
         private LayerMask _defaultLayer;
 
@@ -16,7 +16,7 @@ namespace HandScripts.Grab
             _defaultLayer = gameObject.layer;
         }
 
-        public Transform GetHeldPoint() => _heldPoint;
+        public GrabPoint GetGrabPoint() => _heldPoint;
         public EInteractType GetInteractType() => EInteractType.Grab;
         public Transform GetObjectTransform() => transform;
         public void SetParent(Transform newParent) => transform.SetParent(newParent);

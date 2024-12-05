@@ -12,7 +12,7 @@ namespace HandScripts.ProceduralAnimation
     {
         public string Name;
         public Transform Target;
-        public Vector3 StartPosition => Target.position;
+        public Vector3 StartPosition;
     }
     public class ProceduralHandAnimation : MonoBehaviour
     {
@@ -27,6 +27,10 @@ namespace HandScripts.ProceduralAnimation
         private void Start()
         {
             _pathFollower = GetComponent<PathFollower>();
+            foreach (var finger in _fingers)
+            {
+                finger.StartPosition = finger.Target.localPosition;
+            }
         }
 
         public Finger GetFinger(string name) => Array.Find(_fingers, finger => finger.Name == name);
@@ -42,11 +46,11 @@ namespace HandScripts.ProceduralAnimation
         {
             StartCoroutine(AnimateHand(_grabPoint, onComplete));
         }
-        private void ResetFingers()
+        public void ResetFingers()
         {
             foreach (Finger finger in _fingers)
             {
-                finger.Target.position = finger.StartPosition;
+                StartCoroutine(AnimateFinger(finger.StartPosition, finger, true));
             }
         }
 
@@ -68,7 +72,7 @@ namespace HandScripts.ProceduralAnimation
                     moveFingers = false;
                     foreach (Finger finger in _fingers)
                     {
-                        StartCoroutine(AnimateFinger(point, finger));
+                        StartCoroutine(AnimateFinger(point.GetFingerPosition(finger.Name), finger));
                     }
                 }
                 yield return null;
@@ -78,15 +82,16 @@ namespace HandScripts.ProceduralAnimation
             yield return new WaitForSeconds(dynamicWaitTime);
             onComplete?.Invoke();
         }
-        private IEnumerator AnimateFinger(GrabPoint grabPoint, Finger finger)
+        private IEnumerator AnimateFinger(Vector3 target, Finger finger, bool isLocal = false)
         {
-            Vector3 StartPos = finger.Target.position;
-            Vector3 EndPos = grabPoint.GetFingerPosition(finger.Name);
+            Vector3 startPos = finger.Target.position;
+            Vector3 endPos = target;
             float t = 0;
             while (t < 1)
             {
                 t += Time.deltaTime * _fingerSpeed;
-                finger.Target.position = Vector3.Slerp(StartPos, EndPos, t);
+                if (isLocal) finger.Target.localPosition = Vector3.Slerp(startPos, endPos, t);
+                else finger.Target.position = Vector3.Slerp(startPos, endPos, t);
                 yield return null;
             }
         }

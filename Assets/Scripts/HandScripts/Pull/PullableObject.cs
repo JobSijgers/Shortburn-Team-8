@@ -1,5 +1,6 @@
 using System;
 using HandScripts.Core;
+using HandScripts.Grab;
 using PathCreation;
 using Player;
 using UnityEditor;
@@ -10,7 +11,7 @@ namespace HandScripts.Pull
 {
     public class PullableObject : MonoBehaviour, IHandInteractable, IHandPullable
     {
-        [SerializeField] private Transform _handHoldPoint;
+        [SerializeField] private GrabPoint _handHoldPoint;
         [SerializeField] private float _pullSpeed;
         [SerializeField] private PathCreator _pathCreator;
         [Range(-360, 360)] [SerializeField] private float _minAngle;
@@ -19,7 +20,7 @@ namespace HandScripts.Pull
         private float _distanceTravelled;
 
 
-        public Transform GetHeldPoint() => _handHoldPoint;
+        public GrabPoint GetGrabPoint() => _handHoldPoint;
         public EInteractType GetInteractType() => EInteractType.Pull;
         public Transform GetObjectTransform() => transform;
         public bool HasBeenPulled() => _distanceTravelled >= _pathCreator.path.length;
