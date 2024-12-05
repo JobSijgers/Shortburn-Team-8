@@ -15,6 +15,8 @@ namespace HandScripts.Pull
         [SerializeField] private PathCreator _pathCreator;
         [Range(-360, 360)] [SerializeField] private float _minAngle;
         [Range(-360, 360)] [SerializeField] private float _maxAngle;
+        [SerializeField] private UnityEvent _onPullComplete;
+        [SerializeField] private UnityEvent<float> _onPullUpdate;
 
         private float _distanceTravelled;
 
@@ -35,10 +37,12 @@ namespace HandScripts.Pull
             _distanceTravelled += _pullSpeed * Time.deltaTime;
             SetPositionAndRotationAtPathDistance(_distanceTravelled);
 
-            if (_distanceTravelled >= _pathCreator.path.length)
-            {
-                onComplete?.Invoke();
-            }
+            _onPullUpdate?.Invoke(_distanceTravelled / _pathCreator.path.length);
+            
+            if (_distanceTravelled < _pathCreator.path.length) 
+                return;
+            onComplete?.Invoke();
+            _onPullComplete?.Invoke();
         }
 
         public bool CanPull(Vector3 playerPosition)
@@ -56,13 +60,6 @@ namespace HandScripts.Pull
         }
 
 #if UNITY_EDITOR
-        private void OnValidate()
-        {
-            if (_minAngle > _maxAngle)
-            {
-                _maxAngle = _minAngle;
-            }
-        }
 
         private void OnDrawGizmosSelected()
         {
