@@ -13,16 +13,26 @@ namespace Component_movement
         [SerializeField] private float _delay;
         private Quaternion _startRot;
 
+        private void Start()
+        {
+            _startRot = transform.localRotation;
+        }
+
         public void StartMovement()
         {
             StartCoroutine(Move());
         }
-
+        
+        public void UpdateRotation(float t)
+        {
+            float curveValue = _movementCurve.Evaluate(t);
+            transform.localRotation = Quaternion.Lerp(_startRot, _endRot, curveValue);
+        }
+        
         private IEnumerator Move()
         {
             yield return new WaitForSeconds(_delay);
             // lerp to end pos
-            _startRot = transform.localRotation;
             float t = 0;
             while (t < 1)
             {

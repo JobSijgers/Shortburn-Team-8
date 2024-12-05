@@ -30,6 +30,8 @@ namespace Player
 
         [SerializeField] private float _speedChangeTime;
         [SerializeField] private float _sprintMultiplier;
+        [SerializeField] private float _noLegSpeedDevider;
+
 
         [Header("  2. Jump", order = 2)] [SerializeField]
         private float _jumpHeight;
@@ -121,8 +123,7 @@ namespace Player
                     : EPlayerMovementState.Walking;
             }
 
-            float constraintSpeed = Leg.Instance == null ^ LimbsController.Instance.Leg.enabled == false ? 1 : 2;
-
+            float constraintSpeed = Leg.Instance == null ^ LimbsController.Instance.Leg.enabled == false ? 1 : _noLegSpeedDevider;
             Controller.Move(MoveVector * ((Speed / constraintSpeed) * Time.deltaTime));
 
             // Apply gravity
