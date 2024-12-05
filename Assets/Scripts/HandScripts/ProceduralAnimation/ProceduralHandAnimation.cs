@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using HandScripts.Grab;
 using PathCreation.Examples;
+using UnityEngine.Events;
 
 namespace HandScripts.ProceduralAnimation
 {
@@ -18,42 +19,53 @@ namespace HandScripts.ProceduralAnimation
         [SerializeField] private float _animationSpeed = 1;
         [SerializeField] private float _fingerSpeed = 1;
         [SerializeField] [Range(0, 1)]private float _fingerAnimStartPrc;
-        [SerializeField] private GrabPoint _grabPoint;
 
+        private GrabPoint _grabPoint;
         private PathFollower _pathFollower;
+
         private void Start()
         {
-            StartAnimation(_grabPoint);
             _pathFollower = GetComponent<PathFollower>();
         }
+
         public Finger GetFinger(string name) => Array.Find(_fingers, finger => finger.Name == name);
+        public PathFollower GetPathFollower() => _pathFollower;
+        public void SetGrabPoint(GrabPoint grabPoint) => _grabPoint = grabPoint;
         public void SetFingerPosition(string name, Vector3 position)
         {
             Finger finger = GetFinger(name);
             if (finger != null) finger.Target.position = position;
         }
-        public void StartAnimation(GrabPoint grabPoint)
+        
+        public void MoveToGrabPoint(UnityAction onComplete = null)
         {
-            StartCoroutine(AnimateHand(grabPoint));
+            StartCoroutine(AnimateHand(_grabPoint, onComplete));
         }
 
-        private IEnumerator AnimateHand(GrabPoint point)
+        private IEnumerator AnimateHand(GrabPoint point, UnityAction onComplete = null)
         {
-            Vector3 startPosition = transform.position;
-            Vector3 endPosition = point.PathCreator.path.GetPoint(0);
-            Quaternion startRotation = transform.rotation;
-            Quaternion endRotation = point.PathCreator.path.GetRotation(0);
-            bool startFingers = true;
+            Vector3 startPos = transform.position;
+            Vector3 endPos = point.transform.position;
+            Quaternion startRot = transform.rotation;
+            Quaternion endRot = point.transform.rotation;
             float t = 0;
+            bool moveFingers = true;
             while (t < 1)
             {
                 t += Time.deltaTime * _animationSpeed;
-                transform.position = Vector3.Slerp(startPosition, endPosition, t);
-                transform.rotation = Quaternion.Slerp(startRotation, endRotation, t);
+                transform.position = Vector3.Slerp(startPos, endPos, t);
+                transform.rotation = Quaternion.Slerp(startRot, endRot, t);
+                if (t >= _fingerAnimStartPrc && moveFingers)
+                {
+                    moveFingers = false;
+                    foreach (Finger finger in _fingers)
+                    {
+                        StartCoroutine(AnimateFinger(point, finger));
+                    }
+                }
                 yield return null;
             }
-            _pathFollower.pathCreator = point.PathCreator;
-            
+            onComplete?.Invoke();
         }
         private IEnumerator AnimateFinger(GrabPoint grabPoint, Finger finger)
         {
