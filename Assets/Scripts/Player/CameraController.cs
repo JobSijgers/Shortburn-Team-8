@@ -26,7 +26,6 @@ namespace Player
         [SerializeField] private float _leglessBobIntensityY = 0.05f;
         [SerializeField] private float _runMultiplier;
 
-        [FormerlySerializedAs("walkFOV")]
         [Header("FOV")] 
         [SerializeField] private float _walkFOV;
         [SerializeField] private float _runFOV;

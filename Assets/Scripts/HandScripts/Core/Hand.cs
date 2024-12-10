@@ -37,6 +37,7 @@ namespace HandScripts.Core
             yield return StartCoroutine(FollowPathRoutine(target.PathCreator, target.UsePathRotation, null));
             yield return StartCoroutine(MoveRoutine(target.GrabPointTransform, null, null));
             _proceduralAnim.MoveToGrabPoint(target, () => onComplete?.Invoke());
+            transform.SetParent(parentAfterMove);
         }
 
         private IEnumerator MoveRoutine(Vector3 endPosition, Quaternion endRotation, Transform parentAfterMove,

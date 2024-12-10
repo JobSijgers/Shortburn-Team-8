@@ -114,7 +114,7 @@ namespace HandScripts.Core
                 IHandGrabable storedObject = _leftHand.GetStoredObject();
                 storedObject.SetParent(_rightHand.GetStoragePoint().transform);
                 storedObject.ResetPosition(quaternion.identity);
-                _rightHand.MoveToPoint(interactable.GetGrabPoint().transform, null, () =>
+                _rightHand.MoveToGrabPoint(interactable.GetGrabPoint(), null, () =>
                 {
                     storedObject.SetParent(null);
 
@@ -152,7 +152,7 @@ namespace HandScripts.Core
                 _leftHand.gameObject.SetActive(true);
                 _leftHand.Grab(interactable.GetGrabPoint());
                 _leftHand.MoveToPoint(_leftHandActiveHolder, _leftHandActiveHolder, null);
-                ReturnRightHand();
+                ReturnRightHand(true);
             });
         }
 

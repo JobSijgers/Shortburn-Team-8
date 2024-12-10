@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 684078970498083437}
   - component: {fileID: 6407122744588001348}
   - component: {fileID: 7803176120749323696}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: PinkyTip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -93,7 +93,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6764361867817256747}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Pinky_top
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -124,7 +124,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 388897653086389509}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Index_tip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -155,7 +155,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2117346346636922916}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Pink IK_hint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -186,7 +186,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 208597735442001420}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Ring IK_hint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -217,7 +217,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5490230039023541862}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Thumb IK_hint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -248,7 +248,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1113550459448471829}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Thumb_Top
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -279,7 +279,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6886968572135587285}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Pink IK_target
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -310,7 +310,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5513997709841719432}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Index IK_target
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -342,7 +342,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7670793477452843117}
   - component: {fileID: 3075069322743127609}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Ring IK
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -399,7 +399,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3246671100804822169}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Middle IK_hint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -431,7 +431,7 @@ GameObject:
   m_Component:
   - component: {fileID: 846013411645458196}
   - component: {fileID: 498425490697979160}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Thumb IK
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -490,7 +490,7 @@ GameObject:
   - component: {fileID: 7774169653315019173}
   - component: {fileID: 6041755581719212540}
   - component: {fileID: 1493005834286258270}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Ring_Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -572,7 +572,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 747398235400059818}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Thumb IK_target
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -605,7 +605,7 @@ GameObject:
   - component: {fileID: 2143408897335687603}
   - component: {fileID: 4408586862769890522}
   - component: {fileID: 3951410507545086691}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Pinky_Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -687,7 +687,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4376452780197432190}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Ring_top
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -718,7 +718,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4263857947228042491}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Mid_Top
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -751,7 +751,7 @@ GameObject:
   - component: {fileID: 6247339769578164994}
   - component: {fileID: 4136147297871206704}
   - component: {fileID: 5954023176344179037}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: IndexTip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -835,7 +835,7 @@ GameObject:
   - component: {fileID: 5908934620528872508}
   - component: {fileID: 620537037941863906}
   - component: {fileID: 2354950283058208395}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Mid_Tip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -919,7 +919,7 @@ GameObject:
   - component: {fileID: 6933795262816288520}
   - component: {fileID: 5222636151828015638}
   - component: {fileID: 7103760151647357021}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Palm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1006,7 +1006,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4473274440510976809}
   - component: {fileID: 1957684352895617802}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Rig 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1162,80 +1162,80 @@ MonoBehaviour:
   - m_Transform: {fileID: 5513997709841719432}
     m_Style:
       shape: {fileID: 4300000, guid: 687b70eb9c49243639f9379f6965034f, type: 2}
-      color: {r: 1, g: 0, b: 0, a: 0.5}
-      size: 0.03
+      color: {r: 1, g: 0, b: 0, a: 0.26666668}
+      size: 0.02
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0}
     m_Visible: 1
   - m_Transform: {fileID: 4690405363733326041}
     m_Style:
       shape: {fileID: 4300000, guid: e050c2b16fe384bd994474655a4b4968, type: 2}
-      color: {r: 1, g: 0, b: 0, a: 0.5}
-      size: 0.06
+      color: {r: 1, g: 0, b: 0, a: 0.26666668}
+      size: 0.02
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0}
     m_Visible: 1
   - m_Transform: {fileID: 2396717254330737264}
     m_Style:
       shape: {fileID: 4300000, guid: 687b70eb9c49243639f9379f6965034f, type: 2}
-      color: {r: 1, g: 0, b: 0, a: 0.5}
-      size: 0.03
+      color: {r: 1, g: 0, b: 0, a: 0.26666668}
+      size: 0.02
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0}
     m_Visible: 1
   - m_Transform: {fileID: 3246671100804822169}
     m_Style:
       shape: {fileID: 4300000, guid: e050c2b16fe384bd994474655a4b4968, type: 2}
-      color: {r: 1, g: 0, b: 0, a: 0.5}
-      size: 0.06
+      color: {r: 1, g: 0, b: 0, a: 0.26666668}
+      size: 0.02
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0}
     m_Visible: 1
   - m_Transform: {fileID: 2887830535800708735}
     m_Style:
       shape: {fileID: 4300000, guid: 687b70eb9c49243639f9379f6965034f, type: 2}
-      color: {r: 1, g: 0, b: 0, a: 0.5}
-      size: 0.03
+      color: {r: 1, g: 0, b: 0, a: 0.26666668}
+      size: 0.02
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0}
     m_Visible: 1
   - m_Transform: {fileID: 208597735442001420}
     m_Style:
       shape: {fileID: 4300000, guid: e050c2b16fe384bd994474655a4b4968, type: 2}
-      color: {r: 1, g: 0, b: 0, a: 0.5}
-      size: 0.06
+      color: {r: 1, g: 0, b: 0, a: 0.26666668}
+      size: 0.02
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0}
     m_Visible: 1
   - m_Transform: {fileID: 6886968572135587285}
     m_Style:
       shape: {fileID: 4300000, guid: 687b70eb9c49243639f9379f6965034f, type: 2}
-      color: {r: 1, g: 0, b: 0, a: 0.5}
-      size: 0.03
+      color: {r: 1, g: 0, b: 0, a: 0.26666668}
+      size: 0.02
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0}
     m_Visible: 1
   - m_Transform: {fileID: 2117346346636922916}
     m_Style:
       shape: {fileID: 4300000, guid: e050c2b16fe384bd994474655a4b4968, type: 2}
-      color: {r: 1, g: 0, b: 0, a: 0.5}
-      size: 0.06
+      color: {r: 1, g: 0, b: 0, a: 0.26666668}
+      size: 0.02
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0}
     m_Visible: 1
   - m_Transform: {fileID: 747398235400059818}
     m_Style:
       shape: {fileID: 4300000, guid: 687b70eb9c49243639f9379f6965034f, type: 2}
-      color: {r: 1, g: 0, b: 0, a: 0.5}
-      size: 0.03
+      color: {r: 1, g: 0, b: 0, a: 0.26666668}
+      size: 0.02
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0}
     m_Visible: 1
   - m_Transform: {fileID: 5490230039023541862}
     m_Style:
       shape: {fileID: 4300000, guid: e050c2b16fe384bd994474655a4b4968, type: 2}
-      color: {r: 1, g: 0, b: 0, a: 0.5}
-      size: 0.06
+      color: {r: 1, g: 0, b: 0, a: 0.26666668}
+      size: 0.02
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0}
     m_Visible: 1
@@ -1251,13 +1251,12 @@ GameObject:
   - component: {fileID: 4610275754618151422}
   - component: {fileID: 1523104517770123779}
   - component: {fileID: 3408524808049505018}
-  - component: {fileID: 6286586266050255786}
   - component: {fileID: 8408889680137676177}
   - component: {fileID: 6018340055276038342}
   - component: {fileID: 3646915624320091420}
   - component: {fileID: 2055862718392907300}
   - component: {fileID: 7821615622886914416}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: MS_Arm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1363,41 +1362,6 @@ MonoBehaviour:
   _animationSpeed: 3
   _fingerSpeed: 4
   _fingerAnimStartPrc: 0.565
---- !u!114 &6286586266050255786
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5990012869077736530}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b2d8418b0b9634b1892b0268dd9c2743, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  boneShape: 1
-  drawBones: 1
-  drawTripods: 0
-  boneSize: 1
-  tripodSize: 1
-  boneColor: {r: 0, g: 0, b: 1, a: 0.5}
-  m_Transforms:
-  - {fileID: 1476039287708894097}
-  - {fileID: 6933795262816288520}
-  - {fileID: 8384332573408827963}
-  - {fileID: 6247339769578164994}
-  - {fileID: 5647914044164764046}
-  - {fileID: 5908934620528872508}
-  - {fileID: 2143408897335687603}
-  - {fileID: 684078970498083437}
-  - {fileID: 7774169653315019173}
-  - {fileID: 2052872483871562332}
-  - {fileID: 7908458219547791011}
-  - {fileID: 8617673506886524358}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!114 &8408889680137676177
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1473,7 +1437,7 @@ MonoBehaviour:
   - m_Transform: {fileID: 1476039287708894097}
     m_Style:
       shape: {fileID: 4300000, guid: c6793350c150f456688e39a81f97364a, type: 2}
-      color: {r: 1, g: 0, b: 0, a: 0.5}
+      color: {r: 1, g: 0, b: 0, a: 0.5294118}
       size: 0.1
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0}
@@ -1492,7 +1456,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pathCreator: {fileID: 0}
   endOfPathInstruction: 2
-  speed: 2
+  speed: 0.0001
 --- !u!114 &7821615622886914416
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1530,7 +1494,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  _storagePoint: {fileID: 502709086731262265}
+  _storagePoint: {fileID: 4134141433470557114}
   _proceduralAnim: {fileID: 3408524808049505018}
 --- !u!1 &6768354249363228406
 GameObject:
@@ -1543,7 +1507,7 @@ GameObject:
   - component: {fileID: 8617673506886524358}
   - component: {fileID: 5023037767328509642}
   - component: {fileID: 4670570881334094985}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Thumb_Tip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1628,7 +1592,7 @@ GameObject:
   - component: {fileID: 2646969051960547343}
   - component: {fileID: 3812748406988294685}
   - component: {fileID: 7100946261699599876}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Index_Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1734,7 +1698,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4690405363733326041}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Index IK_hint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1766,7 +1730,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9212319829516816313}
   - component: {fileID: 8653746085712429729}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Index IK
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1825,7 +1789,7 @@ GameObject:
   - component: {fileID: 7908458219547791011}
   - component: {fileID: 2894616996942456497}
   - component: {fileID: 7627026487103123616}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Thumb_Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1908,7 +1872,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4819784115405608760}
   - component: {fileID: 7948606257705738549}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Middle IK
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1965,7 +1929,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 502709086731262265}
-  m_Layer: 0
+  - component: {fileID: 4134141433470557114}
+  m_Layer: 6
   m_Name: StoragePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1987,6 +1952,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1476039287708894097}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4134141433470557114
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8096940760587833513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e46500841c16c174291619faa7c43865, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _fingers: []
+  _grabPoint: {fileID: 502709086731262265}
+  _pathCreator: {fileID: 0}
+  _usePathRotation: 0
 --- !u!1 &8169841882257838501
 GameObject:
   m_ObjectHideFlags: 0
@@ -1997,7 +1978,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6155648352703815167}
   - component: {fileID: 7558872094867484127}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Pink IK
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2056,7 +2037,7 @@ GameObject:
   - component: {fileID: 2052872483871562332}
   - component: {fileID: 6157363760840828305}
   - component: {fileID: 6010552744196911531}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Ring_Tip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2140,7 +2121,7 @@ GameObject:
   - component: {fileID: 5647914044164764046}
   - component: {fileID: 2041616984100875630}
   - component: {fileID: 4992197050345274595}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Mid_Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2222,7 +2203,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2396717254330737264}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Middle IK_target
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2253,7 +2234,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2887830535800708735}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Ring IK_target
   m_TagString: Untagged
   m_Icon: {fileID: 0}

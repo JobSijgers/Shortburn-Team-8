@@ -64,14 +64,14 @@ namespace HandScripts.ProceduralAnimation
         
         private IEnumerator AnimateFinger(Vector3 target, Finger finger, bool isLocal = false)
         {
-            Vector3 startPos = finger.Target.position;
+            Vector3 startPos = isLocal ? finger.Target.localPosition : finger.Target.position;
             Vector3 endPos = target;
             float t = 0;
             while (t < 1)
             {
                 t += Time.deltaTime * _fingerSpeed;
-                if (isLocal) finger.Target.localPosition = Vector3.Slerp(startPos, endPos, t);
-                else finger.Target.position = Vector3.Slerp(startPos, endPos, t);
+                if (isLocal) finger.Target.localPosition = Vector3.Lerp(startPos, endPos, t);
+                else finger.Target.position = Vector3.Lerp(startPos, endPos, t);
                 yield return null;
             }
         }
