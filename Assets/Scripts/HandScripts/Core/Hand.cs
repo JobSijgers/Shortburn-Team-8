@@ -9,7 +9,7 @@ namespace HandScripts.Core
 {
     public class Hand : MonoBehaviour
     {
-        [SerializeField] private float _moveSpeed = 1f;
+        [SerializeField] private float _metersPerSecond = 1;
         [SerializeField] private AnimationCurve _moveCurve;
         [SerializeField] private GrabPoint _storagePoint;
         [SerializeField] private ProceduralHandAnimation _proceduralAnim;
@@ -33,8 +33,12 @@ namespace HandScripts.Core
                 ? target.PathCreator.path.GetRotationAtDistance(0)
                 : target.GrabPointTransform.rotation;
 
-            yield return StartCoroutine(MoveRoutine(splineStart, splineRot, null, null));
-            yield return StartCoroutine(FollowPathRoutine(target.PathCreator, target.UsePathRotation, null));
+            if (target.PathCreator.path.length >= 0.1f)
+            {
+                yield return StartCoroutine(MoveRoutine(splineStart, splineRot, null, null));
+                yield return StartCoroutine(FollowPathRoutine(target.PathCreator, target.UsePathRotation, null));
+            }
+
             yield return StartCoroutine(MoveRoutine(target.GrabPointTransform, null, null));
             _proceduralAnim.MoveToGrabPoint(target, () => onComplete?.Invoke());
             transform.SetParent(parentAfterMove);
@@ -46,11 +50,12 @@ namespace HandScripts.Core
             transform.SetParent(null);
             Vector3 startPos = transform.position;
             Quaternion startRot = transform.rotation;
+            float speed = Vector3.Distance(startPos, endPosition) / _metersPerSecond;
 
             float t = 0f;
             while (t <= 1)
             {
-                t += Time.deltaTime / _moveSpeed;
+                t += Time.deltaTime / speed;
                 float a = _moveCurve.Evaluate(t);
                 transform.position = Vector3.Lerp(startPos, endPosition, a);
                 transform.rotation = Quaternion.Slerp(startRot, endRotation, a);
@@ -66,10 +71,13 @@ namespace HandScripts.Core
             transform.SetParent(null);
             Vector3 startPos = transform.position;
             Quaternion startRot = transform.rotation;
+            float speed = Vector3.Distance(startPos, destination.position) / _metersPerSecond;
+
+
             float t = 0f;
             while (t <= 1)
             {
-                t += Time.deltaTime / _moveSpeed;
+                t += Time.deltaTime / speed;
                 float a = _moveCurve.Evaluate(t);
                 transform.position = Vector3.Lerp(startPos, destination.position, a);
                 transform.rotation = Quaternion.Slerp(startRot, destination.rotation, a);
@@ -86,7 +94,7 @@ namespace HandScripts.Core
 
             while (distanceTravelled < path.path.length)
             {
-                distanceTravelled += _moveSpeed * Time.deltaTime * 5;
+                distanceTravelled += _metersPerSecond * Time.deltaTime;
                 transform.position = path.path.GetPointAtDistance(distanceTravelled, EndOfPathInstruction.Stop);
                 if (usePathRotation)
                 {
@@ -103,7 +111,7 @@ namespace HandScripts.Core
         {
             _proceduralAnim.SetFingersToGrabPoint(grabPoint);
         }
-        
+
         public void ResetFingers()
         {
             _proceduralAnim.ResetFingers();

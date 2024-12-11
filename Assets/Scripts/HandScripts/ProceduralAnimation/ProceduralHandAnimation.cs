@@ -14,19 +14,17 @@ namespace HandScripts.ProceduralAnimation
         public Transform Target;
         public Vector3 StartPosition;
     }
+
     public class ProceduralHandAnimation : MonoBehaviour
     {
         [SerializeField] private Finger[] _fingers;
-        [SerializeField] private float _animationSpeed = 1;
-        [SerializeField] private float _fingerSpeed = 1;
-        [SerializeField] [Range(0, 1)]private float _fingerAnimStartPrc;
+        [SerializeField] private float _fingerSpeed = 0.1f;
+        [SerializeField] [Range(0, 1)] private float _fingerAnimStartPrc;
 
         private GrabPoint _grabPoint;
-        private PathFollower _pathFollower;
 
         private void Start()
         {
-            _pathFollower = GetComponent<PathFollower>();
             foreach (var finger in _fingers)
             {
                 finger.StartPosition = finger.Target.localPosition;
@@ -34,16 +32,18 @@ namespace HandScripts.ProceduralAnimation
         }
 
         public Finger GetFinger(string name) => Array.Find(_fingers, finger => finger.Name == name);
+
         public void SetFingerPosition(string name, Vector3 position)
         {
             Finger finger = GetFinger(name);
             if (finger != null) finger.Target.position = position;
         }
-        
+
         public void MoveToGrabPoint(GrabPoint grabPoint, UnityAction onComplete = null)
         {
             StartCoroutine(MoveFingersToGrabPoint(grabPoint, onComplete));
         }
+
         public void ResetFingers()
         {
             foreach (Finger finger in _fingers)
@@ -54,26 +54,49 @@ namespace HandScripts.ProceduralAnimation
 
         private IEnumerator MoveFingersToGrabPoint(GrabPoint target, UnityAction onComplete)
         {
+            bool[] fingerStatus = new bool[_fingers.Length];
             foreach (Finger finger in _fingers)
             {
-                StartCoroutine(AnimateFinger(target.GetFingerPosition(finger.Name), finger));
+                StartCoroutine(AnimateFinger(target.GetFingerPosition(finger.Name), finger, false,
+                    () => { fingerStatus[System.Array.IndexOf(_fingers, finger)] = true; }));
             }
-            yield return new WaitForSeconds(1.2f / _fingerSpeed);
-            onComplete?.Invoke();
-        }
-        
-        private IEnumerator AnimateFinger(Vector3 target, Finger finger, bool isLocal = false)
-        {
-            Vector3 startPos = isLocal ? finger.Target.localPosition : finger.Target.position;
-            Vector3 endPos = target;
-            float t = 0;
-            while (t < 1)
+
+            while (Array.Exists(fingerStatus, status => status == false))
             {
-                t += Time.deltaTime * _fingerSpeed;
-                if (isLocal) finger.Target.localPosition = Vector3.Lerp(startPos, endPos, t);
-                else finger.Target.position = Vector3.Lerp(startPos, endPos, t);
                 yield return null;
             }
+
+            onComplete?.Invoke();
+        }
+
+        private IEnumerator AnimateFinger(Vector3 target, Finger finger,
+            bool isLocal = false, UnityAction onComplete = null)
+        {
+            Vector3 endPos = target;
+            
+            while ((isLocal ? Vector3.Distance(target, finger.Target.localPosition) : Vector3.Distance(target, finger.Target.position)) > 0.001f)
+            {
+                if (isLocal)
+                {
+                    finger.Target.localPosition = Vector3.MoveTowards(finger.Target.localPosition, endPos, _fingerSpeed);
+                }
+                else
+                {
+                    finger.Target.position = Vector3.MoveTowards(finger.Target.position, endPos, _fingerSpeed);
+                }
+                yield return null;
+            }
+
+            if (isLocal)
+            {
+                finger.Target.localPosition = endPos;
+            }
+            else
+            {
+                finger.Target.position = endPos;
+            }
+
+            onComplete?.Invoke();
         }
 
         public void SetFingersToGrabPoint(GrabPoint grabPoint)
@@ -85,4 +108,3 @@ namespace HandScripts.ProceduralAnimation
         }
     }
 }
-

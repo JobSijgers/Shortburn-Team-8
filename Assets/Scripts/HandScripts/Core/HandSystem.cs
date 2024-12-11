@@ -131,6 +131,7 @@ namespace HandScripts.Core
             if (_leftHand.GetStoredObject() != null)
             {
                 Debug.Log("Hand is already holding an object");
+                return;
             }
 
             IHandGrabable grabable = (IHandGrabable)interactable;
