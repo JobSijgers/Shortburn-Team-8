@@ -71,7 +71,12 @@ namespace HandScripts.Core
             transform.SetParent(null);
             Vector3 startPos = transform.position;
             Quaternion startRot = transform.rotation;
+            Debug.Log(startPos + " " + destination.position);
             float speed = Vector3.Distance(startPos, destination.position) / _metersPerSecond;
+            if (speed <= 0.2f)
+            {
+                speed = 0.2f;
+            }
 
 
             float t = 0f;
