@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Prefabs/ArmLegPickup/LegPickup.prefab.meta
 guid: dff08b19e999bc341b6dc6415d9cf65d
+========
+guid: be7eadcfdeb34b14f8d7a3ac3ec29ccf
+>>>>>>>> Puzzle-layout:Assets/Prefabs/KeyITems/P_Big_Button_pocketwatch.prefab.meta
 PrefabImporter:
   externalObjects: {}
   userData: 
