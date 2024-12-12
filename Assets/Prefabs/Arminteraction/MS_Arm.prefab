@@ -1359,7 +1359,6 @@ MonoBehaviour:
   - Name: Thumb
     Target: {fileID: 747398235400059818}
     StartPosition: {x: 0, y: 0, z: 0}
-  _animationSpeed: 3
   _fingerSpeed: 4
   _fingerAnimStartPrc: 0.565
 --- !u!114 &8408889680137676177
@@ -1469,7 +1468,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0be4adb39ca756549827ff1d6ec85d97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveSpeed: 1
+  _metersPerSecond: 10
   _moveCurve:
     serializedVersion: 2
     m_Curve:
