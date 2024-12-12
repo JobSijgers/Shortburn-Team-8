@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8355751870529644078}
   - component: {fileID: 2915347267784000130}
   - component: {fileID: 774906941620017761}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: MS_Button_pocketwatch_small
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -111,6 +111,10 @@ namespace Player
             }
             fovCoroutine = null;
         }
+        public bool IsLookingAtObject(Transform obj, LayerMask mask)
+        {
+            return Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, Mathf.Infinity, mask) && hit.transform == obj;
+        }
     }
 }
 
