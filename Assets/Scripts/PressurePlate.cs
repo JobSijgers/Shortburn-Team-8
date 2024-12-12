@@ -1,12 +1,10 @@
-using System;
-using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class PressurePlate : MonoBehaviour
 {
-    [SerializeField] private UnityEvent OnPressurePlate;
-    [SerializeField] private UnityEvent OnUnPressurePlate;
+    public UnityEvent OnPressurePlate;
+    public UnityEvent OnUnPressurePlate;
     private int _amount;
     private Rigidbody _rigidbody;
     private SpringJoint _springJoint;
