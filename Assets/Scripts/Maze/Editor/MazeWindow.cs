@@ -492,19 +492,17 @@ namespace Maze.Editor
             Vector3 left = Vector3.left;
             Vector3 right = Vector3.right;
 
-            bool isForwardBack = point._Connections.Any(conn =>
-                                     Vector3.Normalize(new Vector3(conn.x - point._Position.x, 0,
-                                         conn.z - point._Position.z)) == forward) &&
-                                 point._Connections.Any(conn =>
-                                     Vector3.Normalize(new Vector3(conn.x - point._Position.x, 0,
-                                         conn.z - point._Position.z)) == back);
+            bool isForwardBack =
+                point._Connections.Any(conn =>
+                    Vector3.Normalize(new Vector3(conn.x - point._Position.x, 0, conn.z - point._Position.z)) ==
+                    forward) && point._Connections.Any(conn =>
+                    Vector3.Normalize(new Vector3(conn.x - point._Position.x, 0, conn.z - point._Position.z)) == back);
 
-            bool isLeftRight = point._Connections.Any(conn =>
-                                   Vector3.Normalize(new Vector3(conn.x - point._Position.x, 0,
-                                       conn.z - point._Position.z)) == left) &&
-                               point._Connections.Any(conn =>
-                                   Vector3.Normalize(new Vector3(conn.x - point._Position.x, 0,
-                                       conn.z - point._Position.z)) == right);
+            bool isLeftRight =
+                point._Connections.Any(conn =>
+                    Vector3.Normalize(new Vector3(conn.x - point._Position.x, 0, conn.z - point._Position.z)) ==
+                    left) && point._Connections.Any(conn =>
+                    Vector3.Normalize(new Vector3(conn.x - point._Position.x, 0, conn.z - point._Position.z)) == right);
 
             return isForwardBack || isLeftRight;
         }
@@ -535,16 +533,37 @@ namespace Maze.Editor
 
         private void SpawnStraight(Point point, Transform parent)
         {
-            GameObject go = Instantiate(_straight, point._Position, Quaternion.identity, parent);
+            Vector3 connection = point._Connections.First();
+            Vector3 direction = (connection - point._Position).normalized;
 
-            foreach (Vector3 connection in point._Connections)
+            // Adjust the scale to fit the distance between the two points
+            float distance = Vector3.Distance(point._Position, connection);
+            Vector3 midpoint = (point._Position + connection) / 2;
+
+            bool hasHeightDifference = !Mathf.Approximately(connection.y, point._Position.y);
+
+            GameObject go = Instantiate(_straight, midpoint, Quaternion.identity, parent);
+
+            go.transform.rotation = Quaternion.LookRotation(direction);
+
+            go.transform.localScale = new Vector3(go.transform.localScale.x, go.transform.localScale.y, distance);
+
+            if (hasHeightDifference)
             {
-                Vector3 direction = connection - point._Position;
-                go.transform.rotation = Quaternion.LookRotation(direction);
+                go.transform.position = new Vector3(midpoint.x, midpoint.y, midpoint.z);
+                go.name = "Straight (Height Difference)";
+                Quaternion oldRotation = go.transform.rotation;
+                Vector3 rotation = go.transform.rotation.eulerAngles;
+                rotation.x = 0;
+                go.transform.rotation = Quaternion.Euler(rotation);
+                go.transform.localPosition -= go.transform.forward / 2;
+                go.transform.rotation = oldRotation;
             }
-
-            go.transform.localScale = new Vector3(go.transform.localScale.x, go.transform.localScale.y,
-                Vector3.Distance(point._Position, point._Connections.First()));
+            else
+            {
+                go.transform.position -= go.transform.forward / 2;
+            }
+            
             MazeBlock block = go.AddComponent<MazeBlock>();
             _mazeBlocks.Add(point, block);
         }
