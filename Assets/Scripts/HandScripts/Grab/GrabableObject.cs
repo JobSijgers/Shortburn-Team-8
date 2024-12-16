@@ -23,12 +23,11 @@ namespace HandScripts.Grab
         public void SetParent(Transform newParent) => transform.SetParent(newParent);
         public void Grabbed() => gameObject.layer = LayerMask.NameToLayer("GrabbedObject");
         public string GetDepositKey() => _depositKey;
-
         public void Released() => gameObject.layer = _defaultLayer;
 
         public void ResetPosition(Quaternion localRotation)
         {
-            transform.rotation = localRotation;
+            transform.localRotation = localRotation;
             transform.localPosition = Vector3.zero;
         }
 
