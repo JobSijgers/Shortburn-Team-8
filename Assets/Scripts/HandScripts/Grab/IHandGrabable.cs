@@ -7,6 +7,7 @@ namespace HandScripts.Grab
         void SetParent(Transform newParent);
         void ResetPosition(Quaternion rotation);
         void Grabbed();
+        void Released();
         string GetDepositKey();
     }
 }

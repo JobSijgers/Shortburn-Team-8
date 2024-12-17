@@ -114,13 +114,19 @@ namespace HandScripts.Core
                 IHandGrabable storedObject = _leftHand.GetStoredObject();
                 storedObject.SetParent(_rightHand.GetStoragePoint().transform);
                 storedObject.ResetPosition(quaternion.identity);
+                
+                // set finger positions
+                IHandInteractable handInteractable = (IHandInteractable)storedObject;
+                _rightHand.MoveFingersToGrabPoint(handInteractable.GetGrabPoint());
                 _rightHand.MoveToGrabPoint(interactable.GetGrabPoint(), null, () =>
                 {
                     storedObject.SetParent(null);
-
+                    IHandInteractable handInteractable = (IHandInteractable)storedObject;
+                    handInteractable.GetObjectTransform().localRotation = quaternion.identity;
                     deposit.OnDeposit(_leftHand.GetStoredObject());
 
                     ReturnRightHand(true);
+                    storedObject.Released();
                 });
                 _leftHand.StoreObject(null);
             });
@@ -146,9 +152,9 @@ namespace HandScripts.Core
             _rightHand.MoveToPoint(_leftHandInactiveHolder, null, () =>
             {
                 IHandInteractable interactable = (IHandInteractable)grabable;
-                Quaternion localRotation = interactable.GetObjectTransform().localRotation;
+                Quaternion oldRot = interactable.GetObjectTransform().localRotation;
                 grabable.SetParent(_leftHand.GetStoragePoint().transform);
-                grabable.ResetPosition(localRotation);
+                grabable.ResetPosition(oldRot);
                 _leftHand.StoreObject(grabable);
                 _leftHand.gameObject.SetActive(true);
                 _leftHand.Grab(interactable.GetGrabPoint());

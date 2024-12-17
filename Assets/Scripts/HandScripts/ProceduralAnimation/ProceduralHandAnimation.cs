@@ -43,6 +43,14 @@ namespace HandScripts.ProceduralAnimation
         {
             StartCoroutine(MoveFingersToGrabPoint(grabPoint, onComplete));
         }
+        
+        public void MoveFingersToGrabPoint(GrabPoint target)
+        {
+            foreach (Finger finger in _fingers)
+            {
+                StartCoroutine(AnimateFinger(target.GetFingerPosition(finger.Name), finger, false));
+            }
+        }
 
         public void ResetFingers()
         {
