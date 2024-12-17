@@ -1457,6 +1457,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _movementSpeed: 1
+  _movementCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _delay: 0
   _endPos: {x: -0.9252648, y: 3.13, z: 6.84}
 --- !u!65 &574208717
 BoxCollider:
@@ -1794,8 +1801,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2627515518879131071, guid: 2563d36c014865e45a7e31855e85fa28,
         type: 3}
-      propertyPath: _metersPerSecond
-      value: 5
+      propertyPath: _moveCurve.m_Curve.Array.data[0].inSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2627515518879131071, guid: 2563d36c014865e45a7e31855e85fa28,
+        type: 3}
+      propertyPath: _moveCurve.m_Curve.Array.data[0].outSlope
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3270306862035942356, guid: 2563d36c014865e45a7e31855e85fa28,
         type: 3}
@@ -4831,6 +4843,8 @@ MonoBehaviour:
   _onUseEnd:
     m_PersistentCalls:
       m_Calls: []
+  _canTriggerMultipleTimes: 0
+  _useCooldown: 0
 --- !u!65 &8088074207520032657
 BoxCollider:
   m_ObjectHideFlags: 0
