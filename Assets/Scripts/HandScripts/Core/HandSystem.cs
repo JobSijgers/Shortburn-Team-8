@@ -117,7 +117,7 @@ namespace HandScripts.Core
                 
                 // set finger positions
                 IHandInteractable handInteractable = (IHandInteractable)storedObject;
-                _rightHand.MoveFingersToGrabPoint(handInteractable.GetGrabPoint());
+                _rightHand.MoveFingersToGrabPoint(handInteractable.GetGrabPoint(), true);
                 _rightHand.MoveToGrabPoint(interactable.GetGrabPoint(), null, () =>
                 {
                     storedObject.SetParent(null);

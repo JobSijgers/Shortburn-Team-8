@@ -44,11 +44,11 @@ namespace HandScripts.ProceduralAnimation
             StartCoroutine(MoveFingersToGrabPoint(grabPoint, onComplete));
         }
         
-        public void MoveFingersToGrabPoint(GrabPoint target)
+        public void MoveFingersToGrabPoint(GrabPoint target, bool isLocal = false)
         {
             foreach (Finger finger in _fingers)
             {
-                StartCoroutine(AnimateFinger(target.GetFingerPosition(finger.Name), finger, false));
+                StartCoroutine(AnimateFinger(target.GetFingerPosition(finger.Name), finger, isLocal));
             }
         }
 

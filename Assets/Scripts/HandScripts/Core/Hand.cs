@@ -26,9 +26,9 @@ namespace HandScripts.Core
             StartCoroutine(MoveToGrabPointRoutine(target, parentAfterMove, onComplete));
         }
         
-        public void MoveFingersToGrabPoint(GrabPoint target)
+        public void MoveFingersToGrabPoint(GrabPoint target, bool isLocal = false)
         {
-            _proceduralAnim.MoveFingersToGrabPoint(target);
+            _proceduralAnim.MoveFingersToGrabPoint(target, isLocal);
         }
 
         private IEnumerator MoveToGrabPointRoutine(GrabPoint target, Transform parentAfterMove, UnityAction onComplete)
