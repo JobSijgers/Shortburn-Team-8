@@ -10,10 +10,12 @@ namespace HandScripts.Use
     {
         [SerializeField] private GrabPoint _heldPoint;
         [SerializeField] private float _useDuration = 1f;
-        [SerializeField] private UnityEvent _onUseStart;
-        [SerializeField] private UnityEvent _onUseEnd;
-
+        public UnityEvent _onUseStart;
+        public UnityEvent _onUseEnd;
+        [SerializeField] private bool _canTriggerMultipleTimes;
+        [SerializeField] private float _useCooldown;
         private bool _hasBeenUsed;
+        
         
         public GrabPoint GetGrabPoint() => _heldPoint;
         public EInteractType GetInteractType() => EInteractType.Use;
@@ -23,17 +25,22 @@ namespace HandScripts.Use
         public void Use(UnityAction onComplete)
         {
             StartCoroutine(UseRoutine(onComplete));
-            _hasBeenUsed = true;
+            if (!_canTriggerMultipleTimes)
+                _hasBeenUsed = true;
         }
-
-
+        
         private IEnumerator UseRoutine(UnityAction onComplete)
         {
             _onUseStart?.Invoke();
             yield return new WaitForSeconds(_useDuration);
             _onUseEnd?.Invoke();
             onComplete?.Invoke();
+            if (_canTriggerMultipleTimes)
+            {
+                _hasBeenUsed = true;
+                yield return new WaitForSeconds(_useCooldown);
+                _hasBeenUsed = false;
+            }
         }
-        
     }
 }
