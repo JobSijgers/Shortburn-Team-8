@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using HandScripts.Grab;
 using HandScripts.ProceduralAnimation;
@@ -13,6 +14,33 @@ namespace HandScripts.Core
         [SerializeField] private AnimationCurve _moveCurve;
         [SerializeField] private GrabPoint _storagePoint;
         [SerializeField] private ProceduralHandAnimation _proceduralAnim;
+        private LayerMask _defaultLayer;
+
+        public void ShotArm(Transform parent)
+        {
+            if (parent.childCount == 0) return;
+            foreach (Transform child in parent)
+            {
+                child.gameObject.layer = LayerMask.NameToLayer("ShotArm");
+                ShotArm(child);
+            }
+            gameObject.layer = LayerMask.NameToLayer("ShotArm");
+        }
+
+        public void ReturnArm(Transform parent)
+        {
+            if (parent.childCount == 0) return;
+            foreach (Transform child in parent)
+            {
+                child.gameObject.layer = _defaultLayer;
+                ReturnArm(child);
+            }
+            gameObject.layer = _defaultLayer;
+        }
+        private void Start()
+        {
+            _defaultLayer = gameObject.layer;
+        }
 
         public GrabPoint GetStoragePoint() => _storagePoint;
 

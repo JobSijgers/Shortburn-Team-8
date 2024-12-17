@@ -10182,6 +10182,41 @@ PrefabInstance:
       propertyPath: m_Name
       value: P_Button_pocketwatch_mid
       objectReference: {fileID: 0}
+    - target: {fileID: 7705328389746361413, guid: 535868297d55b1345aa0bb188f091df8,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.113501005
+      objectReference: {fileID: 0}
+    - target: {fileID: 7705328389746361413, guid: 535868297d55b1345aa0bb188f091df8,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.24015601
+      objectReference: {fileID: 0}
+    - target: {fileID: 7705328389746361413, guid: 535868297d55b1345aa0bb188f091df8,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.96396524
+      objectReference: {fileID: 0}
+    - target: {fileID: 7705328389746361413, guid: 535868297d55b1345aa0bb188f091df8,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.01461566
+      objectReference: {fileID: 0}
+    - target: {fileID: 7705328389746361413, guid: 535868297d55b1345aa0bb188f091df8,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 4.743
+      objectReference: {fileID: 0}
+    - target: {fileID: 7705328389746361413, guid: 535868297d55b1345aa0bb188f091df8,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -192.271
+      objectReference: {fileID: 0}
+    - target: {fileID: 7705328389746361413, guid: 535868297d55b1345aa0bb188f091df8,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 27.469
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -45535,7 +45570,7 @@ PrefabInstance:
     - target: {fileID: 1245152916147940287, guid: 633e64156b63ae744a97a3755b6219ac,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.069999695
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1245152916147940287, guid: 633e64156b63ae744a97a3755b6219ac,
         type: 3}
@@ -45582,6 +45617,11 @@ PrefabInstance:
       propertyPath: _onDeposit.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1387882921}
+    - target: {fileID: 4508134551997430141, guid: 633e64156b63ae744a97a3755b6219ac,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5957182113200873972, guid: 633e64156b63ae744a97a3755b6219ac,
         type: 3}
       propertyPath: _minuteButton

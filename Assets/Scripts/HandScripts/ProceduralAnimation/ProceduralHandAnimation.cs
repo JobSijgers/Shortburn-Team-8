@@ -48,7 +48,9 @@ namespace HandScripts.ProceduralAnimation
         {
             foreach (Finger finger in _fingers)
             {
-                StartCoroutine(AnimateFinger(target.GetFingerPosition(finger.Name), finger, isLocal));
+                Transform fingerTransform = target.GetFingerTransform(finger.Name);
+                Vector3 pos = isLocal ?  fingerTransform.localPosition : fingerTransform.position;
+                StartCoroutine(AnimateFinger(pos, finger, isLocal));
             }
         }
 

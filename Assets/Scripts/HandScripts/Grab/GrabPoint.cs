@@ -15,6 +15,7 @@ namespace HandScripts.Grab
         public PathCreator PathCreator => _pathCreator;
         public bool UsePathRotation => _usePathRotation;
         public Vector3 GetFingerPosition(string name) => Array.Find(_fingers, finger => finger.Name == name).Target.position; 
+        public Transform GetFingerTransform(string name) => Array.Find(_fingers, finger => finger.Name == name).Target;
     }
 }
 

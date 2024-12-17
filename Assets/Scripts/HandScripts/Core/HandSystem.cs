@@ -71,6 +71,7 @@ namespace HandScripts.Core
             if (interactable == null)
                 return;
 
+            _rightHand.ShotArm(_rightHand.transform);
             switch (interactable.GetInteractType())
             {
                 case EInteractType.Grab:
@@ -213,6 +214,7 @@ namespace HandScripts.Core
             }
 
             _rightHand.MoveToPoint(_rightHandHolder, _rightHandHolder, OnHandUseComplete);
+            _rightHand.ReturnArm(_rightHand.transform);
         }
 
         private void OnHandUseComplete()
