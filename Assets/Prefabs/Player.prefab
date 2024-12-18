@@ -1408,7 +1408,7 @@ PrefabInstance:
     - target: {fileID: 7821615622886914416, guid: 361bfeb4fa669924b9723cbac79327df,
         type: 3}
       propertyPath: _metersPerSecond
-      value: 4
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 7908458219547791011, guid: 361bfeb4fa669924b9723cbac79327df,
         type: 3}
@@ -1745,6 +1745,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalRotation.z
       value: -0.000000014901161
+      objectReference: {fileID: 0}
+    - target: {fileID: 7821615622886914416, guid: 361bfeb4fa669924b9723cbac79327df,
+        type: 3}
+      propertyPath: _metersPerSecond
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7908458219547791011, guid: 361bfeb4fa669924b9723cbac79327df,
         type: 3}

@@ -1469,27 +1469,45 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0be4adb39ca756549827ff1d6ec85d97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _metersPerSecond: 5
+  _metersPerSecond: 10
   _moveCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 0
+      inSlope: 0.64454365
+      outSlope: 0.64454365
+      tangentMode: 34
       weightedMode: 0
       inWeight: 0
-      outWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.15211004
+      value: 0.098041564
+      inSlope: 1.0481322
+      outSlope: 1.0481322
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.73643994
+      value: 0.9463255
+      inSlope: 0.82768637
+      outSlope: 0.82768637
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
+      inSlope: 0.20365195
+      outSlope: 0.20365195
+      tangentMode: 34
       weightedMode: 0
-      inWeight: 0
+      inWeight: 0.33333334
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2

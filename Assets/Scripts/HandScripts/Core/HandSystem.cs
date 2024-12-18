@@ -110,10 +110,12 @@ namespace HandScripts.Core
             _leftHand.MoveToPoint(_leftHandInactiveHolder, _leftHandInactiveHolder,
                 () => { _leftHand.gameObject.SetActive(false); });
 
+            _rightHand.ShotArm(_rightHand.transform);
             _rightHand.MoveToPoint(_leftHandInactiveHolder, null, () =>
             {
                 IHandGrabable storedObject = _leftHand.GetStoredObject();
                 storedObject.SetParent(_rightHand.GetStoragePoint().transform);
+                storedObject.Released();
                 storedObject.ResetPosition(quaternion.identity);
                 
                 // set finger positions
@@ -127,7 +129,6 @@ namespace HandScripts.Core
                     deposit.OnDeposit(_leftHand.GetStoredObject());
 
                     ReturnRightHand(true);
-                    storedObject.Released();
                 });
                 _leftHand.StoreObject(null);
             });
@@ -213,8 +214,8 @@ namespace HandScripts.Core
                 _rightHand.ResetFingers();
             }
 
-            _rightHand.MoveToPoint(_rightHandHolder, _rightHandHolder, OnHandUseComplete);
             _rightHand.ReturnArm(_rightHand.transform);
+            _rightHand.MoveToPoint(_rightHandHolder, _rightHandHolder, OnHandUseComplete);
         }
 
         private void OnHandUseComplete()
