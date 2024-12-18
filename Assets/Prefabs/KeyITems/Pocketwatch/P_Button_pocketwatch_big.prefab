@@ -137,7 +137,94 @@ MonoBehaviour:
   _objectToRotate: {fileID: 0}
   _timeBetweenRotations: 0.2
   _rotationStepInMinutes: 5
-  _rotationSpeed: 1
+  _rotationSpeed: 3
+  _rotationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 1.9838943
+      outSlope: 1.9838943
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.5029257
+      value: 0.9977514
+      inSlope: 1.9838943
+      outSlope: -3.2889154
+      tangentMode: 69
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.5729068
+      value: 0.7675895
+      inSlope: -3.2889154
+      outSlope: 4.019149
+      tangentMode: 69
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.63020825
+      value: 0.9978926
+      inSlope: 4.019149
+      outSlope: -3.2970283
+      tangentMode: 69
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 1
+    - serializedVersion: 3
+      time: 0.6973255
+      value: 0.77660507
+      inSlope: -3.2970283
+      outSlope: 4.3624773
+      tangentMode: 69
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.74802077
+      value: 0.9977619
+      inSlope: 4.3624773
+      outSlope: -3.0189235
+      tangentMode: 69
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.82318366
+      value: 0.7708509
+      inSlope: -3.0189235
+      outSlope: 4.422102
+      tangentMode: 69
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.86763036
+      value: 0.96739876
+      inSlope: 0.18141627
+      outSlope: 0.18141627
+      tangentMode: 1
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0.24628939
+      outSlope: 0.24628939
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   _buttonPressedPosition: {x: 0, y: -0.05, z: 0}
   _buttonPressCurve:
     serializedVersion: 2

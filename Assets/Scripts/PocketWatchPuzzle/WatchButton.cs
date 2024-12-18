@@ -13,6 +13,7 @@ namespace PocketWatchPuzzle
         [SerializeField] private float _timeBetweenRotations;
         [SerializeField] private int _rotationStepInMinutes;
         [SerializeField] private float _rotationSpeed;
+        [SerializeField] private AnimationCurve _rotationCurve;
         
         [Header("Button options")]
         [SerializeField] private Vector3 _buttonPressedPosition;
@@ -60,7 +61,8 @@ namespace PocketWatchPuzzle
                 while (t < 1)
                 {
                     t += Time.deltaTime * _rotationSpeed;
-                    _objectToRotate.transform.rotation = Quaternion.Slerp(startRotation, endRotation, t);
+                    float a = _rotationCurve.Evaluate(t);
+                    _objectToRotate.transform.rotation = Quaternion.Slerp(startRotation, endRotation, a);
                     yield return null;
                 }
                 yield return new WaitForSeconds(_timeBetweenRotations);
@@ -76,8 +78,7 @@ namespace PocketWatchPuzzle
             while (t < 1)
             {
                 t += Time.deltaTime * _rotationSpeed * 2;
-                float a = _buttonPressCurve.Evaluate(t);
-                transform.position = Vector3.Lerp(startPosition, endPosition, a);
+                transform.position = Vector3.Lerp(startPosition, endPosition, t);
                 yield return null;
             }
             if (doReturn) StartCoroutine(PressButtonRoutine(endPosition, startPosition, false));
