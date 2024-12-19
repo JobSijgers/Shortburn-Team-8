@@ -3,6 +3,7 @@ using System.Collections;
 using HandScripts.Grab;
 using HandScripts.Pull;
 using HandScripts.Use;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -70,6 +71,7 @@ namespace HandScripts.Core
             if (interactable == null)
                 return;
 
+            _rightHand.ShotArm(_rightHand.transform);
             switch (interactable.GetInteractType())
             {
                 case EInteractType.Grab:
@@ -88,10 +90,10 @@ namespace HandScripts.Core
                     throw new ArgumentOutOfRangeException();
             }
         }
-        
+
         private RaycastHit ShootRay()
         {
-            Physics.Raycast(_rayOrigin.position, _rayOrigin.forward, out RaycastHit hit, _rayDistance, _layerMask);
+                Physics.Raycast(_rayOrigin.position, _rayOrigin.forward, out RaycastHit hit, _rayDistance, _layerMask);
             return hit;
         }
 
@@ -105,23 +107,28 @@ namespace HandScripts.Core
                 return;
 
             _handInUse = true;
-            _leftHand.MoveToPoint(_leftHandInactiveHolder, _leftHandInactiveHolder, () =>
-            {
-                _leftHand.gameObject.SetActive(false);
-            });
-                
+            _leftHand.MoveToPoint(_leftHandInactiveHolder, _leftHandInactiveHolder,
+                () => { _leftHand.gameObject.SetActive(false); });
+
+            _rightHand.ShotArm(_rightHand.transform);
             _rightHand.MoveToPoint(_leftHandInactiveHolder, null, () =>
             {
                 IHandGrabable storedObject = _leftHand.GetStoredObject();
-                storedObject.SetParent(_rightHand.GetStoragePoint());
-                storedObject.ResetPosition();
-                _rightHand.MoveToPoint(interactable.GetHeldPoint(), null, () =>
+                storedObject.SetParent(_rightHand.GetStoragePoint().transform);
+                storedObject.Released();
+                storedObject.ResetPosition(quaternion.identity);
+                
+                // set finger positions
+                IHandInteractable handInteractable = (IHandInteractable)storedObject;
+                _rightHand.MoveFingersToGrabPoint(handInteractable.GetGrabPoint(), true);
+                _rightHand.MoveToGrabPoint(interactable.GetGrabPoint(), null, () =>
                 {
                     storedObject.SetParent(null);
-                    
+                    IHandInteractable handInteractable = (IHandInteractable)storedObject;
+                    handInteractable.GetObjectTransform().localRotation = quaternion.identity;
                     deposit.OnDeposit(_leftHand.GetStoredObject());
-                    
-                    ReturnRightHand();
+
+                    ReturnRightHand(true);
                 });
                 _leftHand.StoreObject(null);
             });
@@ -132,11 +139,12 @@ namespace HandScripts.Core
             if (_leftHand.GetStoredObject() != null)
             {
                 Debug.Log("Hand is already holding an object");
+                return;
             }
 
             IHandGrabable grabable = (IHandGrabable)interactable;
             _handInUse = true;
-            _rightHand.MoveToPoint(interactable.GetHeldPoint(), null, () => ReturnGrabItem(grabable));
+            _rightHand.MoveToGrabPoint(interactable.GetGrabPoint(), null, () => ReturnGrabItem(grabable));
         }
 
         private void ReturnGrabItem(IHandGrabable grabable)
@@ -145,12 +153,15 @@ namespace HandScripts.Core
             grabable.Grabbed();
             _rightHand.MoveToPoint(_leftHandInactiveHolder, null, () =>
             {
-                grabable.SetParent(_leftHand.GetStoragePoint());
-                grabable.ResetPosition();
+                IHandInteractable interactable = (IHandInteractable)grabable;
+                Quaternion oldRot = interactable.GetObjectTransform().localRotation;
+                grabable.SetParent(_leftHand.GetStoragePoint().transform);
+                grabable.ResetPosition(oldRot);
                 _leftHand.StoreObject(grabable);
                 _leftHand.gameObject.SetActive(true);
+                _leftHand.Grab(interactable.GetGrabPoint());
                 _leftHand.MoveToPoint(_leftHandActiveHolder, _leftHandActiveHolder, null);
-                ReturnRightHand();
+                ReturnRightHand(true);
             });
         }
 
@@ -160,7 +171,7 @@ namespace HandScripts.Core
             if (pullable.HasBeenPulled())
                 return;
             _handInUse = true;
-            _rightHand.MoveToPoint(interactable.GetHeldPoint(), interactable.GetObjectTransform(),
+            _rightHand.MoveToGrabPoint(interactable.GetGrabPoint(), interactable.GetObjectTransform(),
                 () => StartCoroutine(PullRoutine(pullable)));
         }
 
@@ -183,7 +194,7 @@ namespace HandScripts.Core
                 yield return null;
             }
 
-            ReturnRightHand();
+            ReturnRightHand(true);
         }
 
         private void HandleHandUse(IHandInteractable interactable)
@@ -192,12 +203,18 @@ namespace HandScripts.Core
             if (useable.HasBeenUsed())
                 return;
             _handInUse = true;
-            _rightHand.MoveToPoint(interactable.GetHeldPoint(), interactable.GetObjectTransform(),
-                () => useable.Use(ReturnRightHand));
+            _rightHand.MoveToGrabPoint(interactable.GetGrabPoint(), interactable.GetObjectTransform(),
+                () => useable.Use(() => ReturnRightHand(true)));
         }
 
-        private void ReturnRightHand()
+        private void ReturnRightHand(bool resetFingers = false)
         {
+            if (resetFingers)
+            {
+                _rightHand.ResetFingers();
+            }
+
+            _rightHand.ReturnArm(_rightHand.transform);
             _rightHand.MoveToPoint(_rightHandHolder, _rightHandHolder, OnHandUseComplete);
         }
 

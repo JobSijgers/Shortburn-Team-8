@@ -5,8 +5,9 @@ namespace HandScripts.Grab
     public interface IHandGrabable
     {
         void SetParent(Transform newParent);
-        void ResetPosition();
+        void ResetPosition(Quaternion rotation);
         void Grabbed();
+        void Released();
         string GetDepositKey();
     }
 }
