@@ -14,6 +14,25 @@ namespace Maze
             gameObject.name = $"MazeBlock with ({_neighbours.Length}) neighbours";
         }
         
+        public bool IsStraight()
+        {
+            if (_neighbours.Length == 1)
+            {
+                return true;
+            }
+            bool hasTwoNeighbours = _neighbours.Length == 2;
+            if (!hasTwoNeighbours)
+            {
+                return false;
+            }
+            
+            Vector3 firstNeighbour = _neighbours[0].transform.position;
+            Vector3 secondNeighbour = _neighbours[1].transform.position;
+            
+            Vector3 direction = secondNeighbour - firstNeighbour;
+            
+            return direction.x == 0 || direction.z == 0;
+        }
 
         public MazeBlock GetNextMazeBlock(Vector3 playerPosition)
         {

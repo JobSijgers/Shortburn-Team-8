@@ -11,25 +11,14 @@ namespace Maze
         [SerializeReference] private MazeBlock _currentBlock;
         [SerializeReference] private MazeBlock _endBlock;
 
+        private bool _isPastMidpoint = false;
         
-        private void Update()
+        public void Pull(Vector3 currentLocation)
         {
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                if (_currentBlock == _endBlock)
-                {
-                    Debug.Log("You won!");
-                }
-                else
-                {
-                    MazeBlock nextBlock = _currentBlock.GetNextMazeBlock(_player.position);
-                    if (nextBlock != null)
-                    {
-                        _currentBlock = nextBlock;
-                    }
-                    _mazeFollowObject.transform.position = _currentBlock.transform.position;
-                }
-            }
+            bool currentBlockIsStraight = _currentBlock.IsStraight();
+            MazeBlock target = _currentBlock.GetNextMazeBlock(currentLocation);
+            
+            
         }
 
         public void SetCurrentBlock(MazeBlock block)
