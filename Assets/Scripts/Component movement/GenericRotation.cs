@@ -11,11 +11,13 @@ namespace Component_movement
         [SerializeField] private AnimationCurve _movementCurve;
         [SerializeField] private Quaternion _endRot;
         [SerializeField] private float _delay;
-        private Quaternion _startRot;
+        [SerializeField] private Quaternion _startRot;
+        [SerializeField] private bool _autoSetStartRot = true;
 
         private void Start()
         {
-            _startRot = transform.localRotation;
+            if (_autoSetStartRot)
+                _startRot = transform.localRotation; 
         }
 
         public void StartMovement()

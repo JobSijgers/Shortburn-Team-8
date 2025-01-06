@@ -126,11 +126,11 @@ namespace HandScripts.Core
                     storedObject.SetParent(null);
                     IHandInteractable handInteractable = (IHandInteractable)storedObject;
                     handInteractable.GetObjectTransform().localRotation = quaternion.identity;
+                    Debug.Log(_leftHand.GetStoredObject());
                     deposit.OnDeposit(_leftHand.GetStoredObject());
-
                     ReturnRightHand(true);
+                    _leftHand.StoreObject(null);
                 });
-                _leftHand.StoreObject(null);
             });
         }
 
