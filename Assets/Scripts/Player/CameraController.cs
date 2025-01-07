@@ -115,6 +115,10 @@ namespace Player
         {
             return Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, Mathf.Infinity, mask) && hit.transform == obj;
         }
+        public Transform GetLookAtObject()
+        {
+            return Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, Mathf.Infinity) ? hit.transform : null;
+        }
     }
 }
 

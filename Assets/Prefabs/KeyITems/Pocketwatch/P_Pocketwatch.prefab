@@ -1426,6 +1426,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LimbScript: {fileID: 11500000, guid: 858f2c241819af2499c1381aa816d906, type: 3}
+  _onPickup:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: UnityEngine.UI.Image, UnityEngine.UI
+        m_MethodName: set_sprite
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1008489845, guid: 1ee1108c6ce70bd43b4f462ad1fb40cf,
+            type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Sprite, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!65 &10134209470974766
 BoxCollider:
   m_ObjectHideFlags: 0
