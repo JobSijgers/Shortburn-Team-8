@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c56ed51ca206404bb736c4e4d4639b72, type: 3}
   m_Name: Cooking Recipe
   m_EditorClassIdentifier: 
-  _ingredients: []
-  _resultPrefab: {fileID: 919132149155446097, guid: 0a92a09d01edd054ead2cbbf49f52998,
+  _ingredients:
+  - Zaad
+  - Zout
+  _resultPrefab: {fileID: 5635155772028028895, guid: 9c8beb106a3bd2d46822db0986747a04,
     type: 3}

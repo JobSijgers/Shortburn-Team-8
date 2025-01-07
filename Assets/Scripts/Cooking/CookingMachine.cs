@@ -36,7 +36,6 @@ namespace Cooking
             {
                 if (!recipe.CanCook(_ingredients)) 
                     continue;
-                Debug.Log("Zaad");
                 Instantiate(recipe._resultPrefab, _resultSpawnPoint.position, _resultSpawnPoint.rotation);
                 break;
             }
