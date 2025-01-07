@@ -1,0 +1,27 @@
+2025-01-07 11:30:25.5969 [WARNING] Unable to sync reference to Mesh pb_Mesh-430458(Clone)
+2025-01-07 11:30:25.6044 [WARNING] Unable to sync reference to Mesh pb_Mesh-430458
+2025-01-07 11:31:12.3916 [WARNING] Unable to sync reference to Mesh pb_Mesh-430458(Clone)(Clone)
+2025-01-07 11:31:12.3926 [WARNING] Unable to sync reference to Mesh pb_Mesh-430458(Clone)
+2025-01-07 11:44:49.6415 [WARNING] Your asset UnityEngine.Material at 'Packages/com.unity.render-pipelines.universal/Runtime/Materials/Decal.mat' conflicts with the server version and will not sync.
+2025-01-07 11:46:39.3557 [WARNING] Your asset UnityEngine.Material at 'Packages/com.unity.render-pipelines.universal/Runtime/Materials/Decal.mat' conflicts with the server version and will not sync.
+2025-01-07 11:48:11.6633 [WARNING] Your asset UnityEngine.Material at 'Packages/com.unity.render-pipelines.universal/Runtime/Materials/Decal.mat' conflicts with the server version and will not sync.
+2025-01-07 11:50:24.5614 [WARNING] Prevented saving prefab 'Assets/Prefabs/KeyITems/Pocketwatch/P_Pocketwatch.prefab'.
+2025-01-07 11:52:07.5993 [WARNING] Your asset UnityEngine.Material at 'Packages/com.unity.render-pipelines.universal/Runtime/Materials/Decal.mat' conflicts with the server version and will not sync.
+2025-01-07 11:54:41.2527 [WARNING] Your asset UnityEngine.Material at 'Packages/com.unity.render-pipelines.universal/Runtime/Materials/Decal.mat' conflicts with the server version and will not sync.
+2025-01-07 12:00:34.2117 [WARNING] Your asset UnityEngine.Material at 'Packages/com.unity.render-pipelines.universal/Runtime/Materials/Decal.mat' conflicts with the server version and will not sync.
+2025-01-07 12:24:40.0241 [WARNING] Your asset UnityEngine.Material at 'Packages/com.unity.render-pipelines.universal/Runtime/Materials/Decal.mat' conflicts with the server version and will not sync.
+2025-01-07 12:24:40.0341 [WARNING] Your asset UnityEngine.Material at 'Assets/Materials/ClockHint.mat' conflicts with the server version and will not sync.
+2025-01-07 12:39:38.4300 [WARNING] Your asset UnityEngine.Material at 'Packages/com.unity.render-pipelines.universal/Runtime/Materials/Decal.mat' conflicts with the server version and will not sync.
+2025-01-07 12:39:38.4496 [WARNING] Your asset UnityEngine.Material at 'Assets/Materials/ClockHint.mat' conflicts with the server version and will not sync.
+2025-01-07 12:41:17.5497 [WARNING] Your asset UnityEngine.Material at 'Packages/com.unity.render-pipelines.universal/Runtime/Materials/Decal.mat' conflicts with the server version and will not sync.
+2025-01-07 12:41:17.5724 [WARNING] Your asset UnityEngine.Material at 'Assets/Materials/ClockHint.mat' conflicts with the server version and will not sync.
+2025-01-07 12:41:46.7275 [WARNING] Unable to sync reference to Mesh pb_Mesh-430458(Clone)(Clone)(Clone)
+2025-01-07 12:41:46.7300 [WARNING] Unable to sync reference to Mesh pb_Mesh-430458(Clone)(Clone)
+2025-01-07 12:41:51.4803 [WARNING] Unable to sync reference to Mesh pb_Mesh-430458(Clone)(Clone)(Clone)(Clone)
+2025-01-07 12:41:51.4813 [WARNING] Unable to sync reference to Mesh pb_Mesh-430458(Clone)(Clone)(Clone)
+2025-01-07 12:41:55.6208 [WARNING] Unable to sync reference to Mesh pb_Mesh-430458(Clone)(Clone)(Clone)(Clone)(Clone)
+2025-01-07 12:41:55.6228 [WARNING] Unable to sync reference to Mesh pb_Mesh-430458(Clone)(Clone)(Clone)(Clone)
+2025-01-07 12:42:07.2420 [WARNING] Unable to sync reference to Mesh pb_Mesh-430458(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)
+2025-01-07 12:42:07.2440 [WARNING] Unable to sync reference to Mesh pb_Mesh-430458(Clone)(Clone)(Clone)(Clone)(Clone)
+2025-01-07 12:44:55.9968 [WARNING] Your asset UnityEngine.Material at 'Packages/com.unity.render-pipelines.universal/Runtime/Materials/Decal.mat' conflicts with the server version and will not sync.
+2025-01-07 12:44:56.0123 [WARNING] Your asset UnityEngine.Material at 'Assets/Materials/ClockHint.mat' conflicts with the server version and will not sync.
