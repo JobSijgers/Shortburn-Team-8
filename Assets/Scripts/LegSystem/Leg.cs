@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace LegSystem
 {
@@ -16,12 +17,12 @@ namespace LegSystem
             Instance = this;
         }
 
-        public void StartLegReturn(Transform origin)
+        public void StartLegReturn(Transform origin, UnityAction onReturn = null)
         {
-            StartCoroutine(ReturnLeg(origin));
+            StartCoroutine(ReturnLeg(origin, onReturn));
         }
 
-        private IEnumerator ReturnLeg(Transform origin)
+        private IEnumerator ReturnLeg(Transform origin, UnityAction onReturn = null)
         {
             // lerp to position
             float t = 0;
@@ -36,6 +37,7 @@ namespace LegSystem
                 transform.rotation = Quaternion.Lerp(startRot, origin.rotation, b);
                 yield return null;
             }
+            onReturn?.Invoke();
             Destroy(gameObject);
         }
     }

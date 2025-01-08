@@ -41,8 +41,7 @@ namespace LegSystem
             }
             else
             {
-                _leg.StartLegReturn(_legOrigin);
-                _leg = null;
+                _leg.StartLegReturn(_legOrigin, () => _leg = null);
                 _playerMovement.RemoveConstraint();
             }
         }
