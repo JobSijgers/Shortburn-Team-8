@@ -39,7 +39,7 @@ namespace UISystem.UIComponents
                         return;
                     }
                 }
-                _text.text = interactable.GetInteractType() == EInteractType.Grab ? "Press LMB to grab" : "Press LMB to use";
+                _text.text = "Press LMB to interact";
             }
             else
             {

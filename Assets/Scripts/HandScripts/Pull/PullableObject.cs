@@ -16,6 +16,7 @@ namespace HandScripts.Pull
         [SerializeField] private PathCreator _pathCreator;
         [Range(-360, 360)] [SerializeField] private float _minAngle;
         [Range(-360, 360)] [SerializeField] private float _maxAngle;
+        [SerializeField] private Vector3 _angleDirection;
         [SerializeField] private UnityEvent _onPullComplete;
         [SerializeField] private UnityEvent<float> _onPullUpdate;
 
@@ -88,8 +89,8 @@ namespace HandScripts.Pull
             {
                 Handles.color = new Color(1, 0, 0, 0.1f);
             }
-            Handles.DrawSolidArc(transform.position, Vector3.up, transform.forward, _minAngle, 10);
-            Handles.DrawSolidArc(transform.position, Vector3.up, transform.forward, _maxAngle, 10);
+            Handles.DrawSolidArc(transform.position, Vector3.up, _angleDirection, _minAngle, 10);
+            Handles.DrawSolidArc(transform.position, Vector3.up, _angleDirection, _maxAngle, 10);
         }
 #endif
     }
