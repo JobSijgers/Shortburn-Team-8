@@ -81,6 +81,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 5949994893991273300}
+    - targetCorrespondingSourceObject: {fileID: 4027228791024609348, guid: 98a13d57cada59d4685c7c9c30d1e3b0,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 9103443989703912775}
   m_SourcePrefab: {fileID: 100100000, guid: 98a13d57cada59d4685c7c9c30d1e3b0, type: 3}
 --- !u!1 &2146050656737493890 stripped
 GameObject:
@@ -110,3 +114,50 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
+--- !u!1 &2804250933543261847 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4027228791024609348, guid: 98a13d57cada59d4685c7c9c30d1e3b0,
+    type: 3}
+  m_PrefabInstance: {fileID: 1227552378318241491}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &9103443989703912775
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2804250933543261847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93529675c85a76a49b792692d1f71f05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _movementSpeed: 1
+  _movementCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _endRot: {x: 0, y: 0, z: 0, w: 0}
+  _delay: 0
+  _startRot: {x: 0, y: 0, z: 0, w: 0}
+  _autoSetStartRot: 1

@@ -66,6 +66,7 @@ namespace HandScripts.Core
 
         private void TryUseInteractable(RaycastHit hit)
         {
+            // get closest interactable on object
             IHandInteractable interactable = hit.collider?.GetComponent<IHandInteractable>();
 
             if (interactable == null)
