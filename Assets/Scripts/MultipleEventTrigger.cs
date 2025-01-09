@@ -9,6 +9,7 @@ public class MultipleEventTrigger : MonoBehaviour
     [SerializeField] private HandUseableObject[] _useableObjects;
     [FormerlySerializedAs("_onAllPressurePlate")] [SerializeField] private UnityEvent _onAllEvents;
     [FormerlySerializedAs("_onUnPressurePlate")] [SerializeField] private UnityEvent _onUnEvents;
+    [SerializeField] private UnityEvent<float> _onEventUpdate;
     private int _currentEventIndex;
     
     private void Start()
@@ -33,7 +34,7 @@ public class MultipleEventTrigger : MonoBehaviour
         {
             _onAllEvents.Invoke();
         }
-        Debug.Log(_currentEventIndex);
+        UpdateEventProgress();
     }
 
     private void OnEventEnd()
@@ -43,5 +44,11 @@ public class MultipleEventTrigger : MonoBehaviour
             _onUnEvents.Invoke();
         }
         _currentEventIndex--;
+        UpdateEventProgress();
+    }
+    
+    private void UpdateEventProgress()
+    {
+        _onEventUpdate?.Invoke((float)_currentEventIndex / (_pressurePlates.Length + _useableObjects.Length));
     }
 }
