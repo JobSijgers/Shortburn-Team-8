@@ -39,7 +39,6 @@ namespace PocketWatchPuzzle
 
         private void OnTimeUpdated()
         {
-            Debug.Log(GetHour() + " : " + GetMinute() + " : " + GetSecond());
             if (GetHour() == _correctTime.x &&
                 GetMinute() == _correctTime.y &&
                 GetSecond() == _correctTime.z)
