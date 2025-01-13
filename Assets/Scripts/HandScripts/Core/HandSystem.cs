@@ -67,7 +67,19 @@ namespace HandScripts.Core
         private void TryUseInteractable(RaycastHit hit)
         {
             // get closest interactable on object
-            IHandInteractable interactable = hit.collider?.GetComponent<IHandInteractable>();
+            IHandInteractable[] interactables = hit.collider?.GetComponents<IHandInteractable>();
+            float closestDistance = float.MaxValue;
+            IHandInteractable interactable = null;
+            foreach (IHandInteractable current in interactables)
+            {
+                GrabPoint grabPoint = current.GetGrabPoint();
+                float distance = Vector3.Distance(transform.position, grabPoint.GrabPointTransform.position);
+                if (distance < closestDistance)
+                {
+                    closestDistance = distance;
+                    interactable = current;
+                }
+            }
 
             if (interactable == null)
                 return;

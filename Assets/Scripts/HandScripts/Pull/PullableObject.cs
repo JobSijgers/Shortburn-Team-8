@@ -13,7 +13,9 @@ namespace HandScripts.Pull
     {
         [SerializeField] private GrabPoint _handHoldPoint;
         [SerializeField] private float _pullSpeed;
-        [SerializeField] private PathCreator _pathCreator;
+        [SerializeField] private Transform _destination;
+        [SerializeField] private bool _updateY;
+        [SerializeField] private bool _updateRotation;
         [Range(-360, 360)] [SerializeField] private float _minAngle;
         [Range(-360, 360)] [SerializeField] private float _maxAngle;
         [SerializeField] private Vector3 _angleDirection;
@@ -21,15 +23,21 @@ namespace HandScripts.Pull
         [SerializeField] private UnityEvent<float> _onPullUpdate;
 
         private float _distanceTravelled;
-
+        private float _totalDistance;
+        private Vector3 _stratPos;
+        private Quaternion _startRot;
 
         public GrabPoint GetGrabPoint() => _handHoldPoint;
         public EInteractType GetInteractType() => EInteractType.Pull;
         public Transform GetObjectTransform() => transform;
-        public bool HasBeenPulled() => _distanceTravelled >= _pathCreator.path.length;
+        public bool HasBeenPulled() => _distanceTravelled >= _totalDistance;
+        private float GetDistancePRC() => _distanceTravelled / _totalDistance;
 
         private void Start()
         {
+            _stratPos = transform.position;
+            _startRot = transform.rotation;
+            _totalDistance = Vector3.Distance(transform.position, _destination.position);
             SetPositionAndRotationAtPathDistance(0);
         }
 
@@ -39,9 +47,9 @@ namespace HandScripts.Pull
             _distanceTravelled += _pullSpeed * Time.deltaTime;
             SetPositionAndRotationAtPathDistance(_distanceTravelled);
 
-            _onPullUpdate?.Invoke(_distanceTravelled / _pathCreator.path.length);
+            _onPullUpdate?.Invoke(_distanceTravelled / _totalDistance);
             
-            if (_distanceTravelled < _pathCreator.path.length) 
+            if (_distanceTravelled < _totalDistance) 
                 return;
             onComplete?.Invoke();
             _onPullComplete?.Invoke();
@@ -57,8 +65,13 @@ namespace HandScripts.Pull
 
         private void SetPositionAndRotationAtPathDistance(float distance)
         {
-            transform.position = _pathCreator.path.GetPointAtDistance(distance, EndOfPathInstruction.Stop);
-            transform.rotation = _pathCreator.path.GetRotationAtDistance(distance, EndOfPathInstruction.Stop);
+            float a = distance / _totalDistance;
+            Vector3 pos = Vector3.Lerp(_stratPos, _destination.position, a);
+            pos.y = _updateY ? pos.y : transform.position.y;
+            transform.position = pos;
+            
+            Quaternion rot = Quaternion.Lerp(_startRot, _destination.rotation, a);
+            if (_updateRotation)transform.rotation = rot;
         }
 
 #if UNITY_EDITOR
@@ -89,8 +102,8 @@ namespace HandScripts.Pull
             {
                 Handles.color = new Color(1, 0, 0, 0.1f);
             }
-            Handles.DrawSolidArc(transform.position, Vector3.up, _angleDirection, _minAngle, 10);
-            Handles.DrawSolidArc(transform.position, Vector3.up, _angleDirection, _maxAngle, 10);
+            // Handles.DrawSolidArc(transform.position, Vector3.up, _angleDirection, _minAngle, 10);
+            // Handles.DrawSolidArc(transform.position, Vector3.up, _angleDirection, _maxAngle, 10);
         }
 #endif
     }
