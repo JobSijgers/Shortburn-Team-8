@@ -10,6 +10,7 @@ namespace HandScripts.Grab
     {
         [SerializeField] private GrabPoint _heldPoint;
         [SerializeField] private string _depositKey;
+        [SerializeField] private bool _currentlyInteractable = true;
         private LayerMask _defaultLayer;
 
         private void Start()
@@ -24,6 +25,7 @@ namespace HandScripts.Grab
         public void Grabbed() => gameObject.layer = LayerMask.NameToLayer("GrabbedObject");
         public string GetDepositKey() => _depositKey;
         public void Released() => gameObject.layer = _defaultLayer;
+        public bool CurrentlyInteractable() => _currentlyInteractable;
 
         public void ResetPosition(Quaternion localRotation)
         {

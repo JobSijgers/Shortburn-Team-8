@@ -8,6 +8,7 @@ namespace HandScripts.Grab
     {
         [SerializeField] private string _depositKey;
         [SerializeField] private GrabPoint _heldPoint;
+        [SerializeField] private bool _currentlyInteractable = true;
         
         public UnityEvent<IHandGrabable> _onDeposit;
         public void OnDeposit(IHandGrabable grabable) => _onDeposit.Invoke(grabable);
@@ -15,5 +16,7 @@ namespace HandScripts.Grab
         public GrabPoint GetGrabPoint() => _heldPoint;
         public EInteractType GetInteractType() => EInteractType.Deposit;
         public Transform GetObjectTransform() => transform;
+        public bool CurrentlyInteractable() => _currentlyInteractable;
+        public void SetInteractable(bool interactable) => _currentlyInteractable = interactable;
     }
 }

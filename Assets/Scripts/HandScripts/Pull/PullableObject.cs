@@ -21,17 +21,20 @@ namespace HandScripts.Pull
         [SerializeField] private Vector3 _angleDirection;
         [SerializeField] private UnityEvent _onPullComplete;
         [SerializeField] private UnityEvent<float> _onPullUpdate;
+        [SerializeField] private bool _currentlyInteractable = true;
 
         private float _distanceTravelled;
         private float _totalDistance;
         private Vector3 _stratPos;
         private Quaternion _startRot;
+        private bool _resetStartPos;
 
         public GrabPoint GetGrabPoint() => _handHoldPoint;
         public EInteractType GetInteractType() => EInteractType.Pull;
         public Transform GetObjectTransform() => transform;
         public bool HasBeenPulled() => _distanceTravelled >= _totalDistance;
         private float GetDistancePRC() => _distanceTravelled / _totalDistance;
+        public bool CurrentlyInteractable() => _currentlyInteractable;
 
         private void Start()
         {

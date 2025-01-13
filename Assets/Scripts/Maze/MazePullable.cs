@@ -12,6 +12,7 @@ namespace Maze
         [SerializeField] private GrabPoint _handHoldPoint;
         [SerializeField] private float _pullStep;
         [SerializeField] private Maze _maze;
+        [SerializeField] private bool _currentlyInteractable = true;
 
         public GrabPoint GetGrabPoint() => _handHoldPoint;
         public EInteractType GetInteractType() => EInteractType.Pull;
@@ -19,6 +20,7 @@ namespace Maze
         public float GetPullSpeed() => _pullStep;
         public bool CanPull(Vector3 playerPosition) => true;
         public bool HasBeenPulled() => false;
+        public bool CurrentlyInteractable() => _currentlyInteractable;
 
         public void Pull(UnityAction onComplete)
         {

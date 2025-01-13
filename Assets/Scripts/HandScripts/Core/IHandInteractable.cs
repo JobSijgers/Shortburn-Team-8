@@ -8,5 +8,6 @@ namespace HandScripts.Core
         GrabPoint GetGrabPoint();
         EInteractType GetInteractType();
         Transform GetObjectTransform();
+        bool CurrentlyInteractable();
     }
 }
