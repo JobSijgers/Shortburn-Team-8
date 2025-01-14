@@ -15,13 +15,14 @@ namespace HandScripts.Use
         [SerializeField] private bool _canTriggerMultipleTimes;
         [SerializeField] private float _useCooldown;
         private bool _hasBeenUsed;
+        [SerializeField] private bool _currentlyInteractable = true;
         
         
         public GrabPoint GetGrabPoint() => _heldPoint;
         public EInteractType GetInteractType() => EInteractType.Use;
         public Transform GetObjectTransform() => transform;
         public bool HasBeenUsed() => _hasBeenUsed;
-
+        public bool CurrentlyInteractable() => _currentlyInteractable;
         public void Use(UnityAction onComplete)
         {
             StartCoroutine(UseRoutine(onComplete));

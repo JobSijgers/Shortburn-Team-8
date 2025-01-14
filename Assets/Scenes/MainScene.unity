@@ -9194,6 +9194,9 @@ MonoBehaviour:
   _onUnEvents:
     m_PersistentCalls:
       m_Calls: []
+  _onEventUpdate:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &153669143
 Transform:
   m_ObjectHideFlags: 0
@@ -12757,6 +12760,7 @@ MonoBehaviour:
   _onPullUpdate:
     m_PersistentCalls:
       m_Calls: []
+  _currentlyInteractable: 1
 --- !u!64 &233294934
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -32260,6 +32264,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  _currentlyInteractable: 1
 --- !u!1001 &565685921
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -35731,6 +35736,9 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   _onUnEvents:
+    m_PersistentCalls:
+      m_Calls: []
+  _onEventUpdate:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1001 &695521955
@@ -66575,11 +66583,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 8454092761158314290, guid: 2563d36c014865e45a7e31855e85fa28,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -69014,6 +69017,7 @@ MonoBehaviour:
   _onPullUpdate:
     m_PersistentCalls:
       m_Calls: []
+  _currentlyInteractable: 1
 --- !u!1 &1495766629 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1475822201229789367, guid: b5f76d853ac98b044bada817374244ee,
@@ -90691,8 +90695,8 @@ MonoBehaviour:
   _destination: {fileID: 1882301533}
   _updateY: 0
   _updateRotation: 0
-  _minAngle: -15
-  _maxAngle: 15
+  _minAngle: -20
+  _maxAngle: 20
   _angleDirection: {x: 0, y: 0, z: 0.04}
   _onPullComplete:
     m_PersistentCalls:
@@ -90700,6 +90704,7 @@ MonoBehaviour:
   _onPullUpdate:
     m_PersistentCalls:
       m_Calls: []
+  _currentlyInteractable: 1
 --- !u!65 &2086514216
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -90747,6 +90752,7 @@ MonoBehaviour:
   _onPullUpdate:
     m_PersistentCalls:
       m_Calls: []
+  _currentlyInteractable: 1
 --- !u!1 &2089993355
 GameObject:
   m_ObjectHideFlags: 0
@@ -91518,6 +91524,7 @@ MonoBehaviour:
         m_CallState: 2
   _canTriggerMultipleTimes: 0
   _useCooldown: 0
+  _currentlyInteractable: 1
 --- !u!64 &2107676664
 MeshCollider:
   m_ObjectHideFlags: 0
