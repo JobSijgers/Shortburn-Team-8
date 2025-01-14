@@ -71,10 +71,73 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 98c0b705c45d752499876b4b37bb2d90,
         type: 3}
       propertyPath: m_Name
-      value: MS_Trapdoor_Stairs
+      value: P_Trapdoor_Stairs
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: -8068073526183931155, guid: 98c0b705c45d752499876b4b37bb2d90,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 363781228853635957}
+    - targetCorrespondingSourceObject: {fileID: -3111565609762313623, guid: 98c0b705c45d752499876b4b37bb2d90,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5406142783159745039}
   m_SourcePrefab: {fileID: 100100000, guid: 98c0b705c45d752499876b4b37bb2d90, type: 3}
+--- !u!1 &205699840137152723 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -3111565609762313623, guid: 98c0b705c45d752499876b4b37bb2d90,
+    type: 3}
+  m_PrefabInstance: {fileID: 6200248849264632506}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &5406142783159745039
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 205699840137152723}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -6360558719573625917, guid: 98c0b705c45d752499876b4b37bb2d90, type: 3}
+--- !u!1 &5045092223644053591 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -8068073526183931155, guid: 98c0b705c45d752499876b4b37bb2d90,
+    type: 3}
+  m_PrefabInstance: {fileID: 6200248849264632506}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &363781228853635957
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5045092223644053591}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 6.87955, y: 0.15707676, z: 2.5205452}
+  m_Center: {x: 1.533896, y: -0.029564971, z: -1.1919008}
