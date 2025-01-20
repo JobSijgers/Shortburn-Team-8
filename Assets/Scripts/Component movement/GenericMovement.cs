@@ -10,6 +10,7 @@ namespace Component_movement
         [SerializeField] private AnimationCurve _movementCurve;
         [SerializeField] private float _delay;
         [SerializeField] private Vector3 _endPos;
+        [SerializeField] private bool _useLocalPos;
         private Vector3 _startPos;
 
         public void StartMovement()
@@ -27,7 +28,10 @@ namespace Component_movement
             {
                 float curveValue = _movementCurve.Evaluate(t);
                 t += Time.deltaTime * _movementSpeed;
-                transform.position = Vector3.Lerp(_startPos, _endPos, curveValue);
+                if (_useLocalPos)
+                    transform.localPosition = Vector3.Lerp(_startPos, _endPos, curveValue);
+                else
+                    transform.position = Vector3.Lerp(_startPos, _endPos, curveValue);
                 yield return null;
             }
         }

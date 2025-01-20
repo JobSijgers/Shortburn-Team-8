@@ -59,6 +59,7 @@ namespace HandScripts.Core
 
         private void TryUseHand()
         {
+            Debug.Log(_handInUse);
             if (_handInUse)
                 return;
             TryUseInteractable(ShootRay());
@@ -66,6 +67,7 @@ namespace HandScripts.Core
 
         private void TryUseInteractable(RaycastHit hit)
         {
+            Debug.Log(hit.collider.gameObject.name);
             // get closest interactable on object
             IHandInteractable[] interactables = hit.collider?.GetComponents<IHandInteractable>();
             float closestDistance = float.MaxValue;
