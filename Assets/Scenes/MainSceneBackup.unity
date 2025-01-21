@@ -25649,8 +25649,8 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   _currentlyInteractable: 1
-  _autoSetStartPosition: 0
-  _startPosition: {x: 76.13, y: 19.079, z: 42.561}
+  _autoSetStartPosition: 1
+  _startPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &559246200
 MonoBehaviour:
   m_ObjectHideFlags: 0
