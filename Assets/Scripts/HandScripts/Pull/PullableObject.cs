@@ -25,8 +25,6 @@ namespace HandScripts.Pull
 
         private float _distanceTravelled;
         private float _totalDistance;
-        private Vector3 _stratPos;
-        private Quaternion _startRot;
         private bool _resetStartPos;
 
         public GrabPoint GetGrabPoint() => _handHoldPoint;
@@ -38,21 +36,19 @@ namespace HandScripts.Pull
 
         private void Start()
         {
-            _stratPos = transform.position;
-            _startRot = transform.rotation;
             _totalDistance = Vector3.Distance(transform.position, _destination.position);
-            SetPositionAndRotationAtPathDistance(0);
+            SetPositionAndRotationAtPathDistance();
         }
 
 
         public void Pull(UnityAction onComplete)
         {
             _distanceTravelled += _pullSpeed * Time.deltaTime;
-            SetPositionAndRotationAtPathDistance(_distanceTravelled);
+            SetPositionAndRotationAtPathDistance();
 
             _onPullUpdate?.Invoke(_distanceTravelled / _totalDistance);
-            
-            if (_distanceTravelled < _totalDistance) 
+
+            if (_distanceTravelled < _totalDistance)
                 return;
             onComplete?.Invoke();
             _onPullComplete?.Invoke();
@@ -66,15 +62,15 @@ namespace HandScripts.Pull
             return angle >= _minAngle && angle <= _maxAngle;
         }
 
-        private void SetPositionAndRotationAtPathDistance(float distance)
+        private void SetPositionAndRotationAtPathDistance()
         {
-            float a = distance / _totalDistance;
-            Vector3 pos = Vector3.Lerp(_stratPos, _destination.position, a);
+            Vector3 pos = Vector3.MoveTowards(transform.position, _destination.position, _pullSpeed * Time.deltaTime);
             pos.y = _updateY ? pos.y : transform.position.y;
             transform.position = pos;
-            
-            Quaternion rot = Quaternion.Lerp(_startRot, _destination.rotation, a);
-            if (_updateRotation)transform.rotation = rot;
+
+            Quaternion rot =
+                Quaternion.RotateTowards(transform.rotation, _destination.rotation, _pullSpeed * Time.deltaTime);
+            if (_updateRotation) transform.rotation = rot;
         }
 
 #if UNITY_EDITOR
@@ -92,10 +88,9 @@ namespace HandScripts.Pull
             {
                 if (CanPull(player.transform.position))
                 {
-                
                     Handles.color = new Color(0, 2, 0, 0.1f);
                 }
-            
+
                 else
                 {
                     Handles.color = new Color(1, 0, 0, 0.1f);
