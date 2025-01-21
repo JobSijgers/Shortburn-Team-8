@@ -9,5 +9,7 @@ namespace HandScripts.Grab
         void Grabbed();
         void Released();
         string GetDepositKey();
+        Material GetMaterial();
+        MeshRenderer GetMeshRenderer();
     }
 }
