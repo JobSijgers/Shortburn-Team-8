@@ -1,8 +1,5 @@
-using System;
 using HandScripts.Core;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace HandScripts.Grab
 {

@@ -23,7 +23,7 @@ namespace HandScripts.Pull
         [SerializeField] private UnityEvent<float> _onPullUpdate;
         [SerializeField] private bool _currentlyInteractable = true;
         [SerializeField] private bool _autoSetStartPosition = true;
-        [SerializeField] private Vector3 _startPosition;     
+        [SerializeField] private Vector3 _startPosition;
 
         private float _distanceTravelled;
         private float _totalDistance;
@@ -33,25 +33,26 @@ namespace HandScripts.Pull
         public EInteractType GetInteractType() => EInteractType.Pull;
         public Transform GetObjectTransform() => transform;
         public bool HasBeenPulled() => Vector3.Distance(transform.position, _destination.position) < 0.1f;
-        private float GetDistancePRC() => _distanceTravelled / _totalDistance;
         public bool CurrentlyInteractable() => _currentlyInteractable;
 
         private void Start()
         {
-            if (_autoSetStartPosition)
+            if (_autoSetStartPosition)  
             {
-                _totalDistance = Vector3.Distance(transform.position, _destination.position);
+                _startPosition = transform.position;
             }
+            _totalDistance = Vector3.Distance(_startPosition, _destination.position);
             SetPositionAndRotationAtPathDistance();
         }
 
 
         public void Pull(UnityAction onComplete)
         {
-            _distanceTravelled += _pullSpeed * Time.deltaTime;
             SetPositionAndRotationAtPathDistance();
 
-            _onPullUpdate?.Invoke(_distanceTravelled / _totalDistance);
+            float distance = Vector3.Distance(transform.position, _destination.position);
+            float t = 1 - distance / _totalDistance;
+            _onPullUpdate?.Invoke(t);
 
             if (Vector3.Distance(transform.position, _destination.position) > 0.01f)
                 return;
@@ -105,8 +106,8 @@ namespace HandScripts.Pull
             {
                 Handles.color = new Color(1, 0, 0, 0.1f);
             }
-             // Handles.DrawSolidArc(transform.position, Vector3.up, _angleDirection, _minAngle, 10);
-             // Handles.DrawSolidArc(transform.position, Vector3.up, _angleDirection, _maxAngle, 10);
+            // Handles.DrawSolidArc(transform.position, Vector3.up, _angleDirection, _minAngle, 10);
+            // Handles.DrawSolidArc(transform.position, Vector3.up, _angleDirection, _maxAngle, 10);
         }
 #endif
     }
