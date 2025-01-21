@@ -22,6 +22,8 @@ namespace HandScripts.Pull
         [SerializeField] private UnityEvent _onPullComplete;
         [SerializeField] private UnityEvent<float> _onPullUpdate;
         [SerializeField] private bool _currentlyInteractable = true;
+        [SerializeField] private bool _autoSetStartPosition = true;
+        [SerializeField] private Vector3 _startPosition;     
 
         private float _distanceTravelled;
         private float _totalDistance;
@@ -36,7 +38,10 @@ namespace HandScripts.Pull
 
         private void Start()
         {
-            _totalDistance = Vector3.Distance(transform.position, _destination.position);
+            if (_autoSetStartPosition)
+            {
+                _totalDistance = Vector3.Distance(transform.position, _destination.position);
+            }
             SetPositionAndRotationAtPathDistance();
         }
 

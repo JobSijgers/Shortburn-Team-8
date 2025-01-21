@@ -24,6 +24,9 @@ namespace HandScripts.Grab
         public void SetParent(Transform newParent) => transform.SetParent(newParent);
         public void Grabbed() => gameObject.layer = LayerMask.NameToLayer("GrabbedObject");
         public string GetDepositKey() => _depositKey;
+        public Material GetMaterial() => GetMeshRenderer().material;
+        public MeshRenderer GetMeshRenderer() => GetComponent<MeshRenderer>();
+
         public void Released() => gameObject.layer = _defaultLayer;
         public bool CurrentlyInteractable() => _currentlyInteractable;
 

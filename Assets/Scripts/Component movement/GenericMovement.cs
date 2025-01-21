@@ -22,7 +22,7 @@ namespace Component_movement
         {
             yield return new WaitForSeconds(_delay);
             // lerp to end pos
-            _startPos = transform.position;
+            _startPos = _useLocalPos ? transform.localPosition : transform.position;
             float t = 0;
             while (t < 1)
             {
