@@ -1,6 +1,7 @@
 using UnityEditor;
 using UnityEngine;
 using HandScripts.Core;
+using System;
 namespace LimbsPickup
 {
     using LegSystem;
@@ -19,18 +20,22 @@ namespace LimbsPickup
         public bool LegState => Leg.enabled;
         public bool HandState => Hand.enabled;
 
-        public void PickupLimb(MonoScript type)
+        public void PickupLimb(Type type)
         {
-            
-            if (type.GetClass() == typeof (LegSystem))
+            if (type == typeof(LegSystem))
             {
                 Leg.enabled = true;
             }
-            else if (type.GetClass() == typeof (HandSystem))
+            else if (type == typeof(HandSystem))
             {
                 Hand.enabled = true;
             }
+            else
+            {
+                Debug.LogWarning($"Unsupported limb type: {type}");
+            }
         }
+
     }
 }
 

@@ -1451,7 +1451,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d87126c420a444f7955f30cbb3808dcb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LimbScript: {fileID: 11500000, guid: 858f2c241819af2499c1381aa816d906, type: 3}
+  limbClassName: LegSystem.LegSysten
   _onPickup:
     m_PersistentCalls:
       m_Calls:
