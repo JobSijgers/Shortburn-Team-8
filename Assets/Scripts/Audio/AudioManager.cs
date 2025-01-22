@@ -1,39 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Audio;
+
 
 namespace Audio
 {
     public class AudioManager : MonoBehaviour
     {
-        [Serializable]
-        public class Sound
-        {
-            public string name;
-            public AudioClip clip;
-            [Range(0f, 1f)] public float volume = 0.7f;
-            [Range(0.5f, 1.5f)] public float pitch = 1f;
-            public bool loop;
-            public bool playOnAwake;
-            public bool disableCutoff;
-            [Range(0f, 1f)] public float cutoffRange;
-            public AudioMixerGroup mixerGroup;
-            [HideInInspector] public AudioSource source;
-        }
-
         public static AudioManager instance;
-        [SerializeField] private Sound[] sounds;
+        [SerializeField] private SoundClip[] _soundClips;
 
         private void Awake() => instance = this;
-        private readonly Dictionary<string, Sound> soundDictionary = new();
+        private readonly Dictionary<string, SoundClip> soundDictionary = new();
 
         private void Start()
         {
             //play sounds that are set to play on awake
-            foreach (Sound sound in sounds)
+            foreach (SoundClip sound in _soundClips)
             {
-                if (sound.clip == null)
+                if (sound._clip == null)
                 {
                     Debug.LogWarning($"Sound clip: {sound.name} is null");
                     continue;
@@ -43,49 +27,49 @@ namespace Audio
                 CreateAudioSource(sound);
             }
 
-            sounds = null;
+            _soundClips = null;
         }
 
         //find sound and play it
         public void PlaySound(string soundName)
         {
-            if (!soundDictionary.TryGetValue(soundName, out Sound sound))
+            if (!soundDictionary.TryGetValue(soundName, out SoundClip sound))
             {
                 return;
             }
 
-            if (!sound.source.isPlaying)
+            if (!sound._source.isPlaying)
             {
-                sound.source.Play();
+                sound._source.Play();
                 return;
             }
 
-            if (sound.disableCutoff && sound.source.time > sound.clip.length * sound.cutoffRange)
+            if (sound._disableCutoff && sound._source.time > sound._clip.length * sound._cutoffRange)
             {
-                sound.source.Play();
+                sound._source.Play();
             }
         }
 
         public void StopSound(string soundName)
         {
-            if (!soundDictionary.TryGetValue(soundName, out Sound sound))
+            if (!soundDictionary.TryGetValue(soundName, out SoundClip sound))
             {
                 return;
             }
 
-            sound.source.Stop();
+            sound._source.Stop();
         }
 
-        private void CreateAudioSource(Sound sound)
+        private void CreateAudioSource(SoundClip sound)
         {
             AudioSource audioSource = gameObject.AddComponent<AudioSource>();
-            audioSource.clip = sound.clip;
-            audioSource.volume = sound.volume;
-            audioSource.pitch = sound.pitch;
-            audioSource.loop = sound.loop;
-            audioSource.outputAudioMixerGroup = sound.mixerGroup;
-            sound.source = audioSource;
-            if (sound.playOnAwake)
+            audioSource.clip = sound._clip;
+            audioSource.volume = sound._volume;
+            audioSource.pitch = sound._pitch;
+            audioSource.loop = sound._loop;
+            audioSource.outputAudioMixerGroup = sound._mixerGroup;
+            sound._source = audioSource;
+            if (sound._playOnAwake)
             {
                 audioSource.Play();
             }
