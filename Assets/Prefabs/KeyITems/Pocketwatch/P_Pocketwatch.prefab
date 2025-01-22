@@ -1445,8 +1445,8 @@ MonoBehaviour:
   _hourButton: {fileID: 7912434767716319630}
   _minuteButton: {fileID: 0}
   _secondButton: {fileID: 0}
-  _startTime: {x: 12, y: 10, z: 30}
-  _correctTime: {x: 0, y: 0, z: 0}
+  _startTime: {x: 12, y: 10, z: 50}
+  _correctTime: {x: 3, y: 0, z: 45}
   _onComplete:
     m_PersistentCalls:
       m_Calls:

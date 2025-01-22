@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 namespace Component_movement
@@ -5,48 +6,41 @@ namespace Component_movement
     public class PingPongRotation : MonoBehaviour
     {
         [SerializeField] private float _movementSpeed;
-        [SerializeField] private Vector3 _endRotation;
-        [SerializeField] private AnimationCurve _moveCurve;
+        [SerializeField] private Quaternion _endRotation;
 
-        private Vector3 _startRotation;
+        private Quaternion _startRotation;
         private bool _isMoving;
         private float _t;
+        private Coroutine _moveRoutine;
 
     
         private void Start()
         {
-            _startRotation = transform.eulerAngles;
+            _startRotation = transform.rotation;
         }
 
         public void RotateForward()
         {
-            _isMoving = true;
+            if (_moveRoutine != null) StopCoroutine(_moveRoutine);
+            _moveRoutine = StartCoroutine(MoveRoutine(_endRotation));
         }
 
         public void RotateBack()
         {
-            _isMoving = false;
+            if (_moveRoutine != null) StopCoroutine(_moveRoutine);
+            _moveRoutine = StartCoroutine(MoveRoutine(_startRotation));
+
         }
-        private void Update()
+
+        private IEnumerator MoveRoutine(Quaternion endRotation)
         {
-            if (_isMoving)
+            while (transform.rotation != endRotation)
             {
-                if (_t >= 1) 
-                    return;
-                _t += Time.deltaTime;
-                float t = _moveCurve.Evaluate(_t);
-                Quaternion newPos = Quaternion.Euler(Vector3.Lerp(_startRotation, _endRotation, t));
-                transform.rotation = newPos;
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, endRotation, _movementSpeed * Time.deltaTime);
+                yield return null;
             }
-            else
-            {
-                if (_t <= 0)
-                    return;
-                _t -= Time.deltaTime;
-                float t = _moveCurve.Evaluate(_t);
-                Quaternion newPos = Quaternion.Euler(Vector3.Lerp(_startRotation, _endRotation, t));
-                transform.rotation = newPos;
-            }
+
+            _moveRoutine = null;
         }
     }
 }

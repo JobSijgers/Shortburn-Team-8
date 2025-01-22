@@ -1503,6 +1503,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _minDistance: 5
+  _actionNames:
+  - ActionName: leftButton
+    InteractionMessage: left mouse button
 --- !u!1001 &5259424289644092623
 PrefabInstance:
   m_ObjectHideFlags: 0
