@@ -26,7 +26,8 @@ public class PressurePlate : MonoBehaviour
     public void MovePlate(Vector3 moveDir)
     {
         Vector3 endPos = _startPos + Vector3.Scale(moveDir, _moveAmount) / 2;
-        if (_moveRoutine == null)_moveRoutine = StartCoroutine(MoveRoutine(transform.localPosition, endPos));
+        if (_moveRoutine != null) StopCoroutine(_moveRoutine);
+        _moveRoutine = StartCoroutine(MoveRoutine(transform.localPosition, endPos));
     }
     private void OnTriggerEnter(Collider other)
     {
