@@ -64,7 +64,7 @@ namespace HandScripts.Pull
         {
             //if the player is within the min and max angle of the object
             Vector3 directionToPlayer = playerPosition - transform.position;
-            float angle = Vector3.SignedAngle(transform.forward, directionToPlayer, Vector3.up);
+            float angle = Vector3.SignedAngle(_angleDirection, directionToPlayer, Vector3.up);
             return angle >= _minAngle && angle <= _maxAngle;
         }
 
@@ -84,8 +84,8 @@ namespace HandScripts.Pull
         private void OnDrawGizmosSelected()
         {
             //draw the lines to show the min and max angle
-            Vector3 minAnglePosition = transform.position + Quaternion.Euler(0, _minAngle, 0) * transform.forward * 10;
-            Vector3 maxAnglePosition = transform.position + Quaternion.Euler(0, _maxAngle, 0) * transform.forward * 10;
+            Vector3 minAnglePosition = transform.position + Quaternion.Euler(0, _minAngle, 0) * _angleDirection * 10;
+            Vector3 maxAnglePosition = transform.position + Quaternion.Euler(0, _maxAngle, 0) * _angleDirection * 10;
             Gizmos.DrawLine(transform.position, minAnglePosition);
             Gizmos.DrawLine(transform.position, maxAnglePosition);
             //fill the area between the min and max 
@@ -106,8 +106,8 @@ namespace HandScripts.Pull
             {
                 Handles.color = new Color(1, 0, 0, 0.1f);
             }
-            // Handles.DrawSolidArc(transform.position, Vector3.up, _angleDirection, _minAngle, 10);
-            // Handles.DrawSolidArc(transform.position, Vector3.up, _angleDirection, _maxAngle, 10);
+            Handles.DrawSolidArc(transform.position, Vector3.up, _angleDirection, _minAngle, 10);
+            Handles.DrawSolidArc(transform.position, Vector3.up, _angleDirection, _maxAngle, 10);
         }
 #endif
     }
