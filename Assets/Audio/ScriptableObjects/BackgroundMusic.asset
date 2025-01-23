@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: BackgroundMusic
   m_EditorClassIdentifier: 
   _name: 
-  _clip: {fileID: 0}
-  _volume: 0.7
-  _pitch: 1
-  _loop: 0
-  _playOnAwake: 0
+  _clip: {fileID: 8300000, guid: ad36fc8b7f1633a4a8a4be010c0aa210, type: 3}
+  _volume: 0.054
+  _pitch: 0.5
+  _loop: 1
+  _playOnAwake: 1
   _disableCutoff: 0
   _cutoffRange: 0
   _mixerGroup: {fileID: 0}
