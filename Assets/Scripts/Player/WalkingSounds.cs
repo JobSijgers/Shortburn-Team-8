@@ -52,13 +52,12 @@ public class WalkingSounds : MonoBehaviour
     {
         while (true)
         {
+            yield return new WaitForSeconds(_currentInterval);
             if (_playerMovement.PlayerMovementState == EPlayerMovementState.Idle)
             {
                 _soundCoroutine = null;
                 yield break;
             }
-
-            yield return new WaitForSeconds(_currentInterval);
             SoundClip sound = _walkingSounds[Random.Range(0, _walkingSounds.Length)];
             _audioManager.PlaySound(sound._name);
         }
