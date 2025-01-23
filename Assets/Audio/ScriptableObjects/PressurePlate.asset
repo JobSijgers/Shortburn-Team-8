@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 20c3ce6f5b003754abac8336a03c681c, type: 3}
-  m_Name: Footstep_05
+  m_Name: PressurePlate
   m_EditorClassIdentifier: 
-  _name: Footstep_05
-  _clip: {fileID: 8300000, guid: f739a445b1a6d9d41bb20e17b9d0903f, type: 3}
+  _name: PressurePlate
+  _clip: {fileID: 8300000, guid: e5e440272acd7854e84cdd2c138ac1c4, type: 3}
   _volume: 0.7
   _pitch: 1
   _loop: 0

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20c3ce6f5b003754abac8336a03c681c, type: 3}
   m_Name: Footstep_03
   m_EditorClassIdentifier: 
-  _name: Footstep_01
-  _clip: {fileID: 8300000, guid: 5b35dc62c8d11374798fb5597897ac35, type: 3}
+  _name: Footstep_03
+  _clip: {fileID: 8300000, guid: 3a77b5915e5d2c9478cc95acd5a9ecd7, type: 3}
   _volume: 0.7
   _pitch: 1
   _loop: 0
