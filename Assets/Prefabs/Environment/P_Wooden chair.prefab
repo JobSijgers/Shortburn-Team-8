@@ -66,10 +66,41 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 773736ccf8a9b9a48976d89db93f76af,
         type: 3}
       propertyPath: m_Name
-      value: MS_Wooden chair
+      value: P_Wooden chair
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 773736ccf8a9b9a48976d89db93f76af,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 459014479740777934}
   m_SourcePrefab: {fileID: 100100000, guid: 773736ccf8a9b9a48976d89db93f76af, type: 3}
+--- !u!1 &1439736172275595730 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 773736ccf8a9b9a48976d89db93f76af,
+    type: 3}
+  m_PrefabInstance: {fileID: 2250552668106343555}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &459014479740777934
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1439736172275595730}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.9907519, y: 1.667511, z: 1.0706488}
+  m_Center: {x: 0, y: 0.8262042, z: 0}
