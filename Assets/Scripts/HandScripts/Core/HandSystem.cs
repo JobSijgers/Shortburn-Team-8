@@ -11,6 +11,7 @@ namespace HandScripts.Core
 {
     public class HandSystem : MonoBehaviour
     {
+        public static HandSystem Instance;
         [Header("Hand Settings")]
         [SerializeField] private Hand _rightHand;
 
@@ -28,11 +29,16 @@ namespace HandScripts.Core
         [SerializeField] private float _rayDistance = 10f;
         [SerializeField] private LayerMask _layerMask;
 
-        private bool _handInUse;
+        public bool _handInUse;
         private bool _handPulling;
         private PlayerInputActions _inputActions;
         private InputAction _useAction;
         private InputAction _pullAction;
+
+        private void Awake()
+        {
+            Instance = this;
+        }
 
         private void OnEnable()
         {
