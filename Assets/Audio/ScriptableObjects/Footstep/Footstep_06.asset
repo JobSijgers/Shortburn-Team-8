@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: Footstep_01
   _clip: {fileID: 8300000, guid: 5b35dc62c8d11374798fb5597897ac35, type: 3}
-  _volume: 0.7
-  _pitch: 1
+  _volume: 0.141
+  _pitch: 0.856
   _loop: 0
   _playOnAwake: 0
   _disableCutoff: 0
