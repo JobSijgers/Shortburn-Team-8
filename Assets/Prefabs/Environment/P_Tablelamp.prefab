@@ -16,7 +16,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &6429021672486534349
 Transform:
@@ -84,7 +84,7 @@ Light:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingLayerMask: 1
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -129,52 +129,52 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 390aa52e7fb7cc943a3655e96dcc5bd9,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 63.388
+      value: 2.258
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 390aa52e7fb7cc943a3655e96dcc5bd9,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 18.253
+      value: 23.368786
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 390aa52e7fb7cc943a3655e96dcc5bd9,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 34.925
+      value: 20.422
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 390aa52e7fb7cc943a3655e96dcc5bd9,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.97766125
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 390aa52e7fb7cc943a3655e96dcc5bd9,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: 0.0067293453
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 390aa52e7fb7cc943a3655e96dcc5bd9,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0.20767699
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 390aa52e7fb7cc943a3655e96dcc5bd9,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: -0.031679098
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 390aa52e7fb7cc943a3655e96dcc5bd9,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: 1.508
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 390aa52e7fb7cc943a3655e96dcc5bd9,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 23.941
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 390aa52e7fb7cc943a3655e96dcc5bd9,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
+      value: -3.392
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: 390aa52e7fb7cc943a3655e96dcc5bd9,
         type: 3}
@@ -185,6 +185,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: P_Tablelamp
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 390aa52e7fb7cc943a3655e96dcc5bd9,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
