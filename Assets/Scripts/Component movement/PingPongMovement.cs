@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 namespace Component_movement
@@ -11,7 +12,7 @@ namespace Component_movement
         private Vector3 _startPos;
         private bool _isMoving;
         private float _t;
-
+        private Coroutine _moveRoutine;
     
         private void Start()
         {
@@ -20,33 +21,26 @@ namespace Component_movement
 
         public void MoveForward()
         {
-            _isMoving = true;
+            if (_moveRoutine != null) StopCoroutine(_moveRoutine);
+            _moveRoutine = StartCoroutine(MoveRoutine(_endPos));
         }
 
         public void MoveBack()
         {
-            _isMoving = false;
+            if (_moveRoutine != null) StopCoroutine(_moveRoutine);
+            _moveRoutine = StartCoroutine(MoveRoutine(_startPos));
         }
-        private void Update()
+
+        private IEnumerator MoveRoutine(Vector3 targetPosition)
         {
-            if (_isMoving)
+            while (transform.position != targetPosition)
             {
-                if (_t >= 1) 
-                    return;
-                _t += Time.deltaTime;
-                float t = _moveCurve.Evaluate(_t);
-                Vector3 newPos = Vector3.Lerp(_startPos, _endPos, t);
-                transform.position = newPos;
+                float t = _moveCurve.Evaluate(Vector3.Distance(transform.position, targetPosition) / Vector3.Distance(_startPos, _endPos));
+                transform.position = Vector3.MoveTowards(transform.position, targetPosition, _movementSpeed * Time.deltaTime * t);
+                yield return null;
             }
-            else
-            {
-                if (_t <= 0)
-                    return;
-                _t -= Time.deltaTime;
-                float t = _moveCurve.Evaluate(_t);
-                Vector3 newPos = Vector3.Lerp(_startPos, _endPos, t);
-                transform.position = newPos;
-            }
+
+            _moveRoutine = null;
         }
     }
 }

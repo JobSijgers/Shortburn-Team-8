@@ -11,6 +11,8 @@ namespace HandScripts.Core
 {
     public class HandSystem : MonoBehaviour
     {
+        public static HandSystem Instance;
+
         [Header("Hand Settings")]
         [SerializeField] private Hand _rightHand;
 
@@ -28,11 +30,16 @@ namespace HandScripts.Core
         [SerializeField] private float _rayDistance = 10f;
         [SerializeField] private LayerMask _layerMask;
 
-        private bool _handInUse;
+        public bool _handInUse;
         private bool _handPulling;
         private PlayerInputActions _inputActions;
         private InputAction _useAction;
         private InputAction _pullAction;
+
+        private void Awake()
+        {
+            Instance = this;
+        }
 
         private void OnEnable()
         {
@@ -67,13 +74,15 @@ namespace HandScripts.Core
 
         private void TryUseInteractable(RaycastHit hit)
         {
-            Debug.Log(hit.collider.gameObject.name);
             // get closest interactable on object
             IHandInteractable[] interactables = hit.collider?.GetComponents<IHandInteractable>();
             float closestDistance = float.MaxValue;
             IHandInteractable interactable = null;
+            if (interactables == null)
+                return;
             foreach (IHandInteractable current in interactables)
             {
+                
                 GrabPoint grabPoint = current.GetGrabPoint();
                 float distance = Vector3.Distance(transform.position, grabPoint.GrabPointTransform.position);
                 if (distance < closestDistance)
@@ -108,7 +117,7 @@ namespace HandScripts.Core
 
         private RaycastHit ShootRay()
         {
-                Physics.Raycast(_rayOrigin.position, _rayOrigin.forward, out RaycastHit hit, _rayDistance, _layerMask);
+            Physics.Raycast(_rayOrigin.position, _rayOrigin.forward, out RaycastHit hit, _rayDistance, _layerMask);
             return hit;
         }
 
@@ -132,7 +141,7 @@ namespace HandScripts.Core
                 storedObject.SetParent(_rightHand.GetStoragePoint().transform);
                 storedObject.Released();
                 storedObject.ResetPosition(quaternion.identity);
-                
+
                 // set finger positions
                 IHandInteractable handInteractable = (IHandInteractable)storedObject;
                 _rightHand.MoveFingersToGrabPoint(handInteractable.GetGrabPoint(), true);

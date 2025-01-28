@@ -1,21 +1,24 @@
 using Player;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 namespace LegSystem
 {
     public class LegSystem : MonoBehaviour
     {
+        public static LegSystem Instance;
         [SerializeField] private Leg _legPrefab;
         [SerializeField] private Transform _legOrigin;
         [SerializeField] private float _maxDistanceFromLeg = 10;
         [SerializeField] private PlayerMovement _playerMovement;
         private PlayerInputActions _inputActions;
         private InputAction _legAction;
-        private Leg _leg;
+        public Leg Leg;
 
         private void Awake()
         {
+            Instance = this;
             _inputActions = new PlayerInputActions();
         }
 
@@ -34,14 +37,14 @@ namespace LegSystem
 
         private void LeaveLeg(InputAction.CallbackContext obj)
         {
-            if (_leg == null)
+            if (Leg == null)
             {
-                _leg = Instantiate(_legPrefab, _legOrigin.position, Quaternion.identity);
-                _playerMovement.SetConstraint(_leg.transform, _maxDistanceFromLeg);
+                Leg = Instantiate(_legPrefab, _legOrigin.position, Quaternion.identity);
+                _playerMovement.SetConstraint(Leg.transform, _maxDistanceFromLeg);
             }
             else
             {
-                _leg.StartLegReturn(_legOrigin, () => _leg = null);
+                Leg.StartLegReturn(_legOrigin, () => Leg = null);
                 _playerMovement.RemoveConstraint();
             }
         }

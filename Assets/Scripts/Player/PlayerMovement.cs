@@ -112,7 +112,7 @@ namespace Player
             Y = _smoothedInput.y;
 
             MoveVector = transform.right * X + transform.forward * Y;
-            if (MoveVector.magnitude < 0.1f)
+            if (MoveVector.magnitude < 0.2f)
             {
                 PlayerMovementState = EPlayerMovementState.Idle;
             }
@@ -139,7 +139,7 @@ namespace Player
                     AdjustSpeed(_walkSpeed * _sprintMultiplier);
                 }
             }
-            else
+            else if (!PlayerMovementState.Equals(EPlayerMovementState.Idle))
             {
                 PlayerMovementState = EPlayerMovementState.Walking;
                 AdjustSpeed(_walkSpeed);

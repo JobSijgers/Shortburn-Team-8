@@ -49,82 +49,6 @@ MonoBehaviour:
   blendDistance: 0
   weight: 1
   sharedProfile: {fileID: 11400000, guid: 2b5746ac50df13148abb2c3cd9a08958, type: 2}
---- !u!1 &462638806048125963
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7222968514008365174}
-  - component: {fileID: 7998927964096624669}
-  - component: {fileID: 7405667227268660413}
-  m_Layer: 5
-  m_Name: LimbsPreviewBG
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &7222968514008365174
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 462638806048125963}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1974581425541946021}
-  m_Father: {fileID: 3508605959867340754}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 808, y: 301}
-  m_SizeDelta: {x: 177, y: 387}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &7998927964096624669
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 462638806048125963}
-  m_CullTransparentMesh: 1
---- !u!114 &7405667227268660413
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 462638806048125963}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &530936559739436796
 GameObject:
   m_ObjectHideFlags: 0
@@ -677,7 +601,7 @@ RectTransform:
   - {fileID: 5641685862537632481}
   - {fileID: 4870876916074856050}
   - {fileID: 1198562067158806615}
-  - {fileID: 7222968514008365174}
+  - {fileID: 1974581425541946021}
   - {fileID: 631232358389503227}
   m_Father: {fileID: 9029315374828046490}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1291,6 +1215,7 @@ GameObject:
   - component: {fileID: 1974581425541946021}
   - component: {fileID: 1916851928267019954}
   - component: {fileID: 2044233844400448709}
+  - component: {fileID: 712182817731241131}
   m_Layer: 5
   m_Name: LimbsPreview
   m_TagString: Untagged
@@ -1307,15 +1232,15 @@ RectTransform:
   m_GameObject: {fileID: 8553935410625582289}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.1777, y: 0.1777, z: 0.1777}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 7222968514008365174}
+  m_Father: {fileID: 3508605959867340754}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 177, y: 387}
+  m_AnchoredPosition: {x: 808, y: 301}
+  m_SizeDelta: {x: 1544, y: 2541.8906}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1916851928267019954
 CanvasRenderer:
@@ -1345,7 +1270,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 1341293922, guid: 1ee1108c6ce70bd43b4f462ad1fb40cf, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a2a621be7b2c85149b78050d94311100, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1355,6 +1280,22 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &712182817731241131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8553935410625582289}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abbe388f8b723e242b5925163dc20997, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _noLimbsSprite: {fileID: 21300000, guid: a2a621be7b2c85149b78050d94311100, type: 3}
+  _noLegSprite: {fileID: 21300000, guid: b13f048f090097c4f956a671c48f38ba, type: 3}
+  _noHandSprite: {fileID: 21300000, guid: 642386deb81e83144a9ee8358fca6fa6, type: 3}
+  _bothLimbsSprite: {fileID: 21300000, guid: ef96e8ef511af664aa990428b5a2edcf, type: 3}
 --- !u!1 &9199843515638157442
 GameObject:
   m_ObjectHideFlags: 0
@@ -1503,6 +1444,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _minDistance: 5
+  _actionNames:
+  - ActionName: leftButton
+    InteractionMessage: left mouse button
 --- !u!1001 &5259424289644092623
 PrefabInstance:
   m_ObjectHideFlags: 0
