@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 20c3ce6f5b003754abac8336a03c681c, type: 3}
-  m_Name: Footstep_02
+  m_Name: Footstep_12
   m_EditorClassIdentifier: 
-  _name: Footstep_02
-  _clip: {fileID: 8300000, guid: d8895fb80edaeac46af33a3cae8951c4, type: 3}
+  _name: Footstep_12
+  _clip: {fileID: 8300000, guid: 7518ec26b0e06ad4fb0dc8774b12e96b, type: 3}
   _volume: 0.141
-  _pitch: 0.554
+  _pitch: 0.856
   _loop: 0
   _playOnAwake: 0
   _disableCutoff: 0

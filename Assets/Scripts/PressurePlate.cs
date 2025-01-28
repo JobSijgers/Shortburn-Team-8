@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using LimbsPickup;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -11,6 +12,7 @@ public class PressurePlate : MonoBehaviour
     public UnityEvent OnPressurePlate;
     public UnityEvent OnUnPressurePlate;
     private int _amount;
+    private LegSystem.LegSystem _legSystem;
 
     private Vector3 _startPos;
     private Coroutine _moveRoutine;
@@ -20,6 +22,7 @@ public class PressurePlate : MonoBehaviour
     {
         _startPos = transform.localPosition;
         _meshRenderer = GetComponent<MeshRenderer>();
+        _legSystem = LegSystem.LegSystem.Instance;
         MovePlate(Vector3.up);
     }
 
@@ -34,6 +37,7 @@ public class PressurePlate : MonoBehaviour
         if (!other.CompareTag("Player"))
             return;
         _amount++;
+        if (_amount <= 0) _amount = 1;
         if (_amount != 1) 
             return;
         MovePlate(-Vector3.up);
@@ -50,8 +54,11 @@ public class PressurePlate : MonoBehaviour
         if (!other.CompareTag("Player")) 
             return;
         _amount--;
-        if (_amount != 0) 
-            return;
+        if (_legSystem.Leg != null)
+        {
+            if (_amount != 0) 
+                return;
+        }
         MovePlate(Vector3.up);
         _meshRenderer.material = _pressurePlateMaterial;
         OnUnPressurePlate.Invoke();

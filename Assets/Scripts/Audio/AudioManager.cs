@@ -23,7 +23,8 @@ namespace Audio
                     continue;
                 }
 
-                soundDictionary.Add(sound.name, sound);
+                soundDictionary.Add(sound._name, sound);
+                Debug.Log(sound._name);
                 CreateAudioSource(sound);
             }
 

@@ -6,9 +6,11 @@ using UnityEngine;
 public class WalkingSounds : MonoBehaviour
 {
     [SerializeField] private SoundClip[] _walkingSounds;
+    [SerializeField] private SoundClip[] _creakSound;
     [SerializeField] private float _walkInterval;
     [SerializeField] private float _runInterval;
     [SerializeField] private float _hopInterval;
+    [Range(0, 100)][SerializeField] private int _creakChance;
     private LegSystem.LegSystem _legSystem;
     private PlayerMovement _playerMovement;
     private float _currentInterval;
@@ -60,6 +62,11 @@ public class WalkingSounds : MonoBehaviour
             }
             SoundClip sound = _walkingSounds[Random.Range(0, _walkingSounds.Length)];
             _audioManager.PlaySound(sound._name);
+            if (Random.Range(0, 100) < _creakChance)
+            {
+                SoundClip creak = _creakSound[Random.Range(0, _creakSound.Length)];
+                _audioManager.PlaySound(creak._name);
+            }
         }
     }
 }
