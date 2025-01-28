@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2495983059227280744}
   - component: {fileID: 1516684805510367949}
   - component: {fileID: 3668374871902879239}
-  - component: {fileID: 7614484881935919457}
+  - component: {fileID: 3467043539153587105}
   m_Layer: 0
   m_Name: P_Kitchencounter
   m_TagString: Untagged
@@ -84,7 +84,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &7614484881935919457
+--- !u!65 &3467043539153587105
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -104,4 +104,4 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 0.7706927, y: 1.1271777, z: 3.1682444}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0.56403124, z: 0}
