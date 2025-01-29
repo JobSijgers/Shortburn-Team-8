@@ -96,10 +96,10 @@ namespace Maze.Editor
 
         private void LoadMazePrefabs()
         {
-            _straight = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Maze/Straight.prefab");
-            _corner = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Maze/Corner.prefab");
-            _tJunction = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Maze/T Split.prefab");
-            _crossJunction = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Maze/Split.prefab");
+            _straight = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Maze/P_railsstraight.prefab");
+            _corner = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Maze/P_railscorners.prefab");
+            _tJunction = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Maze/P_rails3way.prefab");
+            _crossJunction = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Maze/P_rails4way.prefab");
         }
 
         private static void SetWindowSizeConstraints(MazeWindow window)
