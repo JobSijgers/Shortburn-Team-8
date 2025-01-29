@@ -1,6 +1,8 @@
 using System;
+using System.Collections;
 using HandScripts.Grab;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Cooking
 {
@@ -9,7 +11,11 @@ namespace Cooking
         [SerializeField] private CookingRecipe[] _recipes;
         [SerializeField] private ItemDeposit[] _deposits;
         [SerializeField] private Transform _resultSpawnPoint;
+        [SerializeField] private float _timeToCook;
 
+        [SerializeField] private UnityEvent _onWrongIngredients;
+        [SerializeField] private UnityEvent _onCorrectIngredients;
+        
         private ICookable[] _ingredients;
 
         private void Start()
@@ -28,17 +34,41 @@ namespace Cooking
             if (grabable is not ICookable cookable) return;
             
             _ingredients[index] = cookable;
+
+            foreach (ICookable ingredient in _ingredients)
+            {
+                if (ingredient == null)
+                {
+                    return;
+                }
+            }
+            
+            StartCoroutine(TryCook());
         }
-        
-        public void TryCook()
+            
+        public IEnumerator TryCook()
         {
+            yield return new WaitForSeconds(_timeToCook);
             foreach (CookingRecipe recipe in _recipes)
             {
                 if (!recipe.CanCook(_ingredients)) 
                     continue;
                 Instantiate(recipe._resultPrefab, _resultSpawnPoint.position, _resultSpawnPoint.rotation);
-                break;
+                // Clear ingredients
+                foreach (ICookable cookable in _ingredients)
+                {
+                    cookable.Destroy();
+                }
+                _ingredients = new ICookable[_deposits.Length];
+                _onCorrectIngredients.Invoke();
+                yield break;
             }
+
+            for (int i = 0; i < _deposits.Length; i++)
+            {
+                _deposits[i]._onWithdraw.Invoke((IHandGrabable)_ingredients[i]);
+            }
+            _onWrongIngredients.Invoke();
         }
     }
 }

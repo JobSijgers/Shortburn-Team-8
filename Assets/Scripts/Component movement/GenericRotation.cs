@@ -38,6 +38,7 @@ namespace Component_movement
             float t = 0;
             while (t < 1)
             {
+                
                 t += Time.deltaTime / _movementSpeed;
                 float curveValue = _movementCurve.Evaluate(t);
                 transform.localRotation = Quaternion.Lerp(_startRot, _endRot, curveValue);
