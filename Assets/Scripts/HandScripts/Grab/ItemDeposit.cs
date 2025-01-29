@@ -11,6 +11,7 @@ namespace HandScripts.Grab
         [SerializeField] private bool _currentlyInteractable = true;
         
         public UnityEvent<IHandGrabable> _onDeposit;
+        public UnityEvent<IHandGrabable> _onWithdraw;
         public void OnDeposit(IHandGrabable grabable) => _onDeposit.Invoke(grabable);
         public string GetDepositKey() => _depositKey;
         public GrabPoint GetGrabPoint() => _heldPoint;
