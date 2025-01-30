@@ -15,5 +15,5 @@ MonoBehaviour:
   _ingredients:
   - But
   - Kaas
-  _resultPrefab: {fileID: 599005599261386844, guid: 02640d120241e2d4da36c3b57b8a6c5c,
+  _resultPrefab: {fileID: 1344746487255396561, guid: bb71219812c31a348b7e846194222cc1,
     type: 3}
