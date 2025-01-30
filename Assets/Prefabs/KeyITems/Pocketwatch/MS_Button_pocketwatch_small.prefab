@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8355751870529644078}
   - component: {fileID: 2915347267784000130}
   - component: {fileID: 774906941620017761}
+  - component: {fileID: 8635001742907010705}
   m_Layer: 8
   m_Name: MS_Button_pocketwatch_small
   m_TagString: Untagged
@@ -83,3 +84,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &8635001742907010705
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2523752018965708904}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87f0465e932648958ba72a7443c15a72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _clip: {fileID: 11400000, guid: ac6efe7876f49ba4bab41900e3d50ce0, type: 2}
