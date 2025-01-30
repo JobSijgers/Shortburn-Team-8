@@ -22,6 +22,8 @@ namespace PocketWatchPuzzle
         [Header("Activation options")]
         [SerializeField] private float _activationDistance;
         [SerializeField] private LayerMask _layerMask;
+        [SerializeField] private UnityEvent _onButtonPressed;
+        [SerializeField] private UnityEvent _onButtonReleased;
         
         private PlayerInputActions _playerInputActions;
         private InputAction _useAction;
@@ -74,6 +76,8 @@ namespace PocketWatchPuzzle
 
         private IEnumerator PressButtonRoutine(Vector3 startPosition, Vector3 endPosition, bool doReturn = true)
         {
+            if (doReturn) _onButtonPressed?.Invoke();
+            else _onButtonReleased?.Invoke();
             float t = 0;
             while (t < 1)
             {

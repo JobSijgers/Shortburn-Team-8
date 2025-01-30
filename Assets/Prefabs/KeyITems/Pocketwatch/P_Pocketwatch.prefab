@@ -76,6 +76,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+  _onWithdraw:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!65 &5483144493594624286
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1306,6 +1309,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+  _onWithdraw:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!65 &6829770117776634660
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1875,6 +1881,21 @@ MonoBehaviour:
   _layerMask:
     serializedVersion: 2
     m_Bits: 512
+  _onButtonPressed:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4612682770764268395}
+        m_TargetAssemblyTypeName: Audio.AudioPlayer, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!65 &7517311666980464288
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1896,6 +1917,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.36, y: 0.33, z: 0.36}
   m_Center: {x: -0.0000009536743, y: 0.000000052154064, z: 0.00000047683716}
+--- !u!114 &4612682770764268395 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8635001742907010705, guid: db9b58200b295e94c8facbb63b811e7c,
+    type: 3}
+  m_PrefabInstance: {fileID: 4023468049710575098}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1499718232033045906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87f0465e932648958ba72a7443c15a72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &4909947039545576404 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8355751870529644078, guid: db9b58200b295e94c8facbb63b811e7c,
