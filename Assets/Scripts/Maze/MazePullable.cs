@@ -13,6 +13,7 @@ namespace Maze
         [SerializeField] private float _pullStep;
         [SerializeField] private Maze _maze;
         [SerializeField] private bool _currentlyInteractable = true;
+        [SerializeField] private UnityEvent _onComplete;
 
         public GrabPoint GetGrabPoint() => _handHoldPoint;
         public EInteractType GetInteractType() => EInteractType.Pull;
@@ -25,6 +26,11 @@ namespace Maze
         public void Pull(UnityAction onComplete)
         {
             transform.position = _maze.GetNextPosition();
+            if (Vector3.Distance(transform.position, _maze.GetEndBlock().transform.position) < 0.1f)
+            {
+                onComplete?.Invoke();
+                _onComplete?.Invoke();
+            }
         }
     }
 }
