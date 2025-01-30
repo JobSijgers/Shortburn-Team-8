@@ -49,6 +49,7 @@ namespace Cooking
         public IEnumerator TryCook()
         {
             yield return new WaitForSeconds(_timeToCook);
+
             foreach (CookingRecipe recipe in _recipes)
             {
                 if (!recipe.CanCook(_ingredients)) 
@@ -64,11 +65,13 @@ namespace Cooking
                 yield break;
             }
 
+            _onWrongIngredients.Invoke();
+            yield return new WaitForSeconds(0.2f);
             for (int i = 0; i < _deposits.Length; i++)
             {
                 _deposits[i]._onWithdraw.Invoke((IHandGrabable)_ingredients[i]);
+                _ingredients[i] = null;
             }
-            _onWrongIngredients.Invoke();
         }
     }
 }
