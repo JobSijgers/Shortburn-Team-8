@@ -11,6 +11,7 @@ namespace Maze
         [SerializeField] private Transform _player;
         [SerializeReference] private MazeBlock _currentBlock;
         [SerializeReference] private MazeBlock _endBlock;
+        public MazeBlock GetEndBlock() => _endBlock;
 
         private bool _isPastMidpoint = false;
         public Vector3 GetNextPosition()

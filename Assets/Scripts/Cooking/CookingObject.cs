@@ -7,5 +7,6 @@ namespace Cooking
     {
         [SerializeField] private string _cookingKey;
         public string GetCookingKey() => _cookingKey;
+        public void Destroy() => Destroy(gameObject);
     }
 }

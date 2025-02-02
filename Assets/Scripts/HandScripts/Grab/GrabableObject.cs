@@ -23,7 +23,7 @@ namespace HandScripts.Grab
         public string GetDepositKey() => _depositKey;
         public Material GetMaterial() => GetMeshRenderer().material;
         public MeshRenderer GetMeshRenderer() => GetComponent<MeshRenderer>();
-
+        public Rigidbody GetRigidbody() => GetComponent<Rigidbody>();
         public void Released() => gameObject.layer = _defaultLayer;
         public bool CurrentlyInteractable() => _currentlyInteractable;
 

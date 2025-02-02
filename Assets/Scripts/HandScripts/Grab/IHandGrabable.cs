@@ -11,5 +11,6 @@ namespace HandScripts.Grab
         string GetDepositKey();
         Material GetMaterial();
         MeshRenderer GetMeshRenderer();
+        Rigidbody GetRigidbody();
     }
 }

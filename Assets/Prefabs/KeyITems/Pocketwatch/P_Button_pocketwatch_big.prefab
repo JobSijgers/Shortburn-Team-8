@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5749111505408691787}
   - component: {fileID: 4261520554447223175}
   - component: {fileID: 3065021679437736630}
+  - component: {fileID: 6803138890768905251}
   m_Layer: 9
   m_Name: P_Button_pocketwatch_big
   m_TagString: Untagged
@@ -122,6 +123,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _heldPoint: {fileID: 2299063040098066767}
   _depositKey: Button Big
+  _currentlyInteractable: 1
 --- !u!114 &3065021679437736630
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -254,6 +256,34 @@ MonoBehaviour:
   _layerMask:
     serializedVersion: 2
     m_Bits: 512
+  _onButtonPressed:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6803138890768905251}
+        m_TargetAssemblyTypeName: Audio.AudioPlayer, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &6803138890768905251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 834147080630518541}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87f0465e932648958ba72a7443c15a72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _clip: {fileID: 11400000, guid: ac6efe7876f49ba4bab41900e3d50ce0, type: 2}
 --- !u!1001 &2997272788481832698
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 323459063504369127}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.013298035, y: -0.28969097, z: 0.05247879}
+  m_LocalPosition: {x: -0.0049972534, y: -0.283, z: 0.05247879}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -86,6 +86,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  _onWithdraw:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &2342104947536682788
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -126,7 +129,7 @@ Transform:
   m_GameObject: {fileID: 5972791596816060374}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.013298035, y: 0.23930931, z: 0.05247879}
+  m_LocalPosition: {x: -0.005, y: 0.246, z: 0.05247879}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -184,6 +187,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  _onWithdraw:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &3257805571480988971
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -224,7 +230,7 @@ Transform:
   m_GameObject: {fileID: 5980477236012394931}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.013298035, y: -0.025691032, z: 0.05247879}
+  m_LocalPosition: {x: -0.0049972534, y: -0.019000053, z: 0.05247879}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -282,6 +288,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  _onWithdraw:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &5598576427914129532
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -473,6 +482,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 4071460212709333454}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b4ae2e7d168486b4aa2b6a14511b5208,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3996599774909966745}
   m_SourcePrefab: {fileID: 100100000, guid: b4ae2e7d168486b4aa2b6a14511b5208, type: 3}
 --- !u!4 &7235103156062913122 stripped
 Transform:
@@ -517,6 +530,31 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 3996599774909966745}
+        m_TargetAssemblyTypeName: Audio.AudioPlayer, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &3996599774909966745
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8008507689820772568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87f0465e932648958ba72a7443c15a72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _clip: {fileID: 11400000, guid: 8f06435898818d94f84c2e786593963c, type: 2}
 --- !u!1001 &7639927357757478955
 PrefabInstance:
   m_ObjectHideFlags: 0
